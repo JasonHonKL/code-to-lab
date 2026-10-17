@@ -23,6 +23,7 @@
   - Lab 3 after:
 - **What the learner should be able to do at the end:**
 - **What is explicitly out of scope:**
+- **Companions used:** none / video-use / impeccable / academic-research-skills
 - **Assumptions / declined questions:**
 - **Deliverables:**
   - `course/index.html`

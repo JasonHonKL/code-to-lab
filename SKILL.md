@@ -82,6 +82,8 @@ Extract:
 
 Choose 3–5 concepts. Fewer, deeper modules beat many thin ones.
 
+If the topic is research-heavy (a paper, a scientific field, a literature-backed topic), optionally use `academic-research-skills` for sources and background. Use it for the domain, not for the code trace, and verify every citation. If your agent has `impeccable` installed, keep it in mind for the post-build design audit.
+
 ## Phase 2 — Design the top-down arc
 
 Use this shape, adapted to the codebase:
@@ -124,6 +126,14 @@ Content rules:
 
 The page must work offline except for web fonts; bundle Mermaid, the video, and the poster locally.
 
+If `impeccable` is installed, run its audit after the page is built:
+
+```bash
+npx impeccable detect course/ --json
+```
+
+or `/impeccable audit course`. Treat the findings as a second pass, not as a replacement for the course’s design direction.
+
 ## Phase 4 — Build the labs and checker
 
 Read `references/lab-checker.md`. Copy and adapt `templates/lab.mjs` if useful.
@@ -162,6 +172,8 @@ Target 60–90 seconds, 16:9, 1920×1080, 30 fps.
 - Render with HyperFrames when available: one paused GSAP timeline, local fonts, local audio, no network at render time, root `data-duration`.
 - If HyperFrames is unavailable, use the fallback: HTML/CSS slides + TTS + ffmpeg, or a screen-recorded walkthrough with burned-in titles.
 - Extract a poster frame and embed the MP4 at the top of the course.
+
+If the video uses recorded footage or demo takes, optionally use `video-use` to cut, caption, and grade that footage. Do not use it as the primary explainer generator; keep the generated 60–90 s storyboard as the spine.
 
 ## Phase 6 — Verify and hand off
 
@@ -204,6 +216,7 @@ Write `course/README.md` with:
 | `references/video-production.md` | Script, storyboard, voice/music/SFX, HyperFrames composition, fallback |
 | `references/design-system.md` | Palette, typography, diagrams, lab UI, responsive rules |
 | `references/quality-gates.md` | Pre-delivery checklist |
+| `references/companion-skills.md` | Optional `video-use`, `impeccable`, and `academic-research-skills` integrations |
 
 ## Templates
 
@@ -213,6 +226,18 @@ Write `course/README.md` with:
 | `templates/storyboard.md` | Scene-by-scene video plan |
 | `templates/lab.mjs` | Generic repo-mode start/restore/status helper (adapt imports) |
 | `templates/lab-cases.json` | Authoritative case format |
+
+## Companion tools
+
+These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`.
+
+| Tool | Use it for | Do not use it for |
+|---|---|---|
+| [`video-use`](https://github.com/browser-use/video-use) | Editing raw footage: filler cuts, captions, color grade, montage, self-eval | Generating the core explainer from scratch |
+| [`impeccable`](https://github.com/pbakaus/impeccable) | Post-build frontend audit, critique, polish, deterministic `detect` | Replacing the course’s design direction |
+| [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Literature review, source-backed research, citations for research-heavy topics | Codebase analysis or the code trace |
+
+Read `references/companion-skills.md` for install notes, licenses, and integration rules.
 
 ## Track adaptations
 
@@ -236,3 +261,4 @@ Write `course/README.md` with:
 - All labs removed at once with no way to restore the originals.
 - A video with no voice, no sound, or no poster.
 - Text walls, recycled metaphors, or a purple-gradient AI look.
+- Letting an optional companion override the course’s direction: a launch-style `video-use` cut, generic `impeccable` advice, or academic prose pasted into the teaching copy.

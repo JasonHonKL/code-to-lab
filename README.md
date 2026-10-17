@@ -150,6 +150,7 @@ references/
   video-production.md      # script, storyboard, voice, sound, render
   design-system.md         # palette, type, diagrams, lab UI
   quality-gates.md         # pre-delivery checklist
+  companion-skills.md      # optional video-use, impeccable, academic-research-skills
 templates/
   course-brief.md
   storyboard.md
@@ -186,6 +187,22 @@ Default: a 60–90 second HyperFrames composition.
 - Poster frame extracted from the final render.
 
 If HyperFrames is unavailable, the skill describes a fallback: HTML/CSS slides + TTS + ffmpeg, or a screen-recorded walkthrough.
+
+## Companion tools (optional)
+
+These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`.
+
+| Tool | Use it for | Do not use it for |
+|---|---|---|
+| [`video-use`](https://github.com/browser-use/video-use) | Editing raw footage: filler cuts, captions, color grade, montage, self-eval | Generating the core explainer from scratch |
+| [`impeccable`](https://github.com/pbakaus/impeccable) | Post-build frontend audit, critique, polish, deterministic `detect` | Replacing the course’s design direction |
+| [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Literature review, source-backed research, citations for research-heavy topics | Codebase analysis or the code trace |
+
+- `video-use` — [MIT](https://github.com/browser-use/video-use). Uses an external transcription provider; review privacy before uploading footage.
+- `impeccable` — [Apache-2.0](https://github.com/pbakaus/impeccable). Telemetry is on by default; opt out with `npx impeccable telemetry off` or `DO_NOT_TRACK=1`.
+- `academic-research-skills` — [CC BY-NC 4.0](https://github.com/Imbad0202/academic-research-skills). Non-commercial; verify every citation.
+
+Read `references/companion-skills.md` for install notes and integration rules.
 
 ## Requirements
 
@@ -224,5 +241,6 @@ The skill itself has no runtime dependencies.
 ## Notes
 
 - The skill is self-contained. It does not download or depend on `/brag` or `codebase-to-course`.
+- The companion tools are optional integrations, not dependencies. The course must work without them.
 - It was extracted from a real course built on a Lua interpreter, but it is not Lua-specific.
 - The worked example used a C build, `make`, a repo-mode checker, and a 90-second HyperFrames video; the references describe how to adapt the same shape to other languages and toolchains.

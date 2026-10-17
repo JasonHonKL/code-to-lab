@@ -114,6 +114,18 @@ mermaid.initialize({
 - Keep code-readable font sizes; allow zoom.
 - Tooltips must be reachable by keyboard/tap and appended to `body` so they are not clipped.
 
+## Optional impeccable audit
+
+If [`impeccable`](https://github.com/pbakaus/impeccable) is installed, use it as a second pass after the page is built:
+
+```bash
+npx impeccable detect course/ --json
+```
+
+or `/impeccable audit course` / `/impeccable critique course` / `/impeccable polish course`.
+
+Use it to catch deterministic frontend defects (contrast, spacing, overflow, overused fonts, nested cards, purple gradients), not to replace the warm paper direction. A clean detector is evidence, not proof; inspect the rendered page across viewports. See `references/companion-skills.md`.
+
 ## Responsive
 
 - Two-column translations stack at 768 px.

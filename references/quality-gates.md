@@ -65,6 +65,13 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] Mobile: no page-level horizontal overflow; labs stack; nav does not cover the first module.
 - [ ] The check button returns per-case results and the build log on failure.
 
+## Optional companion checks
+
+- [ ] If `impeccable` was used: `npx impeccable detect course/ --json` was run and primary findings were reviewed; the course’s own design direction was preserved.
+- [ ] If `video-use` was used on footage: the self-eval output was reviewed, captions/timing were checked, and the cut was watched end to end.
+- [ ] If `academic-research-skills` was used: every citation and source-backed claim was verified, and the non-commercial license was checked for the intended use.
+- [ ] `COURSE_BRIEF.md` records which companions were used.
+
 ## Handoff
 
 - [ ] `course/README.md` explains the course, track, edit/check/restore commands, lab IDs, and video rebuild.

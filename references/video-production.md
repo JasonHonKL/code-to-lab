@@ -110,6 +110,18 @@ ffmpeg -framerate 30 -i frames/%05d.png -i mix.m4a \
 
 Or record a live walkthrough with titles and a voiceover. The quality bar is the same: specific, readable, audible, and under 90 seconds.
 
+## If you have raw footage: video-use
+
+[`video-use`](https://github.com/browser-use/video-use) is an optional companion for editing raw footage: cutting filler, color grading, burned-in captions, animation overlays, and a self-evaluation pass. Use it when the course video includes recorded demo takes, screen recordings, or interviews.
+
+- Install it separately (it is not a dependency of this skill).
+- Feed it a folder of takes; ask for a short demo segment or a captioned clip.
+- Bring the exported `final.mp4` back as a second video or as B-roll.
+- It uses an external transcription provider and self-evaluates cuts; review the output and check privacy before uploading confidential footage.
+- Do not use it to replace the generated 60–90 s explainer. The storyboard and generated composition remain the spine.
+
+See `references/companion-skills.md` for install notes and license.
+
 ## Transcript
 
 Add a transcript in the course page, with timestamps that match the scenes. If the video is in a different language from the course, label it as a translation.
