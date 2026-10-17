@@ -40,6 +40,23 @@ npx hyperframes tts "…" --voice am_michael -o assets/audio/vo/01.wav
 
 Generate one clip per scene so you can place and measure it. Measure durations with `ffprobe`.
 
+## Language and voice
+
+- Produce **one video in the learner's language**. Do not generate an English duplicate unless the learner explicitly asks for one.
+- **Traditional Chinese (Taiwan):** use `zh-TW-HsiaoChenNeural` via `edge-tts`. Other zh-TW voices: `zh-TW-HsiaoYuNeural` (female), `zh-TW-YunJheNeural` (male). Use `zh-TW-HsiaoChenNeural` unless the learner asks for a different voice.
+- `edge-tts` is a lightweight fallback when Kokoro does not cover the language:
+
+```bash
+python3 -m pip install --user edge-tts
+edge-tts --voice zh-TW-HsiaoChenNeural --rate=+8%   --text "…" --write-media assets/audio/zh/scene01.mp3
+ffmpeg -y -i assets/audio/zh/scene01.mp3 -ar 48000 -ac 1 -c:a pcm_s16le assets/audio/zh/scene01.wav
+```
+
+- **Chinese pacing:** at the default rate, `zh-TW-HsiaoChenNeural` speaks roughly 4.2–4.5 Chinese characters per second; English identifiers are slower. A 75–95 s script is about **320–400 Chinese characters** plus a few identifiers. Generate one clip per scene, measure with `ffprobe`, and adjust `--rate` by ±5–10% rather than guessing. The worked example uses `+8%` for a 95.4 s, six-scene video.
+- **CJK rendering:** use a CJK font (PingFang TC, Noto Sans TC, or Source Han Sans) for every Chinese label, code comment, and caption. A Latin-only mono font produces missing-glyph boxes. Keep Menlo/Consolas for ASCII code and identifiers.
+- **Captions:** write a `.vtt` in the video language and add a transcript with timestamps. Split at sentence punctuation; do not break inside English identifiers such as `table_to_grid` or `chart_to_data`.
+- If the course is bilingual, put the video in the edition requested by the learner. Do not silently duplicate it in the other language.
+
 ## Music and sound
 
 - A soft music bed at roughly 8–12% of the voice level. Low-pass it to keep it out of the voice’s way.

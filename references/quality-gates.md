@@ -52,6 +52,7 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] No black gap after the end card; the final frame is intentional.
 - [ ] The transcript matches the narration and timestamps.
 - [ ] `hyperframes check` (or the fallback equivalent) passes with no errors.
+- [ ] If the course language is Chinese: the voice is `zh-TW-HsiaoChenNeural` (or the requested voice), CJK glyphs render (no missing-glyph boxes), captions/transcript are Chinese, and no English duplicate was produced unless requested.
 
 ## Page verification
 

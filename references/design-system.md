@@ -47,6 +47,8 @@ Use warm-tinted shadows (`rgba(44,42,40,…)`), never pure black.
 
 Load Google Fonts by CDN for the course page, or bundle WOFF2 for an offline/video build.
 
+For Traditional Chinese, use PingFang TC, Noto Sans TC, or Source Han Sans for Chinese text. Never set a Latin-only mono font on Chinese labels, code comments, or captions; it produces missing-glyph boxes. Keep Menlo/Consolas for ASCII code only.
+
 ## Layout
 
 - Reading width 760–820 px; wide diagrams up to 1000–1100 px.

@@ -171,6 +171,8 @@ Test design:
 
 Read `references/video-production.md`.
 
+Produce one video in the learner's language. For Traditional Chinese, use `zh-TW-HsiaoChenNeural` via `edge-tts`; do not generate an English duplicate unless the learner asks for one. See the language-and-voice section in the reference.
+
 Target 60–90 seconds, 16:9, 1920×1080, 30 fps.
 
 - 5–7 scenes: hook → the machine → 2–3 stage highlights → values/data → outro.
