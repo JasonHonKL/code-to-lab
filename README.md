@@ -100,6 +100,10 @@ git clone https://github.com/JasonHonKL/code-to-lab.git
 mkdir -p ~/.claude/skills/top-down-course
 cp -R code-to-lab/SKILL.md code-to-lab/references code-to-lab/templates \
   ~/.claude/skills/top-down-course/
+
+# Optional: link the vendored companion skills
+cd code-to-lab
+bash scripts/install-companions.sh
 ```
 
 For opencode:
@@ -160,6 +164,15 @@ templates/
   storyboard.md
   lab.mjs                  # generic start/restore/status helper
   lab-cases.json           # authoritative case format
+scripts/
+  install-companions.sh    # link the vendored skills into your agent
+vendor/
+  mattpocock-skills/       # MIT
+  manim_skill/             # MIT
+  video-use/               # MIT
+  impeccable/              # Apache-2.0
+  academic-research-skills/ # CC BY-NC 4.0
+  README.md                # upstream snapshots, licenses, update notes
 ```
 
 ## Lab workflow
@@ -210,7 +223,25 @@ These are optional and never required for a course to work. Use them when they c
 - `mattpocock/skills` — [MIT](https://github.com/mattpocock/skills). Optional interview skills; the level test is still required.
 - `manim_skill` — [MIT](https://github.com/adithya-s-k/manim_skill). Manim Community Edition is the safer default for a course; ManimGL is better for interactive/3D work.
 
-Read `references/companion-skills.md` for install notes and integration rules.
+### Vendored copies
+
+All five are included under `vendor/` with their upstream licenses and snapshot hashes. Link the single-skill companions with:
+
+```bash
+cd code-to-lab
+bash scripts/install-companions.sh
+```
+
+This links `video-use`, `impeccable`, the Matt Pocock engineering/productivity skills, and the Manim skills into `~/.claude/skills`, `~/.config/opencode/skills`, and `~/.agents/skills`. Existing real directories are skipped unless you pass `--force`.
+
+The **Academic Research Skills** suite is multi-skill and uses a plugin manifest. Point its marketplace at the vendored suite:
+
+```text
+/plugin marketplace add <repo>/vendor/academic-research-skills
+/plugin install academic-research-skills
+```
+
+See `vendor/README.md` for snapshots, licenses, prerequisites, and update instructions. Read `references/companion-skills.md` for integration rules.
 
 ## Math and physics
 
@@ -262,5 +293,6 @@ The skill itself has no runtime dependencies.
 
 - The skill is self-contained. It does not download or depend on `/brag` or `codebase-to-course`.
 - The companion tools are optional integrations, not dependencies. The course must work without them.
+- The repo vendors the companions as snapshots (~23 MB) so they are available offline. Their licenses apply to `vendor/`, not to the rest of the repo.
 - It was extracted from a real course built on a Lua interpreter, but it is not Lua-specific.
 - The worked example used a C build, `make`, a repo-mode checker, and a 90-second HyperFrames video; the references describe how to adapt the same shape to other languages and toolchains.

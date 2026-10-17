@@ -237,7 +237,7 @@ Write `course/README.md` with:
 
 ## Companion tools
 
-These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`.
+These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`. In the `code-to-lab` repo they are vendored under `vendor/`; run `bash scripts/install-companions.sh` to link them.
 
 | Tool | Use it for | Do not use it for |
 |---|---|---|

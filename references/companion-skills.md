@@ -2,11 +2,14 @@
 
 These are optional, high-leverage tools. The course must always work without them. Use them when they clearly improve the result, and record which ones were used in `COURSE_BRIEF.md` so the build is reproducible.
 
+In the `code-to-lab` repository, the companions are **vendored** under `vendor/` with their licenses and upstream snapshot hashes. Run `bash scripts/install-companions.sh` from the repo root to link the single-skill companions into your agent. The academic suite uses its plugin manifest; the script prints the command. If you are using this skill without that repo, install each companion from its upstream README.
+
 Do not vendor their code or copy their instructions into this skill. Link to them, install them separately, and respect their licenses.
 
 ## video-use
 
 **Repo:** https://github.com/browser-use/video-use
+**Vendored at:** `vendor/video-use/`
 **License:** MIT
 **What it is:** an agent skill for editing raw footage: transcript-first cutting, filler-word removal, color grading, burned-in captions, animation overlays (HyperFrames, Remotion, Manim, PIL), and a self-evaluation pass at cut boundaries.
 
@@ -40,6 +43,7 @@ brew install ffmpeg
 ## impeccable
 
 **Repo:** https://github.com/pbakaus/impeccable
+**Vendored at:** `vendor/impeccable/skill/`
 **License:** Apache-2.0
 **What it is:** a design language and skill for AI coding agents: `/impeccable init`, `audit`, `critique`, `polish`, `typeset`, `layout`, `animate`, and 59 deterministic detector rules for AI-generated frontend design. It catches overused fonts, purple gradients, nested cards, contrast issues, spacing problems, and more.
 
@@ -83,6 +87,7 @@ npx impeccable detect course/ --json
 ## academic-research-skills
 
 **Repo:** https://github.com/Imbad0202/academic-research-skills
+**Vendored at:** `vendor/academic-research-skills/`
 **License:** CC BY-NC 4.0 (non-commercial; check before commercial use)
 **What it is:** a suite of academic research skills: deep research, literature review, paper writing, peer review, a 10-stage pipeline, and a systematic-review screener. It emphasizes human-in-the-loop verification and citation checks.
 
@@ -114,6 +119,7 @@ or follow its symlink/global-skill instructions. It has a Traditional Chinese RE
 ## mattpocock/skills
 
 **Repo:** https://github.com/mattpocock/skills
+**Vendored at:** `vendor/mattpocock-skills/`
 **License:** MIT
 **What it is:** a composable set of engineering and productivity skills. The most useful ones here are `/grill-me` (relentless interview to resolve a plan), `/grill-with-docs` (same, plus a shared glossary), `/ask-matt` (router), `/teach` (stateful multi-session teaching), and `/writing-for-agents` (writing skill docs).
 
@@ -144,6 +150,7 @@ npx skills@latest add mattpocock/skills -a opencode
 ## manim_skill
 
 **Repo:** https://github.com/adithya-s-k/manim_skill
+**Vendored at:** `vendor/manim_skill/`
 **License:** MIT
 **What it is:** agent skills for Manim, with best practices and tested examples for **Manim Community Edition** (`manim`, `from manim import *`) and **ManimGL** (`manimgl`, `from manimlib import *`).
 
