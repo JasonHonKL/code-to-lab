@@ -1,0 +1,24 @@
+{
+  "id": "01-example",
+  "title": "Lab 1 — Example",
+  "file": "src/example.c",
+  "cases": [
+    {
+      "name": "basic behavior",
+      "name_zh": "基本行為",
+      "code": "…",
+      "expect": "…"
+    },
+    {
+      "name": "error path",
+      "expectError": true,
+      "errorContains": "…"
+    },
+    {
+      "name": "integration suite",
+      "script": "tests/all.lua",
+      "expectContains": "OK",
+      "timeout": 120000
+    }
+  ]
+}
