@@ -42,8 +42,9 @@ Generate one clip per scene so you can place and measure it. Measure durations w
 
 ## Language and voice
 
-- Produce **one video in the learner's language**. Do not generate an English duplicate unless the learner explicitly asks for one.
+- Produce the requested video language/variant. Do not generate an English duplicate unless the learner explicitly asks for one. If the learner asks for an additional Chinese variant (Cantonese alongside Mandarin), ship a separate MP4 and keep the existing one.
 - **Traditional Chinese (Taiwan):** use `zh-TW-HsiaoChenNeural` via `edge-tts`. Other zh-TW voices: `zh-TW-HsiaoYuNeural` (female), `zh-TW-YunJheNeural` (male). Use `zh-TW-HsiaoChenNeural` unless the learner asks for a different voice.
+- **Cantonese (Hong Kong):** use `zh-HK-HiuMaanNeural` (female) via `edge-tts`; alternatives are `zh-HK-WanLungNeural` (male) and `zh-HK-HiuGaaiNeural` (female). Write the narration in colloquial written Cantonese (唔, 嘅, 咗, 喺, 佢, 啲, 嚟, 呢, 嗰, 冇, 睇, 搵). On-screen titles can stay in standard written Chinese if that is the course's written language. If a Mandarin video already exists and the learner asks for Cantonese as well, keep the Mandarin MP4 and produce a separate Cantonese MP4 + VTT; reuse the same scene images when only the voice changes.
 - `edge-tts` is a lightweight fallback when Kokoro does not cover the language:
 
 ```bash

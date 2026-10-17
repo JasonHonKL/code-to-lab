@@ -171,7 +171,7 @@ Test design:
 
 Read `references/video-production.md`.
 
-Produce one video in the learner's language. For Traditional Chinese, use `zh-TW-HsiaoChenNeural` via `edge-tts`; do not generate an English duplicate unless the learner asks for one. See the language-and-voice section in the reference.
+Produce the requested video language/variant. For Traditional Chinese, use `zh-TW-HsiaoChenNeural` via `edge-tts`; for Cantonese, use `zh-HK-HiuMaanNeural` and colloquial Cantonese. Do not generate an English duplicate unless the learner asks for one. If both Mandarin and Cantonese are requested, keep both as separate MP4s with separate captions. See the language-and-voice section in the reference.
 
 Target 60–90 seconds (up to 120 for Deep Diver), 16:9, 1920×1080, 30 fps.
 

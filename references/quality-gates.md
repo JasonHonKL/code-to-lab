@@ -53,6 +53,7 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] The transcript matches the narration and timestamps.
 - [ ] `hyperframes check` (or the fallback equivalent) passes with no errors.
 - [ ] If the course language is Chinese: the voice is `zh-TW-HsiaoChenNeural` (or the requested voice), CJK glyphs render (no missing-glyph boxes), captions/transcript are Chinese, and no English duplicate was produced unless requested.
+- [ ] If a Cantonese variant was requested: the voice is `zh-HK-HiuMaanNeural` (or another zh-HK voice), the narration is colloquial Cantonese, the Cantonese MP4/VTT is separate from the Mandarin one, and the existing Mandarin video was not overwritten.
 
 ## Page verification
 
