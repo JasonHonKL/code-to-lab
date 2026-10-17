@@ -5,9 +5,10 @@ The goal is a warm, distinctive developer notebook — not the default purple-gr
 ## Canvas
 
 - Warm off-white background `#FAF7F2`; alternate `#F5F0E8`.
-- Dark ink `#2C2A28`; secondary `#6B6560`; muted `#9E9790`.
+- Dark ink `#2C2A28`; secondary `#5F5A54` (6.4:1); muted `#6B6560` (5.4:1). Do not use `#9E9790` for normal-size text; it is 2.7:1 on the canvas.
 - One accent. Vermillion `#D94F30`, teal `#2A7B9B`, amber `#D4A843`, or forest `#2D8B55`. Never a purple gradient.
-- Code ground `#1E1E2E`; code ink `#CDD6F4`.
+- Palette source: the `color-themes` companion (158 TOML palettes). The warm notebook palette below is the default; if the learner names a theme, map that theme's keys to these variables instead of inventing colors.
+- Code ground: choose from `color-themes`. For a light paper course, **GitHub Light High Contrast** (`#FFFFFF` / `#010409`) for code panels and **GitHub Dark High Contrast** (`#0A0C10` / `#F0F3F6`) for terminal/command blocks. A dark code ground (`#1E1E2E` / `#CDD6F4`) is also valid on a dark page; do not use low-contrast gray comments.
 - Borders `#E5DFD6`; surfaces white or `#FDF9F3`.
 - Success `#2D8B55`; error `#C93B3B`; info `#2A7B9B`.
 
@@ -15,10 +16,12 @@ The goal is a warm, distinctive developer notebook — not the default purple-gr
 :root {
   --color-bg: #FAF7F2;
   --color-bg-warm: #F5F0E8;
-  --color-bg-code: #1E1E2E;
+  --color-bg-code: #FFFFFF;
+  --color-code-fg: #010409;
+  --color-code-comment: #4B535D;
   --color-text: #2C2A28;
-  --color-text-secondary: #6B6560;
-  --color-text-muted: #9E9790;
+  --color-text-secondary: #5F5A54;
+  --color-text-muted: #6B6560;
   --color-border: #E5DFD6;
   --color-accent: #D94F30;
   --color-accent-hover: #C4432A;
@@ -56,7 +59,8 @@ Load Google Fonts by CDN for the course page, or bundle WOFF2 for an offline/vid
 
 ## Code
 
-- Dark IDE-style panels; Catppuccin-inspired colors.
+- Use a palette from `color-themes`. For a light paper course: GitHub Light High Contrast for code (`#FFFFFF` background, `#010409` foreground, `#4B535D` comments, `#A0111F` keywords, `#024C1A` strings, `#0349B4` numbers, `#622CBC` functions) and GitHub Dark High Contrast for commands (`#0A0C10` / `#F0F3F6`). Dark IDE panels are fine on a dark page; Catppuccin-inspired colors are optional, not mandatory.
+- Code foreground, comments, and each syntax token must reach **7:1** on the code background. A theme name is not proof; measure the rendered pairs.
 - Code must wrap; no horizontal scrollbar in teaching blocks.
 - Choose naturally short snippets (5–10 lines). Never rewrite project code.
 - Code↔English translation: two columns, real code left, line-by-line plain English right, accent border.
@@ -112,7 +116,8 @@ For math/physics, use an equation↔English translation block: the equation on t
 
 ## Accessibility
 
-- Text contrast at least WCAG AA: 4.5:1 for body, 3:1 for large text.
+- Text contrast at least WCAG AA: 4.5:1 for body, 3:1 for large text. Code tokens and command text should reach 7:1.
+- Verify the actual foreground/background pairs after rendering, including muted text, code comments, keywords, strings, and disabled states. Use a WCAG relative-luminance function, not an eyedropper guess.
 - Focus styles on inputs and buttons.
 - Do not rely on color alone for pass/fail; include a check/cross and text.
 - Keep code-readable font sizes; allow zoom.
@@ -120,7 +125,7 @@ For math/physics, use an equation↔English translation block: the equation on t
 
 ## Optional impeccable audit
 
-If [`impeccable`](https://github.com/pbakaus/impeccable) is installed, use it as a second pass after the page is built:
+If the `color-themes` companion is installed, read the requested palette from its `themes/` folder and map it to CSS variables. If `impeccable` is installed, use it as a second pass after the page is built:
 
 ```bash
 npx impeccable detect course/ --json

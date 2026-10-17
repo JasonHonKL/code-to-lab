@@ -2,7 +2,7 @@
 
 These are optional, high-leverage tools. The course must always work without them. Use them when they clearly improve the result, and record which ones were used in `COURSE_BRIEF.md` so the build is reproducible.
 
-In the `code-to-lab` repository, the companions are **vendored** under `vendor/` with their licenses and upstream snapshot hashes. Run `bash scripts/install-companions.sh` from the repo root to link the single-skill companions into your agent. The academic suite uses its plugin manifest; the script prints the command. If you are using this skill without that repo, install each companion from its upstream README.
+In the `code-to-lab` repository, the companions are **vendored** under `vendor/` with their licenses and upstream snapshot hashes. Run `bash scripts/install-companions.sh` from the repo root to link the single-skill companions into your agent. The academic suite uses its plugin manifest; the script prints the command. The `color-themes` companion is the exception: its upstream declares no license, so it is installed **by reference** with `bash scripts/install-color-themes.sh` and is never vendored. If you are using this skill without that repo, install each companion from its upstream README.
 
 Do not vendor their code or copy their instructions into this skill. Link to them, install them separately, and respect their licenses.
 
@@ -83,6 +83,38 @@ npx impeccable detect course/ --json
 - Use `critique` for hierarchy and clarity, not for changing the content.
 - Re-check after changes; a clean detector is evidence, not proof.
 - Telemetry is on by default; opt out with `npx impeccable telemetry off` or `DO_NOT_TRACK=1` if needed.
+
+## color-themes
+
+**Repo:** https://github.com/archibate/dotfiles-opencode/blob/main/skills/color-themes/SKILL.md
+**Vendored at:** not vendored (upstream declares no license)
+**License:** none declared
+**What it is:** a catalog of 158 color palettes in `themes/*.toml`, plus a short workflow for applying a palette to a frontend or a desktop configuration. Tokyo Night is the default; the catalog also includes Catppuccin, GitHub Light/Dark (including high-contrast variants), Flexoki, Everforest, Dracula, Alabaster, and many terminal themes.
+
+**Use it when:**
+
+- the learner names a theme (“Tokyo Night”, “Catppuccin Latte”, “GitHub Light High Contrast”);
+- body text or code is hard to read, or a design review flags contrast;
+- you need a coherent palette for the page, code panels, command blocks, and diagrams.
+
+**Do not use it to replace the course’s design direction.** Keep the warm paper canvas, hierarchy, and lab structure. Apply the palette as a constraint, not a redesign.
+
+**Install (by reference):**
+
+```bash
+bash scripts/install-color-themes.sh
+```
+
+The script keeps a sparse checkout in the local cache and links `color-themes` into `~/.claude/skills`, `~/.config/opencode/skills`, and `~/.agents/skills`. Do not copy the upstream files into this repository without checking the license.
+
+**Integration:**
+
+- Read `references/color-themes.md` for the contrast gate and code/terminal pairings.
+- Map the TOML keys to CSS custom properties; do not hard-code the palette in many rules.
+- Measure: body text ≥ 4.5:1, code foreground/comments/syntax tokens ≥ 7:1, command blocks ≥ 7:1.
+- A dark code panel on a light page is fine; a light code panel needs a visible border. Do not rely on a theme name as proof of readability.
+- Record the chosen palette and the measured pairs in `COURSE_BRIEF.md` when a theme was explicitly requested.
+- If the requested theme is missing, search the web and extract the palette; do not fabricate one. If it fails contrast, adjust the failing token and say so.
 
 ## academic-research-skills
 
@@ -186,7 +218,7 @@ Prerequisites: Python 3.7+, FFmpeg, and a LaTeX distribution (MacTeX/TeX Live/Mi
 
 1. **Optional, not required.** A course must be buildable with this skill alone.
 2. **Record usage.** Add a `Companions used:` line to `COURSE_BRIEF.md`.
-3. **Respect licenses.** Link to the repos; do not vendor their content.
+3. **Respect licenses.** Link to the repos; do not vendor their content. If an upstream has no license, install it by reference and do not copy it into the repository.
 4. **Verify outputs.** Review video cuts, design findings, and citations.
 5. **Keep the course’s direction.** Use companions to improve execution, not to replace the top-down teaching design.
 6. **Ask first.** For a Newcomer, do not use a companion that assumes domain knowledge. Use the level test and the course’s own scaffolded path.

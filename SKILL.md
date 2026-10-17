@@ -26,6 +26,7 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 - **Every lab needs 3 progressive hints and a reference solution.**
 - **Verify before delivery:** `--self-test` (skeleton fails, solution passes), page loads with no console errors, video has audio, mobile layout works.
 - **Write in the learner's language.** Ask; do not assume English. Keep code, identifiers, and upstream comments in their original language.
+- **Contrast is a quality gate.** Body text ≥ 4.5:1 and code tokens ≥ 7:1 against their actual backgrounds. Use a palette from the `color-themes` companion when a theme is requested or contrast is in question; measure it, do not eyeball it.
 
 ## Workflow
 
@@ -111,6 +112,8 @@ Do not create a separate “Labs” module. The nav should have one dot per teac
 ## Phase 3 — Build the course site
 
 Read `references/design-system.md`.
+
+If the learner names a theme, or if code/body text is hard to read, read `references/color-themes.md` and use the `color-themes` companion. Pick a palette from its `themes/*.toml` catalog (Tokyo Night is the default; GitHub Light/Dark High Contrast are good for code panels), map it to CSS custom properties, and verify contrast after rendering. Do not invent a palette when the requested one exists.
 
 Build a directory course site with:
 
@@ -202,7 +205,8 @@ Check the page:
 - every lab loads and is read-only;
 - every diagram renders;
 - no console errors;
-- mobile layout has no horizontal overflow outside code/editor areas.
+- mobile layout has no horizontal overflow outside code/editor areas;
+- body text ≥ 4.5:1, code foreground/comments/syntax tokens ≥ 7:1, and command blocks ≥ 7:1 on their real backgrounds.
 
 Write `course/README.md` with:
 
@@ -222,6 +226,7 @@ Write `course/README.md` with:
 | `references/lab-checker.md` | Repo-mode labs, start/restore, checker modes, case format, self-test |
 | `references/video-production.md` | Script, storyboard, voice/music/SFX, HyperFrames composition, fallback |
 | `references/design-system.md` | Palette, typography, diagrams, lab UI, responsive rules |
+| `references/color-themes.md` | Palette catalog, contrast gate, code/terminal pairings, install-by-reference |
 | `references/quality-gates.md` | Pre-delivery checklist |
 | `references/companion-skills.md` | Optional `video-use`, `impeccable`, `academic-research-skills`, `mattpocock/skills`, and `manim_skill` integrations |
 | `references/math-physics.md` | Top-down vs bottom-up math/physics courses, Manim, symbolic/numeric labs |
@@ -237,7 +242,7 @@ Write `course/README.md` with:
 
 ## Companion tools
 
-These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`. In the `code-to-lab` repo they are vendored under `vendor/`; run `bash scripts/install-companions.sh` to link them.
+These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`. In the `code-to-lab` repo they are vendored under `vendor/`; run `bash scripts/install-companions.sh` to link them. The `color-themes` companion is installed by reference because its upstream declares no license; run `bash scripts/install-color-themes.sh`.
 
 | Tool | Use it for | Do not use it for |
 |---|---|---|
@@ -246,6 +251,7 @@ These are optional and never required for a course to work. Use them when they c
 | [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Literature review, source-backed research, citations for research-heavy topics | Codebase analysis or the code trace |
 | [`mattpocock/skills`](https://github.com/mattpocock/skills) | Optional `/grill-me` interview to clarify ambiguous goals; `/teach` for multi-session teaching | Replacing the required level test |
 | [`manim_skill`](https://github.com/adithya-s-k/manim_skill) | Manim animation for math/physics courses | Software architecture videos or generic UI explainers |
+| [`color-themes`](https://github.com/archibate/dotfiles-opencode/blob/main/skills/color-themes/SKILL.md) | Palettes and contrast-safe color choices for the course page, code panels, terminals, and diagrams | Inventing a palette when a theme was requested, or shipping low-contrast text |
 
 Read `references/companion-skills.md` for install notes, licenses, and integration rules.
 
@@ -274,4 +280,5 @@ Read `references/companion-skills.md` for install notes, licenses, and integrati
 - All labs removed at once with no way to restore the originals.
 - A video with no voice, no sound, or no poster.
 - Text walls, recycled metaphors, or a purple-gradient AI look.
+- Low-contrast body text or code, especially gray comments on a dark panel; a theme name without its actual palette.
 - Letting an optional companion override the course’s direction: a launch-style `video-use` cut, generic `impeccable` advice, or academic prose pasted into the teaching copy.

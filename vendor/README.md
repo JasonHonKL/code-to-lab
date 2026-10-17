@@ -38,6 +38,16 @@ The academic suite is multi-skill and uses a plugin manifest. The script prints 
 
 Use the upstream README for other agents and installation channels.
 
+## Not vendored: color-themes
+
+`color-themes` ([archibate/dotfiles-opencode](https://github.com/archibate/dotfiles-opencode/blob/main/skills/color-themes/SKILL.md)) is an optional palette catalog. Its upstream repository declares no license, so it is **not** vendored here. Install it by reference instead:
+
+```bash
+bash scripts/install-color-themes.sh
+```
+
+The script keeps a sparse checkout in `~/.cache/code-to-lab/color-themes-src` and links it into the same agent skill directories. See `references/color-themes.md` for the contrast gate.
+
 ## Prerequisites
 
 - **video-use:** `cd vendor/video-use && uv sync`, FFmpeg, and an ElevenLabs API key in `.env` for transcription. Review its README before uploading footage.

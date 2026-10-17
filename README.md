@@ -156,6 +156,7 @@ references/
   lab-checker.md           # repo-mode labs, checker modes, test design
   video-production.md      # script, storyboard, voice, sound, render
   design-system.md         # palette, type, diagrams, lab UI
+  color-themes.md          # palette catalog, contrast gate, install-by-reference
   quality-gates.md         # pre-delivery checklist
   math-physics.md          # top-down/bottom-up math/physics courses + Manim
   companion-skills.md      # optional companions
@@ -166,6 +167,7 @@ templates/
   lab-cases.json           # authoritative case format
 scripts/
   install-companions.sh    # link the vendored skills into your agent
+  install-color-themes.sh  # fetch the color-themes companion by reference
 vendor/
   mattpocock-skills/       # MIT
   manim_skill/             # MIT
@@ -216,12 +218,14 @@ These are optional and never required for a course to work. Use them when they c
 | [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Literature review, source-backed research, citations for research-heavy topics | Codebase analysis or the code trace |
 | [`mattpocock/skills`](https://github.com/mattpocock/skills) | Optional `/grill-me` interview to clarify ambiguous goals; `/teach` for multi-session teaching | Replacing the required level test |
 | [`manim_skill`](https://github.com/adithya-s-k/manim_skill) | Manim animation for math/physics courses | Software architecture videos or generic UI explainers |
+| [`color-themes`](https://github.com/archibate/dotfiles-opencode/blob/main/skills/color-themes/SKILL.md) | Palettes and contrast-safe color choices for the course page, code panels, terminals, and diagrams | Inventing a palette when a theme was requested, or shipping low-contrast text |
 
 - `video-use` — [MIT](https://github.com/browser-use/video-use). Uses an external transcription provider; review privacy before uploading footage.
 - `impeccable` — [Apache-2.0](https://github.com/pbakaus/impeccable). Telemetry is on by default; opt out with `npx impeccable telemetry off` or `DO_NOT_TRACK=1`.
 - `academic-research-skills` — [CC BY-NC 4.0](https://github.com/Imbad0202/academic-research-skills). Non-commercial; verify every citation.
 - `mattpocock/skills` — [MIT](https://github.com/mattpocock/skills). Optional interview skills; the level test is still required.
 - `manim_skill` — [MIT](https://github.com/adithya-s-k/manim_skill). Manim Community Edition is the safer default for a course; ManimGL is better for interactive/3D work.
+- `color-themes` — No license declared upstream. Install it by reference with `bash scripts/install-color-themes.sh`; do not vendor it.
 
 ### Vendored copies
 
@@ -240,6 +244,17 @@ The **Academic Research Skills** suite is multi-skill and uses a plugin manifest
 /plugin marketplace add <repo>/vendor/academic-research-skills
 /plugin install academic-research-skills
 ```
+
+### Color themes (by reference)
+
+The color-themes catalog is not vendored because its upstream repository declares no license. Fetch a sparse checkout into the local cache and link it into your agent:
+
+```bash
+cd code-to-lab
+bash scripts/install-color-themes.sh
+```
+
+The script links `color-themes` into the same three skill directories as the other companions. It keeps the upstream files in `~/.cache/code-to-lab/color-themes-src` (override with `COLOR_THEMES_CACHE`), so updates are a re-run of the same command. See `references/color-themes.md` for the contrast gate and recommended code/terminal pairings.
 
 See `vendor/README.md` for snapshots, licenses, prerequisites, and update instructions. Read `references/companion-skills.md` for integration rules.
 
@@ -293,6 +308,7 @@ The skill itself has no runtime dependencies.
 
 - The skill is self-contained. It does not download or depend on `/brag` or `codebase-to-course`.
 - The companion tools are optional integrations, not dependencies. The course must work without them.
+- The color-themes companion is installed by reference, not vendored, because its upstream has no declared license. Do not copy its files into this repository.
 - The repo vendors the companions as snapshots (~23 MB) so they are available offline. Their licenses apply to `vendor/`, not to the rest of the repo.
 - It was extracted from a real course built on a Lua interpreter, but it is not Lua-specific.
 - The worked example used a C build, `make`, a repo-mode checker, and a 90-second HyperFrames video; the references describe how to adapt the same shape to other languages and toolchains.

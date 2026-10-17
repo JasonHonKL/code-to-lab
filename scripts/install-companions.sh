@@ -90,4 +90,7 @@ echo "  video-use:  cd \"$VENDOR/video-use\" && uv sync   (plus FFmpeg and ELEVE
 echo "  manim:      pip install manim   (plus FFmpeg and LaTeX)"
 echo "  impeccable: the skill launcher downloads its engine on first run"
 echo
+echo "Color themes is installed separately because upstream declares no license:"
+echo "  bash $ROOT/scripts/install-color-themes.sh"
+echo
 echo "Restart your agent so it discovers the new skills."

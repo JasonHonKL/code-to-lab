@@ -63,6 +63,10 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] No missing local asset references.
 - [ ] The nav dot count equals the teaching-section count.
 - [ ] Mobile: no page-level horizontal overflow; labs stack; nav does not cover the first module.
+- [ ] Body text and muted text meet 4.5:1 on their rendered backgrounds.
+- [ ] Code foreground, comments, keywords, strings, numbers, and functions meet 7:1 on the code background.
+- [ ] Command/terminal blocks meet 7:1, including the copy button and muted labels.
+- [ ] If a named theme was requested, the rendered page uses that palette (not a lookalike) and the chosen pairs are recorded in `COURSE_BRIEF.md`.
 - [ ] The check button returns per-case results and the build log on failure.
 
 ## Newcomer and math/physics checks
@@ -80,6 +84,7 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 ## Optional companion checks
 
 - [ ] If `impeccable` was used: `npx impeccable detect course/ --json` was run and primary findings were reviewed; the course’s own design direction was preserved.
+- [ ] If `color-themes` was used: the palette came from its `themes/*.toml`, contrast was measured after rendering, and no failing token was left in place.
 - [ ] If `video-use` was used on footage: the self-eval output was reviewed, captions/timing were checked, and the cut was watched end to end.
 - [ ] If `academic-research-skills` was used: every citation and source-backed claim was verified, and the non-commercial license was checked for the intended use.
 - [ ] `COURSE_BRIEF.md` records which companions were used.
