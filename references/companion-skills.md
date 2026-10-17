@@ -2,9 +2,91 @@
 
 These are optional, high-leverage tools. The course must always work without them. Use them when they clearly improve the result, and record which ones were used in `COURSE_BRIEF.md` so the build is reproducible.
 
-In the `code-to-lab` repository, the companions are **vendored** under `vendor/` with their licenses and upstream snapshot hashes. Run `bash scripts/install-companions.sh` from the repo root to link the single-skill companions into your agent. The academic suite uses its plugin manifest; the script prints the command. The `color-themes` companion is the exception: its upstream declares no license, so it is installed **by reference** with `bash scripts/install-color-themes.sh` and is never vendored. If you are using this skill without that repo, install each companion from its upstream README.
+In the `code-to-lab` repository, most companions are **vendored** under `vendor/` with their licenses and upstream snapshot hashes. Run `bash scripts/install-companions.sh` from the repo root to link the single-skill companions into your agent. The academic suite uses its plugin manifest; the script prints the command.
+
+Four companions are installed **by reference** rather than vendored:
+
+- `deep-research` (Apache-2.0) and `frontend-slides` (MIT) — `bash scripts/install-research-and-slides.sh` clones shallow copies into a local cache and links them.
+- `color-themes` — `bash scripts/install-color-themes.sh` because its upstream declares no license.
+- The academic suite is vendored, but installed through its plugin manifest.
+
+If you are using this skill without that repo, install each companion from its upstream README.
 
 Do not vendor their code or copy their instructions into this skill. Link to them, install them separately, and respect their licenses.
+
+## deep-research
+
+**Repo:** https://github.com/sanjay3290/ai-skills/tree/main/skills/deep-research
+**Installed at:** by reference (`bash scripts/install-research-and-slides.sh`)
+**License:** Apache-2.0
+**What it is:** a Gemini Deep Research agent that plans a research strategy, searches and reads sources, iterates, and returns a cited report. It runs for 2–10 minutes and costs roughly $2–5 per task. It requires `GEMINI_API_KEY`.
+
+**Use it when:**
+
+- the learner asks for research, a literature scan, a competitive landscape, or source-backed background;
+- the course is research-heavy and needs current, cited sources;
+- you need to compare approaches or verify a factual claim before teaching it.
+
+**Do not use it for:**
+
+- codebase analysis or the code trace (use the repo);
+- private, authenticated, or sensitive sources;
+- a run the learner has not agreed to pay for.
+
+**Install:**
+
+```bash
+bash scripts/install-research-and-slides.sh
+# or, manually:
+git clone --depth 1 https://github.com/sanjay3290/ai-skills ~/.cache/code-to-lab/ai-skills
+ln -sfn ~/.cache/code-to-lab/ai-skills/skills/deep-research ~/.claude/skills/deep-research
+cd ~/.cache/code-to-lab/ai-skills/skills/deep-research
+python3 -m pip install -r requirements.txt
+cp .env.example .env   # add GEMINI_API_KEY
+```
+
+**Integration:**
+
+- Ask before the first run and state the approximate cost.
+- Give it a precise query and a requested output format; do not send confidential data.
+- Use the report for domain context, not for the code walkthrough.
+- **Verify every citation.** Treat an unverified claim as a hypothesis.
+- Do not paste academic prose into the teaching copy; rewrite it in the course’s voice.
+- Record the run and its sources in `COURSE_BRIEF.md`.
+- If the skill or key is unavailable, do ordinary web research and cite the sources.
+
+## frontend-slides
+
+**Repo:** https://github.com/zarazhangrui/frontend-slides
+**Installed at:** by reference (`bash scripts/install-research-and-slides.sh`)
+**License:** MIT
+**What it is:** a coding-agent skill for building self-contained HTML presentations. It generates visual style previews, lets the learner pick one, then produces a single-file deck with inline CSS/JS. It can also convert PPTX files and includes 16:9, accessible templates.
+
+**Use it when:**
+
+- the learner asks for slides, a deck, a presentation, or a PPTX conversion;
+- the video fallback needs an HTML/CSS slide deck;
+- a module needs a downloadable presentation version.
+
+**Do not use it for:**
+
+- replacing the course page or the HyperFrames explainer;
+- introducing a second, conflicting palette or type system;
+- a deck with no content plan.
+
+**Install:**
+
+```bash
+bash scripts/install-research-and-slides.sh
+```
+
+**Integration:**
+
+- Give it the course brief, the scene/section outline, and the required slide content.
+- Reuse the course palette and type choices; do not let style discovery invent a new direction.
+- Keep the deck 16:9 and verify it at desktop and mobile sizes.
+- If the deck is used for the video, render or record it and mux the same voice/music bed.
+- Do not substitute the deck for the course page; the page remains the interactive course.
 
 ## video-use
 
@@ -125,9 +207,11 @@ The script keeps a sparse checkout in the local cache and links `color-themes` i
 
 **Use it when:**
 
-- the course is about a research paper, a scientific field, or a literature-backed topic;
-- you need a source-backed script, a literature review, or a citation list;
-- the learner’s goal is academic or research-oriented.
+- the learner wants an academic literature review or paper-style sources;
+- the course is about a research paper or a scientific field and `deep-research` is unavailable;
+- you need a citation list with an academic-review workflow.
+
+It is an alternative to `deep-research`, not the default when the learner simply asks for research.
 
 **Do not use it for codebase analysis.** Use it for the domain context, sources, and claims; use the repo for the code trace and labs.
 
@@ -217,8 +301,10 @@ Prerequisites: Python 3.7+, FFmpeg, and a LaTeX distribution (MacTeX/TeX Live/Mi
 ## Rules for all companions
 
 1. **Optional, not required.** A course must be buildable with this skill alone.
-2. **Record usage.** Add a `Companions used:` line to `COURSE_BRIEF.md`.
+2. **Record usage.** Add a `Companions used:` line to `COURSE_BRIEF.md`, including the verification rungs for each lab.
 3. **Respect licenses.** Link to the repos; do not vendor their content. If an upstream has no license, install it by reference and do not copy it into the repository.
-4. **Verify outputs.** Review video cuts, design findings, and citations.
+4. **Verify outputs.** Review video cuts, design findings, slide decks, rubric verdicts, and citations.
 5. **Keep the course’s direction.** Use companions to improve execution, not to replace the top-down teaching design.
 6. **Ask first.** For a Newcomer, do not use a companion that assumes domain knowledge. Use the level test and the course’s own scaffolded path.
+7. **Paid APIs need consent.** `deep-research` costs money per run and an LLM judge may cost money per submission. State the cost and get consent before the first call.
+8. **No hidden uploads.** Do not send a learner’s submission, recording, or repo to a model without telling them and redacting private data.

@@ -90,6 +90,9 @@ echo "  video-use:  cd \"$VENDOR/video-use\" && uv sync   (plus FFmpeg and ELEVE
 echo "  manim:      pip install manim   (plus FFmpeg and LaTeX)"
 echo "  impeccable: the skill launcher downloads its engine on first run"
 echo
+echo "Research and slide companions are installed by reference:"
+echo "  bash $ROOT/scripts/install-research-and-slides.sh"
+echo
 echo "Color themes is installed separately because upstream declares no license:"
 echo "  bash $ROOT/scripts/install-color-themes.sh"
 echo

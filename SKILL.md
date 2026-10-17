@@ -1,6 +1,6 @@
 ---
 name: top-down-course
-description: "Build a top-down, interactive course from any codebase or technical topic: a short narrated explainer video, diagrams, hands-on labs placed inline between sections, progressive hints, and an automated checker. Use when someone wants to turn code into a course, teach a codebase, create a video + diagrams + exercises, or design a level-adapted tutorial. Always run a short learner-level diagnostic before building, and make labs edit the real project files rather than an in-page editor."
+description: "Build a top-down, interactive course from any codebase or technical topic: a short narrated explainer video, diagrams, hands-on labs placed inline between sections, progressive hints, and verification that fits the skill. Labs are learn-by-doing and may edit real code, write or perform in the real medium, design an artifact, or run an experiment; they can be checked by tests, deterministic validators, rubrics, or a calibrated LLM judge. Use when someone wants to turn code or a skill into a course, teach a codebase, create a video + diagrams + exercises, or design a level-adapted tutorial. Always run a short learner-level diagnostic before building, and never make the in-page editor the lab."
 ---
 
 # Top-Down Course
@@ -11,7 +11,7 @@ The course has three layers:
 
 1. **A short explainer video** — 60–90 seconds, narrated, with music and sound effects.
 2. **Diagrams and code↔plain-English translations** — the system map, then each layer.
-3. **Hands-on labs inline between sections** — the learner edits the real project files, fills in TODO stubs, uses progressive hints, and runs an automated checker.
+3. **Hands-on labs inline between sections** — the learner does the real activity: edits code, writes, designs, performs, or runs an experiment. Every lab produces evidence, gives progressive hints, and is checked by the strongest verification the medium allows.
 
 This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, or any external prompt. Use the references and templates in this skill. HyperFrames is optional; if it is unavailable, use the fallback video pipeline in `references/video-production.md`.
 
@@ -20,11 +20,13 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 - **Run the level test before building.** It has two axes: general technical level and **topic prior knowledge**. Include the explicit **“I don’t know this topic at all”** option and use the **Newcomer** track when it is chosen. If the learner declines, default to **Builder** and say so.
 - **Top-down arc.** Never start with “what is a pointer” or “what is a hash table.” Start with the behavior the learner can see, then open the box that produced it.
 - **Labs live inside the course**, after the section that teaches their core. Never collect all labs into one “Labs” module at the end.
-- **Labs modify the real repo.** Install TODO stubs into the actual source files, back up the originals, and provide `start` / `restore` commands. The course page is a read-only preview and a check button, not an editor.
-- **No multiple-choice lab exercises.** Labs are fill-in-the-code. The only quiz allowed is the **level diagnostic** before the course, and it is for placement, not grading.
-- **Every lab needs a checker** that builds a temp copy of the current repo, runs authoritative tests, and reports per-case results. The checker must never modify the repo.
-- **Every lab needs 3 progressive hints and a reference solution.**
-- **Verify before delivery:** `--self-test` (skeleton fails, solution passes), page loads with no console errors, video has audio, mobile layout works.
+- **Labs happen in the real medium.** For code, install TODO stubs into the actual source files, back up the originals, and provide `start` / `restore` commands. For writing, design, practice, or experiments, scaffold a real work file or artifact and check that. The course page is a read-only preview and a check button, not an editor.
+- **Choose the lab kind from the learning verb.** Debug → code; explain → writing; design → artifact; play or speak → performance; recognize → drill. Read `references/lab-kinds.md` before choosing. Do not force a code lab onto a non-code skill.
+- **Labs are active practice, not a quiz.** Multiple choice is allowed when the objective is recognition, recall, or discrimination (ear training, vocabulary, error triage), with per-option feedback. It is not allowed as the only evidence for a production skill, as the default format, or as “guess the formula.” The level diagnostic remains separate and is for placement, not grading.
+- **Every lab needs verification that fits the medium.** Code labs build a temp copy and run authoritative tests. Non-code labs combine deterministic checks, an explicit rubric, and—only when needed—a calibrated LLM judge or expert review. The checker must never modify the learner's work.
+- **Every lab needs 3 progressive hints and a reference solution or exemplar.**
+- **Verify before delivery:** `--self-test` (skeleton/weak exemplar fails, solution/strong exemplar passes), page loads with no console errors, video has audio, mobile layout works.
+- **Use the research and slides companions when asked.** For research, use `sanjay3290/ai-skills` → `skills/deep-research` (Gemini Deep Research) first; get consent for its paid API. For a slide deck, use `zarazhangrui/frontend-slides`. Both are optional to install but are the default choice when the learner asks for that artifact. See `references/companion-skills.md`.
 - **Write in the learner's language.** Ask; do not assume English. Keep code, identifiers, and upstream comments in their original language.
 - **Contrast is a quality gate.** Body text ≥ 4.5:1 and code tokens ≥ 7:1 against their actual backgrounds. Use a palette from the `color-themes` companion when a theme is requested or contrast is in question; measure it, do not eyeball it.
 
@@ -36,7 +38,7 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 | 1 | Analyze the codebase/topic; choose concepts and lab sites | 3–5 concepts, 2–3 labs, one end-to-end trace |
 | 2 | Design the top-down arc and inline lab placement | Module outline reviewed |
 | 3 | Build the course site | Page loads, diagrams render, labs are inline |
-| 4 | Build the labs and checker | `--self-test` passes |
+| 4 | Build the labs and their verification | `--self-test` passes (both directions) |
 | 5 | Produce the video | 60–90 s MP4 with voice + sound + poster |
 | 6 | Verify and hand off | All quality gates pass; README has commands |
 
@@ -88,7 +90,7 @@ Choose 3–5 concepts. Fewer, deeper modules beat many thin ones.
 
 For a math/physics topic, read `references/math-physics.md` and use the same arc with a derivation and a computational lab. Use Manim for the video when the topic is mathematical or physical.
 
-If the topic is research-heavy (a paper, a scientific field, a literature-backed topic), optionally use `academic-research-skills` for sources and background. Use it for the domain, not for the code trace, and verify every citation. If your agent has `impeccable` installed, keep it in mind for the post-build design audit.
+If the learner asks for research, or the topic is research-heavy (a paper, a scientific field, a literature-backed topic), use `sanjay3290/ai-skills` → `skills/deep-research` first. It is a Gemini Deep Research agent that plans, searches, reads, and returns a cited report. It needs `GEMINI_API_KEY`, takes 2–10 minutes, and costs roughly $2–5 per run, so ask before the first run. Use the report for domain context, never for the code trace, and verify every citation. If it is unavailable, do ordinary web research with sources. `academic-research-skills` remains an optional academic-suite alternative, not the default. If your agent has `impeccable` installed, keep it in mind for the post-build design audit.
 
 ## Phase 2 — Design the top-down arc
 
@@ -129,8 +131,10 @@ Content rules:
 - Every technical term gets a glossary tooltip on first use per module.
 - Every module has at least one real code↔English translation.
 - Every module has a diagram or interactive visual (Mermaid, flow animation, group chat, architecture map).
-- Every lab is a white card with: broken behavior, mission, TODOs, 3 hints, read-only code preview, copy-path, checker command, check button, reference solution.
-- No multiple-choice quizzes in the course body.
+- Every lab is a white card with: the incomplete/weak behavior, mission, deliverable, evidence path, 3 hints, a read-only starter or preview (code or artifact), copy-path, check command, check button, rubric, and a reference solution/exemplar.
+- Multiple choice is allowed only for recognition, recall, or discrimination, with per-option feedback; never as the only evidence for a production skill and never as the default lab format.
+
+If the learner asks for slides, a deck, or a presentation version, read `references/companion-skills.md` and use `frontend-slides`. Do not build a second competing design system; reuse the course's palette, type, and content.
 
 The page must work offline except for web fonts; bundle Mermaid, the video, and the poster locally.
 
@@ -142,11 +146,11 @@ npx impeccable detect course/ --json
 
 or `/impeccable audit course`. Treat the findings as a second pass, not as a replacement for the course’s design direction.
 
-## Phase 4 — Build the labs and checker
+## Phase 4 — Build the labs and verification
 
-Read `references/lab-checker.md`. Copy and adapt `templates/lab.mjs` if useful.
+Read `references/lab-kinds.md`, then `references/lab-checker.md`. Copy and adapt `templates/lab.mjs` and `templates/lab-rubric.json` if useful.
 
-The contract:
+The contract for code labs:
 
 1. The real repo file is the lab file. A `lab.mjs start` command backs up the original and installs the TODO skeleton; `restore` puts the original back; `status` reports skeleton/original/edited.
 2. The checker builds a **temp copy** of the current repo:
@@ -157,6 +161,14 @@ The contract:
 4. The checker CLI returns per-case results and exits non-zero on failure.
 5. The server exposes `/api/health`, `/api/labs`, `/api/lab/:id` (read-only content), `/api/lab/:id/check`, and `/api/lab/:id/solution`.
 
+The contract for non-code labs:
+
+1. The lab has a real deliverable: a work file, recording, design, or observation. `lab.mjs start` scaffolds it from a starter; `restore` backs it up and resets; `status` reports not started/draft/reference exemplar, and the checker records whether the draft was checked.
+2. The checker reads the deliverable and runs deterministic checks first (format, length, required sections, links, schema, duration, render state).
+3. A rubric defines 3–6 observable criteria. If an LLM judge is configured, it returns per-criterion verdicts with quoted evidence, at `temperature: 0`, with a fixed model and prompt version.
+4. The judge is calibrated against a known-weak and a known-strong exemplar. `--manual` prints the rubric and accepts a self-check or expert verdict when no judge is available.
+5. The checker never modifies the submission and never sends secrets or the whole repo to a model.
+
 Test design:
 
 - Force runtime behavior. If the compiler constant-folds an expression, use variables in the test.
@@ -164,8 +176,9 @@ Test design:
 - Include error cases (division by zero, malformed input, missing key).
 - Test the boundary the lab is about, not unrelated behavior.
 - Add `name_zh` (or the target language) only if the course is localized.
-- Self-test: skeleton fails, solution passes.
-- Do not let the learner edit the tests. Hash them.
+- For non-code labs, test deterministic requirements (format, length, required sections, links, duration) and keep the rubric criteria observable. Calibrate the judge with weak and strong exemplars.
+- Self-test both directions: skeleton/weak exemplar fails, solution/strong exemplar passes.
+- Do not let the learner edit the tests, rubric, or exemplars. Hash them.
 
 ## Phase 5 — Produce the video
 
@@ -180,7 +193,7 @@ Target 60–90 seconds (up to 120 for Deep Diver), 16:9, 1920×1080, 30 fps.
 - Voice: a local TTS. Kokoro-82M (`am_michael`) for English; `zh-TW-HsiaoChenNeural` via `edge-tts` for Traditional Chinese, unless the learner requests another voice. Do not require a paid provider.
 - Music and SFX: a soft bed under the voice, keyboard/click/whoosh cues, a small result chime. Pre-mix with ffmpeg and normalize to about −16 LUFS.
 - Render with HyperFrames when available: one paused GSAP timeline, local fonts, local audio, no network at render time, root `data-duration`.
-- If HyperFrames is unavailable, use the fallback: HTML/CSS slides + TTS + ffmpeg, or a screen-recorded walkthrough with burned-in titles.
+- If HyperFrames is unavailable, use the fallback: HTML/CSS slides + TTS + ffmpeg, or a screen-recorded walkthrough with burned-in titles. When a slide deck is requested, use `frontend-slides` (`zarazhangrui/frontend-slides`) to build the HTML deck, then record or render it with the same storyboard and audio bed.
 - Extract a poster frame and embed the MP4 at the top of the course.
 
 If the video uses recorded footage or demo takes, optionally use `video-use` to cut, caption, and grade that footage. Do not use it as the primary explainer generator; keep the generated 60–90 s storyboard as the spine.
@@ -195,8 +208,9 @@ Run:
 
 ```bash
 node course/check.mjs --self-test
-node course/check.mjs <lab-id>          # repo mode, should fail until the learner fixes it
-node course/check.mjs <lab-id> --solution
+node course/check.mjs <lab-id>          # repo/work mode, should fail until the learner fixes it
+node course/check.mjs <lab-id> --solution   # code labs
+node course/check.mjs <lab-id> --manual     # non-code labs without a judge
 node course/lab.mjs status
 node course/serve.mjs
 ```
@@ -225,12 +239,13 @@ Write `course/README.md` with:
 |---|---|
 | `references/level-test.md` | The 6-question diagnostic, scoring, and track adaptations |
 | `references/course-architecture.md` | Top-down arc, module templates, inline lab placement, content rules |
-| `references/lab-checker.md` | Repo-mode labs, start/restore, checker modes, case format, self-test |
+| `references/lab-kinds.md` | Code/writing/design/performance/experiment/research/drill labs, MC rules, rubric and LLM-judge contract, non-code self-test |
+| `references/lab-checker.md` | Code repo-mode labs, start/restore, checker modes, case format, self-test; non-code adapters |
 | `references/video-production.md` | Script, storyboard, voice/music/SFX, HyperFrames composition, fallback |
 | `references/design-system.md` | Palette, typography, diagrams, lab UI, responsive rules |
 | `references/color-themes.md` | Palette catalog, contrast gate, code/terminal pairings, install-by-reference |
 | `references/quality-gates.md` | Pre-delivery checklist |
-| `references/companion-skills.md` | Optional `video-use`, `impeccable`, `academic-research-skills`, `mattpocock/skills`, and `manim_skill` integrations |
+| `references/companion-skills.md` | Optional `deep-research`, `frontend-slides`, `video-use`, `impeccable`, `academic-research-skills`, `mattpocock/skills`, and `manim_skill` integrations |
 | `references/math-physics.md` | Top-down vs bottom-up math/physics courses, Manim, symbolic/numeric labs |
 
 ## Templates
@@ -239,18 +254,21 @@ Write `course/README.md` with:
 |---|---|
 | `templates/course-brief.md` | Fill after the level test |
 | `templates/storyboard.md` | Scene-by-scene video plan |
-| `templates/lab.mjs` | Generic repo-mode start/restore/status helper (adapt imports) |
-| `templates/lab-cases.json` | Authoritative case format |
+| `templates/lab.mjs` | Generic start/restore/status helper for code and work-file labs (adapt imports) |
+| `templates/lab-cases.json` | Authoritative case format for code labs |
+| `templates/lab-rubric.json` | Rubric + deterministic-check + LLM-judge format for non-code labs |
 
 ## Companion tools
 
-These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`. In the `code-to-lab` repo they are vendored under `vendor/`; run `bash scripts/install-companions.sh` to link them. The `color-themes` companion is installed by reference because its upstream declares no license; run `bash scripts/install-color-themes.sh`.
+These are optional and never required for a course to work. Use them when they clearly improve the result; record usage in `COURSE_BRIEF.md`. In the `code-to-lab` repo most are vendored under `vendor/`; run `bash scripts/install-companions.sh` to link them. `deep-research`, `frontend-slides`, and `color-themes` are installed by reference: run `bash scripts/install-research-and-slides.sh` for the first two and `bash scripts/install-color-themes.sh` for the palette catalog.
 
 | Tool | Use it for | Do not use it for |
 |---|---|---|
+| [`deep-research`](https://github.com/sanjay3290/ai-skills/tree/main/skills/deep-research) | Multi-step cited research when the learner asks for research or the topic is research-heavy | Codebase analysis or the code trace; paid runs without consent |
+| [`frontend-slides`](https://github.com/zarazhangrui/frontend-slides) | Building a beautiful HTML slide deck from a brief or PPTX | Replacing the course page or the HyperFrames explainer |
 | [`video-use`](https://github.com/browser-use/video-use) | Editing raw footage: filler cuts, captions, color grade, montage, self-eval | Generating the core explainer from scratch |
 | [`impeccable`](https://github.com/pbakaus/impeccable) | Post-build frontend audit, critique, polish, deterministic `detect` | Replacing the course’s design direction |
-| [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Literature review, source-backed research, citations for research-heavy topics | Codebase analysis or the code trace |
+| [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Academic literature review, paper-style sources, citations (alternative to `deep-research`) | Codebase analysis or the code trace |
 | [`mattpocock/skills`](https://github.com/mattpocock/skills) | Optional `/grill-me` interview to clarify ambiguous goals; `/teach` for multi-session teaching | Replacing the required level test |
 | [`manim_skill`](https://github.com/adithya-s-k/manim_skill) | Manim animation for math/physics courses | Software architecture videos or generic UI explainers |
 | [`color-themes`](https://github.com/archibate/dotfiles-opencode/blob/main/skills/color-themes/SKILL.md) | Palettes and contrast-safe color choices for the course page, code panels, terminals, and diagrams | Inventing a palette when a theme was requested, or shipping low-contrast text |
@@ -276,9 +294,11 @@ Read `references/companion-skills.md` for install notes, licenses, and integrati
 - Asking a Newcomer to choose top-down vs bottom-up before the first module.
 - Using generic Manim decoration instead of animating the actual derivation.
 - A “Labs” section at the end instead of labs after their concept.
-- An in-page code editor that edits a copy instead of the real repo.
-- Multiple-choice lab exercises.
-- A checker that copies the repo but ignores the learner’s edits, or modifies the repo.
+- An in-page editor that edits a copy instead of the real medium.
+- Forcing every lab to be code when the skill is writing, design, performance, or recognition.
+- Multiple choice as the default lab format, as the only evidence for a production skill, or as “guess the formula.”
+- An LLM judge with no rubric, no quoted evidence, no calibration, or no deterministic checks where they are possible.
+- A checker that copies the repo but ignores the learner’s edits, or modifies the learner’s work.
 - All labs removed at once with no way to restore the originals.
 - A video with no voice, no sound, or no poster.
 - Text walls, recycled metaphors, or a purple-gradient AI look.

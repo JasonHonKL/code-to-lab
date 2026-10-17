@@ -4,7 +4,7 @@ The same top-down method works for math and physics, but the artifacts change:
 
 - the “codebase” may be a model, a derivation, or a simulation;
 - the “line of code” is a concrete phenomenon, quantity, or equation;
-- the “lab” is usually a Python/SymPy computation with a numeric or symbolic checker;
+- the “lab” is usually a Python/SymPy computation with a numeric or symbolic checker, or a written derivation checked by a rubric;
 - the video is often Manim, not HTML.
 
 ## When to use this mode
@@ -54,11 +54,13 @@ Use a real computational repo, even for a math/physics course:
 - a numerical simulation,
 - a Manim scene codebase with a TODO animation step (harder to test; prefer a numeric function).
 
-The repo-mode checker still applies:
+The repo-mode checker still applies to computational labs:
 
 - `lab.mjs start/restore/status` on the real file,
 - `check.mjs` builds a temp copy and runs authoritative tests,
 - the learner edits the real file and runs the checker.
+
+A derivation or explanation lab is also valid when the core skill is reasoning rather than computation. In that case, scaffold a work file with the derivation steps or a claim table, and verify it with a rubric: units, assumptions, sign conventions, limiting cases, and a correct final relation. Use a calibrated judge only for qualities the rubric cannot check deterministically, and keep a `--manual` fallback.
 
 ### Checker patterns
 
@@ -78,7 +80,7 @@ assert sympy.simplify(result - expected) == 0
 
 **Manim:** keep the mathematical logic in a pure function that can be tested; test the function, not the pixels. A separate visual check reviews the rendered scene.
 
-Do not use multiple-choice. Do not use “guess the formula.” Fill in the function, the derivation step, or the simulation.
+Do not use multiple choice for the main lab, and never use “guess the formula.” Fill in the function, the derivation step, or the simulation. A short recognition drill (for example, matching a graph to a derivative) is acceptable as a warm-up, with an explanation for every option.
 
 ## Video with Manim
 

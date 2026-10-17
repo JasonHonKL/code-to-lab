@@ -1,0 +1,54 @@
+{
+  "id": "02-example",
+  "kind": "writing",
+  "title": "Lab 2 — Explain the failure",
+  "submission": "course/work/02-example/submission.md",
+  "deterministic": [
+    {
+      "name": "required sections",
+      "type": "sections",
+      "require": ["Cause", "Diagnosis", "Fix", "Practice"]
+    },
+    {
+      "name": "length",
+      "type": "wordCount",
+      "min": 120,
+      "max": 350
+    }
+  ],
+  "rubric": [
+    {
+      "id": "cause",
+      "weight": 1,
+      "criterion": "Names the actual cause, not a symptom.",
+      "failExample": "Says only that the chord 'sounds bad'."
+    },
+    {
+      "id": "diagnosis",
+      "weight": 1,
+      "criterion": "Gives an observable way to confirm the cause.",
+      "failExample": "Jumps to a fix with no check."
+    },
+    {
+      "id": "fix",
+      "weight": 1,
+      "criterion": "The fix addresses the named cause.",
+      "failExample": "Suggests a fix for a different problem."
+    },
+    {
+      "id": "practice",
+      "weight": 1,
+      "criterion": "Gives one concrete, repeatable practice step.",
+      "failExample": "Says 'practice more'."
+    }
+  ],
+  "exemplar": "course/exercises/02-example/exemplar.md",
+  "weakExemplar": "course/exercises/02-example/weak.md",
+  "judge": {
+    "enabled": true,
+    "model": "<configured-model>",
+    "temperature": 0,
+    "promptVersion": "1",
+    "prompt": "Grade the submission against each rubric criterion. Quote the exact sentence that supports each verdict. If the submission does not contain enough evidence, answer insufficient evidence. Do not reward length or confidence."
+  }
+}

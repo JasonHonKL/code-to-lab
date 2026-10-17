@@ -38,6 +38,19 @@ The academic suite is multi-skill and uses a plugin manifest. The script prints 
 
 Use the upstream README for other agents and installation channels.
 
+## Not vendored: deep-research and frontend-slides
+
+These two companions are installed by reference instead of vendored, to keep the repo small and to follow their upstream install flow:
+
+```bash
+bash scripts/install-research-and-slides.sh
+```
+
+- `deep-research` ([sanjay3290/ai-skills](https://github.com/sanjay3290/ai-skills/tree/main/skills/deep-research), Apache-2.0) — Gemini Deep Research. Requires `GEMINI_API_KEY`; each run costs roughly $2–5 and takes 2–10 minutes. Ask before the first run and verify citations.
+- `frontend-slides` ([zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides), MIT) — self-contained HTML presentations. No npm or build step.
+
+The script keeps shallow checkouts in `~/.cache/code-to-lab` (override with `RESEARCH_SLIDES_CACHE`) and links both into the same agent skill directories.
+
 ## Not vendored: color-themes
 
 `color-themes` ([archibate/dotfiles-opencode](https://github.com/archibate/dotfiles-opencode/blob/main/skills/color-themes/SKILL.md)) is an optional palette catalog. Its upstream repository declares no license, so it is **not** vendored here. Install it by reference instead:
@@ -55,6 +68,8 @@ The script keeps a sparse checkout in `~/.cache/code-to-lab/color-themes-src` an
 - **manim_skill:** Python 3.7+, FFmpeg, and LaTeX (MacTeX/TeX Live/MiKTeX). ManimCE is the safer default for a course; ManimGL is better for interactive/3D work.
 - **academic-research-skills:** follow its plugin/agent installation; the vendored copy includes the suite, shared contracts, scripts, and plugin metadata.
 - **mattpocock-skills:** no runtime; the skills are Markdown plus small helper scripts.
+- **deep-research:** Python 3, its `requirements.txt`, and a `GEMINI_API_KEY` in `.env`; paid per run.
+- **frontend-slides:** no runtime dependencies.
 
 ## Updates
 

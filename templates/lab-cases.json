@@ -1,5 +1,6 @@
 {
   "id": "01-example",
+  "kind": "code",
   "title": "Lab 1 — Example",
   "file": "src/example.c",
   "cases": [

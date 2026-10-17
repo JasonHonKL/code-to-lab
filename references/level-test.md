@@ -161,5 +161,5 @@ If the learner declines the test, use **Builder** and state the assumption in `C
 ## What the test is not
 
 - It is not a graded exam.
-- It is not the course’s exercise format. The labs remain fill-in-the-code.
+- It is not the course’s exercise format. The labs are active practice in the medium the skill requires; only recognition/recall drills may use multiple choice, and only with feedback.
 - It does not decide whether the learner “deserves” the course. It only changes depth, pace, and scaffolding.

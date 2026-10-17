@@ -103,12 +103,13 @@ For math/physics, use an equation↔English translation block: the equation on t
 - A white card inside the module, not a separate page.
 - Header: lab number, difficulty, time, file.
 - Broken behavior in one sentence.
-- Sidebar: mission, TODOs, concepts, hints.
-- Main: read-only code preview, copy path, jump to TODO, check button, results.
-- Status line: line/column, file size, read-only state.
-- Check results: pass/fail badge, score, per-case rows, build log on failure.
-- Reference solution behind a `<details>` reveal.
-- No Save/Reset buttons that edit the repo; use the CLI helper.
+- Sidebar: mission, deliverable, task list, concepts, hints.
+- Main: read-only code preview or artifact starter, copy path, jump to the work file, check button, results.
+- Status line: line/column or word count/duration, file size, read-only state.
+- Check results: pass/fail badge, score, per-case or per-criterion rows, build log or rubric evidence on failure.
+- Rubric visible for non-code labs; reference solution/exemplar behind a `<details>` reveal.
+- No Save/Reset buttons that edit the work; use the CLI helper.
+- For a practice/performance lab, show the recording checklist and where to put the take; do not build a fake recorder in the page.
 
 ## Icons and decoration
 
@@ -144,3 +145,4 @@ Use it to catch deterministic frontend defects (contrast, spacing, overflow, ove
 - Nav title truncates; dots wrap or shrink.
 - Video is full width with a 16:9 aspect ratio.
 - Code preview scrolls horizontally on small screens; the page itself must not.
+- Non-code lab cards stack the rubric above the results; long criteria wrap instead of truncating.

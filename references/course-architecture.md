@@ -60,6 +60,12 @@ A lab belongs immediately after the section that teaches its core. Do not collec
 | Runtime data structure | After the data-structure screen | Hash lookup, array growth, interning |
 | Execution loop | After the dispatch/fast-path screen | Arithmetic opcode, method call, error handling |
 | Boundary (API, DB, GC) | After the boundary screen | Serialization, allocation, reference counting |
+| Writing / explanation | After the concept screen | Explain why the value changed; write a review |
+| Design / artifact | After the design-pattern screen | Redesign a screen; draw the flow |
+| Performance / practice | After the technique screen | Play the progression; record the phrase |
+| Experiment / research | After the mechanism screen | Change one variable; evaluate the sources |
+
+Read `references/lab-kinds.md` for the full catalog and verification contract. The lab kind must match the learning verb: do not force a code lab onto a writing or performance skill.
 
 The nav has one dot per **teaching section**, not one per lab. The lab cards live inside the modules and do not get their own dot.
 
@@ -71,7 +77,7 @@ The nav has one dot per **teaching section**, not one per lab. The lab cards liv
 - **Use exact code** from the repo. Never simplify or rewrite a snippet. Choose naturally short sections instead.
 - **Tooltips on every technical term**, first use per module. Use a dashed underline and `cursor: pointer`, not a question-mark cursor.
 - **No recycled metaphors.** Pick one that fits the concept. Do not use restaurant/kitchen for everything.
-- **No multiple-choice in the course body.** Use labs, diagrams, traces, and translations. The only quiz is the pre-course level test.
+- **Active practice, not a quiz.** Multiple choice is allowed for recognition, recall, or discrimination (with per-option feedback), but not as the default lab format, not as the only evidence for a production skill, and not as “guess the formula.” Use labs, diagrams, traces, and translations for everything else.
 - **One idea per screen.** If you need two diagrams, use two screens.
 - **Show the thing.** At least one screen per module must display real code, real output, or a real data structure from the project.
 - **Errors are a teaching tool.** Map error messages to the layer that produced them.
@@ -113,7 +119,7 @@ Ask for the course language before writing. Keep code, file names, identifiers, 
 | Analogy density | Highest | High | Medium | Low |
 | Code/equation snippet length | 3–8 lines, heavily annotated | 5–10 lines | 8–15 lines | 15–30 lines |
 | Tooltips | Every term | Very aggressive | Standard | Only non-obvious |
-| Lab TODOs | 1 guided TODO | 1–2 | 2–3 | 3–4 |
+| Lab tasks | 1 guided task | 1–2 | 2–3 | 3–4 |
 | Hints | Step-by-step | 2 up front | 3 progressive | 3, last minimal |
 | Video | 75–90 s | 75–90 s | 90 s | 90–120 s |
 
@@ -132,7 +138,7 @@ A Newcomer track is selected by the topic prior-knowledge answer, not by the gen
 - Ask top-down vs bottom-up; both are valid.
 - Start with a phenomenon, experiment, graph, or simulation, even in bottom-up mode.
 - Use Manim for the video; see `references/math-physics.md`.
-- Labs are computational: Python/SymPy, numeric tolerance, symbolic equivalence, conservation laws, or a known analytic case.
+- Labs are computational or derivational: Python/SymPy, numeric tolerance, symbolic equivalence, conservation laws, a known analytic case, or a written derivation checked against a rubric.
 - Keep the mathematical logic in a testable function; test the function, not the pixels.
 
 ## The final module

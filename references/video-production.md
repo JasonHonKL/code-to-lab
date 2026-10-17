@@ -116,7 +116,7 @@ ffmpeg -ss 9 -i renders/video.mp4 -frames:v 1 -q:v 2 assets/poster.jpg
 
 If HyperFrames is unavailable:
 
-1. Build the same scenes as an HTML/CSS deck with one timeline (CSS animations or GSAP).
+1. Build the same scenes as an HTML/CSS deck with one timeline (CSS animations or GSAP). When the learner asks for a slide deck, use `frontend-slides` and its 16:9 deck output.
 2. Record the deck with a headless browser screenshot sequence or a screen recorder.
 3. Generate the same voice/audio bed.
 4. Mux with ffmpeg:
@@ -174,3 +174,4 @@ Add a transcript in the course page, with timestamps that match the scenes. If t
 - No black gaps after the end card.
 - Duration is 60–90 s (or the agreed length).
 - Poster exists and is not a black frame.
+- If a slide deck was requested, it was built with `frontend-slides`, reuses the course palette, and renders at 16:9 without overflow.
