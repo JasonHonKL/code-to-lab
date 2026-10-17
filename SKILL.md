@@ -173,11 +173,11 @@ Read `references/video-production.md`.
 
 Produce one video in the learner's language. For Traditional Chinese, use `zh-TW-HsiaoChenNeural` via `edge-tts`; do not generate an English duplicate unless the learner asks for one. See the language-and-voice section in the reference.
 
-Target 60–90 seconds, 16:9, 1920×1080, 30 fps.
+Target 60–90 seconds (up to 120 for Deep Diver), 16:9, 1920×1080, 30 fps.
 
 - 5–7 scenes: hook → the machine → 2–3 stage highlights → values/data → outro.
-- 150–220 words of narration. Write for the ear, not the page.
-- Voice: a local TTS such as Kokoro-82M (`am_michael` or a voice matching the learner’s language/tone). Do not require a paid provider.
+- 150–220 words of narration, or about 320–400 Chinese characters for a 75–95 s Chinese video. Measure the rendered voice; do not guess. Write for the ear, not the page.
+- Voice: a local TTS. Kokoro-82M (`am_michael`) for English; `zh-TW-HsiaoChenNeural` via `edge-tts` for Traditional Chinese, unless the learner requests another voice. Do not require a paid provider.
 - Music and SFX: a soft bed under the voice, keyboard/click/whoosh cues, a small result chime. Pre-mix with ffmpeg and normalize to about −16 LUFS.
 - Render with HyperFrames when available: one paused GSAP timeline, local fonts, local audio, no network at render time, root `data-duration`.
 - If HyperFrames is unavailable, use the fallback: HTML/CSS slides + TTS + ffmpeg, or a screen-recorded walkthrough with burned-in titles.
