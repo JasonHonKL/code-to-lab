@@ -110,6 +110,27 @@ ffmpeg -framerate 30 -i frames/%05d.png -i mix.m4a \
 
 Or record a live walkthrough with titles and a voiceover. The quality bar is the same: specific, readable, audible, and under 90 seconds.
 
+## Math and physics: Manim
+
+For math/physics, use [`manim_skill`](https://github.com/adithya-s-k/manim_skill) and Manim to animate the actual derivation, not decoration.
+
+- Prefer **Manim Community Edition** (`manim`, `from manim import *`) for a production course; use **ManimGL** (`manimgl`) for interactive/3D exploration.
+- Keep the mathematical logic in a testable pure function; test the function, not the pixels.
+- Render scenes to MP4, then mux the voice and music with ffmpeg, or composite the clips in HyperFrames.
+- Show the equation and the visual together; animate the transformation, not just the final formula.
+- Label axes, units, assumptions, and limiting cases.
+- Check the render for missing LaTeX glyphs, clipped labels, and black frames.
+
+A typical pipeline:
+
+```bash
+manim -qh scenes/derivation.py DerivativeScene
+# then mux voice + music
+ffmpeg -i scenes/derivation.mp4 -i mix.m4a -c:v copy -c:a aac -shortest video.mp4
+```
+
+See `references/math-physics.md` and `references/companion-skills.md`.
+
 ## If you have raw footage: video-use
 
 [`video-use`](https://github.com/browser-use/video-use) is an optional companion for editing raw footage: cutting filler, color grading, burned-in captions, animation overlays, and a self-evaluation pass. Use it when the course video includes recorded demo takes, screen recordings, or interviews.

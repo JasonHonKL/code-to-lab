@@ -1,6 +1,13 @@
 # Level Test
 
-Run this **before** designing the course. It takes about two minutes and prevents the most common failure: explaining too much to an experienced learner, or too little to a beginner.
+Run this **before** designing the course. It takes about two minutes and prevents the most common failure: explaining too much to an experienced learner, or too little to someone who is new to the topic.
+
+There are two separate axes:
+
+1. **General technical level** — 6 scored questions (0–12).
+2. **Topic prior knowledge** — an explicit “I don’t know this topic at all” option, not a guess.
+
+A strong programmer can still know nothing about the topic. Use both axes.
 
 ## How to ask
 
@@ -10,7 +17,7 @@ Say this in chat:
 
 Ask the questions one at a time, or all at once. Do not turn this into a form or a graded quiz. The learner may skip any question; score skipped items as 0 and note it.
 
-## Scored questions (0–2 each, max 12)
+## General technical level (0–2 each, max 12)
 
 ### 1. Vocabulary self-rating
 “How comfortable are you with terms like variable, function, API, and memory?”
@@ -44,7 +51,7 @@ console.log(total);
 - 1 = right answer, weak explanation
 - 2 = right answer and explains reassignment / evaluation order
 
-Adapt the language to the target codebase.
+Adapt the language to the target codebase. For a math/physics course with no code, replace this with a one-step symbolic or numerical trace, e.g. “Given `f(x) = x²`, what is `f'(3)` and why?”
 
 ### 5. Debugging scenario
 “You change one line and now the app crashes with `cannot read property 'name' of undefined`. Where would you look first?”
@@ -52,11 +59,55 @@ Adapt the language to the target codebase.
 - 1 = “at the line that changed” or “where the value is used”
 - 2 = traces the value backward to where it should have been set, and checks the boundary
 
-### 6. Data-structure choice
+For math/physics: “Your numeric result has the wrong sign. What do you check first?”
+- 0 = no idea
+- 1 = rechecks the calculation
+- 2 = checks assumptions, units, boundary conditions, and the sign convention
+
+### 6. Data-structure / model choice
 “You need to store 1,000 users and look them up by ID. Would you use a list or a map/dictionary? Why?”
 - 0 = no clear choice
 - 1 = picks one, weak reason
 - 2 = picks a map for key lookup and mentions cost/ordering/implementation
+
+For math/physics: “Would you model a falling object with a discrete simulation or a closed-form equation? Why?”
+- 0 = no clear choice
+- 1 = picks one, weak reason
+- 2 = mentions assumptions, accuracy, and when each model is appropriate
+
+## Topic prior knowledge (required)
+
+Ask:
+
+> How much do you already know about **<topic>**?
+
+- **A. I don’t know this topic at all.**
+- **B. I’ve heard some terms / read a little.**
+- **C. I can use it, but I want the internals.**
+- **D. I can teach it.**
+
+This is not added to the 12-point score. It selects the **Newcomer** track and whether the course needs a topic primer.
+
+- **A → Newcomer**, even if the general score is high.
+- **B →** use the general track, but add a one-screen topic primer before the first deep module.
+- **C →** use the general track and skip the primer.
+- **D →** use the general track, skip the primer, and allow the Deep Diver pace.
+
+## Domain and direction
+
+Ask:
+
+> Is this a software codebase, a math topic, a physics topic, or something else?
+
+Then:
+
+> Do you want **top-down** (start from a phenomenon/result, then derive the principles) or **bottom-up** (start from definitions/axioms, then build up)?
+
+- **Software:** top-down is the default. Do not ask unless the learner volunteers a preference.
+- **Math / physics:** ask. Both are valid; they produce different courses.
+- **Newcomer:** do not force the choice before the primer. Start with a concrete visual phenomenon, then introduce the choice after the first module.
+- **No preference:** choose top-down for software; for math/physics, choose top-down for a first course and bottom-up for a reference-style course.
+- **Bottom-up:** still put a concrete example on screen 1. “Axioms first” does not mean “no motivation first.”
 
 ## Unscored questions
 
@@ -67,7 +118,8 @@ Ask these to shape the course, not the score:
    - debug when AI gets stuck
    - understand the architecture
    - build on top of the codebase
-   - pass an interview / class
+   - solve problems / pass an exam
+   - teach it to someone else
 2. **Time:** “How much time do you want to spend?”
    - 15 minutes (Explorer)
    - 30 minutes (Builder)
@@ -75,23 +127,36 @@ Ask these to shape the course, not the score:
 3. **Language:** “Should the course be in English, Traditional Chinese, or another language?”
 4. **Video:** “Do you want a narrated video, or are diagrams + labs enough?”
 
-## Scoring and tracks
+If `mattpocock/skills` is installed, you may optionally run `/grill-me` to resolve an ambiguous goal or a “what do you actually want?” conversation. Cap it at about 10 questions, write the answers into `COURSE_BRIEF.md`, and do not grill a novice on domain facts they cannot know. The level test is the required minimum; grilling is optional and deeper.
 
-| Score | Track | What changes |
+## Tracks
+
+| Condition | Track | What changes |
 |---|---|---|
-| 0–4 | **Explorer** | 4 modules, 2 labs, more everyday analogies, show 2 hints up front, shorter code snippets, 75–90 s video |
-| 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video |
-| 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, longer real code, 90–120 s video |
+| Topic A (none) | **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab, 75–90 s video, no unglossed jargon |
+| Score 0–4, topic B–D | **Explorer** | 4 modules, 2 labs, more analogies, show 2 hints up front, shorter snippets |
+| Score 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video |
+| Score 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, longer real code, 90–120 s video |
 
-If the score is mixed, use the **lowest dimension for support** and the **highest for pace**. For example, a learner with strong vocabulary but weak code reading gets fewer definitions but more code translations.
+If the score is mixed, use the **lowest dimension for support** and the **highest for pace**. A strong programmer who is new to the topic gets Newcomer for the topic primer, then the full technical pace after it.
 
 If the learner declines the test, use **Builder** and state the assumption in `COURSE_BRIEF.md`.
 
+## Newcomer rules
+
+- Start with “What is this thing?” — a concrete phenomenon, output, or visual. Do not start with a definition.
+- Define every term on first use; assume no domain vocabulary.
+- The first lab is guided: a near-complete skeleton with one small TODO.
+- Do not ask the learner to choose top-down vs bottom-up before the first module.
+- Use more visuals and fewer code lines; show the result before the mechanism.
+- For math/physics, start with a visual phenomenon (a moving object, a graph, a simulation), then introduce the formal definition.
+
 ## Calibration examples
 
-- **Explorer:** “It just runs” + “I ask AI” + list for user lookup. Start with `print(1+2)` and trace one line. Define every term. Do not open the VM until module 4.
-- **Builder:** knows functions and APIs, reads code sometimes, can trace a reassignment. Use the standard arc, open the runtime in module 3, and keep labs to 2–3 TODOs.
-- **Deep Diver:** explains compilation, traces undefined values, chooses a map for lookup. Skip basic definitions, show the real bytecode earlier, and make the lab TODOs harder with fewer hints.
+- **Newcomer:** “I don’t know this topic at all” + “I ask AI” + no model. Build a 4-module course with a “What is a compiler?” opening, define every term, and give a guided first lab.
+- **Explorer:** “heard some terms” + “sometimes read code” + can trace a reassignment. Use the standard arc, but add a topic primer and more analogies.
+- **Builder:** knows functions and APIs, reads code sometimes, traces a reassignment. Standard 5-module course, 3 labs.
+- **Deep Diver:** explains compilation, traces undefined values, chooses a map. Skip basic definitions, show real internals earlier, and use harder labs.
 
 ## What the test is not
 

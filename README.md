@@ -36,15 +36,18 @@ The learner starts with something they can already see, then opens the boxes tha
 
 ### 1. Level test first
 
-Before building, the agent runs a two-minute diagnostic: self-ratings, a code trace, a debugging scenario, and a data-structure choice. It scores the learner into one of three tracks:
+Before building, the agent runs a two-minute diagnostic with **two separate axes**: general technical level and **topic prior knowledge**. The topic question includes an explicit **“I don’t know this topic at all”** option.
 
 | Track | Course shape |
 |---|---|
+| **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab |
 | **Explorer** | 4 modules, 2 labs, more analogies, more scaffolding |
 | **Builder** | 5 modules, 3 labs, standard hints |
 | **Deep Diver** | 5–6 modules, 3 harder labs, less scaffolding, more real code |
 
-The test is not graded. It only changes depth, pace, and hint density.
+The topic answer wins over the general score: a strong programmer can still be new to the topic. The test is not graded. It only changes depth, pace, and hint density.
+
+For math/physics, the agent also asks **top-down vs bottom-up** and can use **Manim** for the explainer. See `references/math-physics.md`.
 
 ### 2. Labs live between sections
 
@@ -150,7 +153,8 @@ references/
   video-production.md      # script, storyboard, voice, sound, render
   design-system.md         # palette, type, diagrams, lab UI
   quality-gates.md         # pre-delivery checklist
-  companion-skills.md      # optional video-use, impeccable, academic-research-skills
+  math-physics.md          # top-down/bottom-up math/physics courses + Manim
+  companion-skills.md      # optional companions
 templates/
   course-brief.md
   storyboard.md
@@ -197,12 +201,28 @@ These are optional and never required for a course to work. Use them when they c
 | [`video-use`](https://github.com/browser-use/video-use) | Editing raw footage: filler cuts, captions, color grade, montage, self-eval | Generating the core explainer from scratch |
 | [`impeccable`](https://github.com/pbakaus/impeccable) | Post-build frontend audit, critique, polish, deterministic `detect` | Replacing the course’s design direction |
 | [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Literature review, source-backed research, citations for research-heavy topics | Codebase analysis or the code trace |
+| [`mattpocock/skills`](https://github.com/mattpocock/skills) | Optional `/grill-me` interview to clarify ambiguous goals; `/teach` for multi-session teaching | Replacing the required level test |
+| [`manim_skill`](https://github.com/adithya-s-k/manim_skill) | Manim animation for math/physics courses | Software architecture videos or generic UI explainers |
 
 - `video-use` — [MIT](https://github.com/browser-use/video-use). Uses an external transcription provider; review privacy before uploading footage.
 - `impeccable` — [Apache-2.0](https://github.com/pbakaus/impeccable). Telemetry is on by default; opt out with `npx impeccable telemetry off` or `DO_NOT_TRACK=1`.
 - `academic-research-skills` — [CC BY-NC 4.0](https://github.com/Imbad0202/academic-research-skills). Non-commercial; verify every citation.
+- `mattpocock/skills` — [MIT](https://github.com/mattpocock/skills). Optional interview skills; the level test is still required.
+- `manim_skill` — [MIT](https://github.com/adithya-s-k/manim_skill). Manim Community Edition is the safer default for a course; ManimGL is better for interactive/3D work.
 
 Read `references/companion-skills.md` for install notes and integration rules.
+
+## Math and physics
+
+Math/physics courses use the same top-down method with different artifacts:
+
+- ask **top-down** (phenomenon → model → derivation → lab) or **bottom-up** (definitions → derivation → examples);
+- use **Manim** for the video via `manim_skill`;
+- keep the mathematical logic in a testable function;
+- labs check **numeric tolerance** or **symbolic equivalence** (SymPy), not string matching;
+- test a known analytic/limiting case.
+
+See `references/math-physics.md`.
 
 ## Requirements
 

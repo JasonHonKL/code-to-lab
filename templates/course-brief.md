@@ -2,8 +2,12 @@
 
 - **Topic / repo:**
 - **Learner goal:** steer AI / debug / understand architecture / build / other
-- **Level test score:** __ / 12
-- **Track:** Explorer / Builder / Deep Diver
+- **General level score:** __ / 12
+- **Topic prior knowledge:** I don’t know this topic at all / heard some terms / can use it / can teach it
+- **Track:** Newcomer / Explorer / Builder / Deep Diver
+- **Domain:** software / math / physics / other
+- **Direction:** top-down / bottom-up / let the agent choose
+- **Need a topic primer?** yes / no
 - **Language:**
 - **Time budget:**
 - **Video:** yes / no / length
@@ -23,7 +27,7 @@
   - Lab 3 after:
 - **What the learner should be able to do at the end:**
 - **What is explicitly out of scope:**
-- **Companions used:** none / video-use / impeccable / academic-research-skills
+- **Companions used:** none / video-use / impeccable / academic-research-skills / mattpocock-skills / manim_skill
 - **Assumptions / declined questions:**
 - **Deliverables:**
   - `course/index.html`

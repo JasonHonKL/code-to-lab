@@ -65,12 +65,26 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] Mobile: no page-level horizontal overflow; labs stack; nav does not cover the first module.
 - [ ] The check button returns per-case results and the build log on failure.
 
+## Newcomer and math/physics checks
+
+- [ ] Newcomer: the first screen is “What is this?”, not a definition.
+- [ ] Newcomer: every technical term has a tooltip and a plain-language definition.
+- [ ] Newcomer: the first lab is guided (one small TODO), not a blank file.
+- [ ] Math/physics: every equation has a plain-language translation.
+- [ ] Math/physics: units, assumptions, and limiting cases are visible.
+- [ ] Math/physics: the lab checker uses numeric tolerance or symbolic equivalence, not string matching.
+- [ ] Math/physics: a known analytic/limiting case is tested.
+- [ ] Manim: no missing LaTeX glyphs, clipped labels, or black frames; voice and animation are aligned.
+- [ ] The selected direction (top-down / bottom-up) is recorded in `COURSE_BRIEF.md`.
+
 ## Optional companion checks
 
 - [ ] If `impeccable` was used: `npx impeccable detect course/ --json` was run and primary findings were reviewed; the course’s own design direction was preserved.
 - [ ] If `video-use` was used on footage: the self-eval output was reviewed, captions/timing were checked, and the cut was watched end to end.
 - [ ] If `academic-research-skills` was used: every citation and source-backed claim was verified, and the non-commercial license was checked for the intended use.
 - [ ] `COURSE_BRIEF.md` records which companions were used.
+- [ ] If `mattpocock/skills` was used for grilling: the answers were merged into the brief and did not replace the level test.
+- [ ] If `manim_skill` was used: the scenes were rendered and checked, and the mathematical functions are covered by tests.
 
 ## Handoff
 

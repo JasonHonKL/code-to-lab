@@ -88,6 +88,10 @@ mermaid.initialize({
 - Keep labels short; use `<br/>` for two-line labels (escape them in HTML if the source is inside a normal element; use `<script type="text/plain">` for raw Mermaid text).
 - Do not reuse the default purple Mermaid theme.
 
+## Equations
+
+For math/physics, use an equation↔English translation block: the equation on the left, what each symbol means and why it is there on the right. Use LaTeX or MathJax for display; keep units and assumptions visible. Use one color consistently for the same quantity across the video, diagrams, and labs.
+
 ## Lab UI
 
 - A white card inside the module, not a separate page.

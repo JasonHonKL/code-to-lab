@@ -17,7 +17,7 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 
 ## Non-negotiables
 
-- **Run the level test before building.** If the learner declines, default to the **Builder** track and say so.
+- **Run the level test before building.** It has two axes: general technical level and **topic prior knowledge**. Include the explicit **“I don’t know this topic at all”** option and use the **Newcomer** track when it is chosen. If the learner declines, default to **Builder** and say so.
 - **Top-down arc.** Never start with “what is a pointer” or “what is a hash table.” Start with the behavior the learner can see, then open the box that produced it.
 - **Labs live inside the course**, after the section that teaches their core. Never collect all labs into one “Labs” module at the end.
 - **Labs modify the real repo.** Install TODO stubs into the actual source files, back up the originals, and provide `start` / `restore` commands. The course page is a read-only preview and a check button, not an editor.
@@ -45,26 +45,29 @@ Read the relevant reference only when you reach that phase.
 
 Read `references/level-test.md`. Run the diagnostic in chat, not as a form.
 
-Ask **6 scored questions** (self-rating, scenarios, one code snippet) plus 2 unscored questions:
+Ask **6 scored questions** (self-rating, scenarios, one code snippet/symbolic trace) for general technical level, then the required topic questions:
 
-- What do you want to be able to do? (steer AI / debug / understand architecture / build)
-- How much time do you have? (15 / 30 / 60+ minutes)
+- **Topic prior knowledge:** “I don’t know this topic at all” / “I’ve heard some terms” / “I can use it” / “I can teach it”.
+- **Domain:** software / math / physics / other.
+- **Direction:** top-down (phenomenon → principles) or bottom-up (definitions → results). Ask for math/physics; default to top-down for software. If the learner is a Newcomer, do not force this choice before the first module.
+- **Goal:** steer AI / debug / understand architecture / build / solve problems / teach.
+- **Time:** 15 / 30 / 60+ minutes.
+- **Language** and whether a video is required.
 
-Score 0–12 and pick a track:
+Select the track:
 
-| Score | Track | Course shape |
+| Condition | Track | Course shape |
 |---|---|---|
-| 0–4 | **Explorer** | 4 modules, 2 labs, more analogies, more scaffolding, 75–90 s video |
-| 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video |
-| 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, more real code, 90–120 s video |
+| Topic “I don’t know this topic at all” | **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab, 75–90 s video |
+| General score 0–4 | **Explorer** | 4 modules, 2 labs, more analogies, more scaffolding, 75–90 s video |
+| General score 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video |
+| General score 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, more real code, 90–120 s video |
+
+Topic “I’ve heard some terms” adds a one-screen primer; “I can use it / teach it” skips the primer. The Newcomer track wins over the general score: a strong programmer can still be new to the topic.
 
 If the learner declines, use **Builder**. Write the result to `COURSE_BRIEF.md` using `templates/course-brief.md`.
 
-Also ask:
-
-- Which repo or topic?
-- Which language should the course be written in?
-- Is a video required, or are diagrams + labs enough?
+If `mattpocock/skills` is installed and the goal is ambiguous, optionally run `/grill-me` or `/grill-with-docs` to ask what they actually want. Cap it at about 10 questions, record the answers in the brief, and do not grill a novice on domain facts. The level test is mandatory; grilling is optional.
 
 Do not start building before the brief exists.
 
@@ -81,6 +84,8 @@ Extract:
 - **Lab candidates:** 2–3 core sections that are self-contained, testable from the command line, and essential to the system. Prefer code that is stable, small, and has an existing test suite.
 
 Choose 3–5 concepts. Fewer, deeper modules beat many thin ones.
+
+For a math/physics topic, read `references/math-physics.md` and use the same arc with a derivation and a computational lab. Use Manim for the video when the topic is mathematical or physical.
 
 If the topic is research-heavy (a paper, a scientific field, a literature-backed topic), optionally use `academic-research-skills` for sources and background. Use it for the domain, not for the code trace, and verify every citation. If your agent has `impeccable` installed, keep it in mind for the post-build design audit.
 
@@ -175,6 +180,8 @@ Target 60–90 seconds, 16:9, 1920×1080, 30 fps.
 
 If the video uses recorded footage or demo takes, optionally use `video-use` to cut, caption, and grade that footage. Do not use it as the primary explainer generator; keep the generated 60–90 s storyboard as the spine.
 
+For math/physics, use `manim_skill` and Manim (Community Edition by default) for the animation. Render the Manim scenes, then mux the voice and music bed with ffmpeg, or composite them in HyperFrames. See `references/math-physics.md`.
+
 ## Phase 6 — Verify and hand off
 
 Read `references/quality-gates.md`.
@@ -216,7 +223,8 @@ Write `course/README.md` with:
 | `references/video-production.md` | Script, storyboard, voice/music/SFX, HyperFrames composition, fallback |
 | `references/design-system.md` | Palette, typography, diagrams, lab UI, responsive rules |
 | `references/quality-gates.md` | Pre-delivery checklist |
-| `references/companion-skills.md` | Optional `video-use`, `impeccable`, and `academic-research-skills` integrations |
+| `references/companion-skills.md` | Optional `video-use`, `impeccable`, `academic-research-skills`, `mattpocock/skills`, and `manim_skill` integrations |
+| `references/math-physics.md` | Top-down vs bottom-up math/physics courses, Manim, symbolic/numeric labs |
 
 ## Templates
 
@@ -236,24 +244,29 @@ These are optional and never required for a course to work. Use them when they c
 | [`video-use`](https://github.com/browser-use/video-use) | Editing raw footage: filler cuts, captions, color grade, montage, self-eval | Generating the core explainer from scratch |
 | [`impeccable`](https://github.com/pbakaus/impeccable) | Post-build frontend audit, critique, polish, deterministic `detect` | Replacing the course’s design direction |
 | [`academic-research-skills`](https://github.com/Imbad0202/academic-research-skills) | Literature review, source-backed research, citations for research-heavy topics | Codebase analysis or the code trace |
+| [`mattpocock/skills`](https://github.com/mattpocock/skills) | Optional `/grill-me` interview to clarify ambiguous goals; `/teach` for multi-session teaching | Replacing the required level test |
+| [`manim_skill`](https://github.com/adithya-s-k/manim_skill) | Manim animation for math/physics courses | Software architecture videos or generic UI explainers |
 
 Read `references/companion-skills.md` for install notes, licenses, and integration rules.
 
 ## Track adaptations
 
-| | Explorer | Builder | Deep Diver |
-|---|---|---|---|
-| Modules | 4 | 5 | 5–6 |
-| Labs | 2 | 3 | 3 |
-| Hints | Show 2 up front | 3 progressive | 3, last one minimal |
-| Code shown | Short, heavily annotated | Real snippets | Longer real snippets |
-| Video | 75–90 s, more analogy | 90 s | 90–120 s, denser |
-| Tooltips | Aggressive | Standard | Only non-obvious terms |
-| Diagrams | More, simpler | Standard | Fewer, denser |
+| | Newcomer | Explorer | Builder | Deep Diver |
+|---|---|---|---|---|
+| Modules | 4 | 4 | 5 | 5–6 |
+| Labs | 2 (guided first lab) | 2 | 3 | 3 |
+| Hints | Very explicit | 2 up front | 3 progressive | 3, last one minimal |
+| Code shown | Short, heavily annotated | Short, annotated | Real snippets | Longer real snippets |
+| Video | 75–90 s | 75–90 s | 90 s | 90–120 s, denser |
+| Tooltips | Every term | Aggressive | Standard | Only non-obvious terms |
+| Diagrams | Most, simplest | More, simpler | Standard | Fewer, denser |
 
 ## Anti-patterns
 
 - Starting with a definition instead of an observable behavior.
+- Forcing a codebase trace onto a math/physics topic whose core is a derivation.
+- Asking a Newcomer to choose top-down vs bottom-up before the first module.
+- Using generic Manim decoration instead of animating the actual derivation.
 - A “Labs” section at the end instead of labs after their concept.
 - An in-page code editor that edits a copy instead of the real repo.
 - Multiple-choice lab exercises.

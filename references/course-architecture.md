@@ -24,6 +24,8 @@ Good opening:
 
 This is a menu, not a checklist. A 4-module Explorer course can merge 3 and 4. A Deep Diver course can split the front end into lexer and parser/codegen modules.
 
+For a math/physics topic, replace the code trace with a concrete phenomenon and a derivation. Read `references/math-physics.md`. The arc becomes phenomenon → model → derivation/computation → lab → limits, and the learner may choose bottom-up (definitions → results) instead of top-down.
+
 ## Module template
 
 ```html
@@ -104,15 +106,34 @@ Ask for the course language before writing. Keep code, file names, identifiers, 
 
 ## Level adaptation
 
-| | Explorer | Builder | Deep Diver |
-|---|---|---|---|
-| Module count | 4 | 5 | 5–6 |
-| Analogy density | High | Medium | Low |
-| Code snippet length | 5–10 lines | 8–15 lines | 15–30 lines |
-| Tooltips | Very aggressive | Standard | Only non-obvious |
-| Lab TODOs | 1–2 | 2–3 | 3–4 |
-| Hints | 2 up front | 3 progressive | 3, last minimal |
-| Video | 75–90 s | 90 s | 90–120 s |
+| | Newcomer | Explorer | Builder | Deep Diver |
+|---|---|---|---|---|
+| Module count | 4 | 4 | 5 | 5–6 |
+| Opening | “What is this?” + visual phenomenon | Observable behavior | Observable behavior | Observable behavior / internals |
+| Analogy density | Highest | High | Medium | Low |
+| Code/equation snippet length | 3–8 lines, heavily annotated | 5–10 lines | 8–15 lines | 15–30 lines |
+| Tooltips | Every term | Very aggressive | Standard | Only non-obvious |
+| Lab TODOs | 1 guided TODO | 1–2 | 2–3 | 3–4 |
+| Hints | Step-by-step | 2 up front | 3 progressive | 3, last minimal |
+| Video | 75–90 s | 75–90 s | 90 s | 90–120 s |
+
+A Newcomer track is selected by the topic prior-knowledge answer, not by the general score. A strong programmer who is new to the topic still gets the “What is this?” opening and the guided first lab.
+
+## Newcomer rules
+
+- Open with “What is this thing?” — a concrete output, phenomenon, or visual. Do not open with a definition.
+- Define every term on first use; assume no domain vocabulary.
+- The first lab is guided: a near-complete skeleton with one small TODO.
+- Do not ask the learner to choose top-down vs bottom-up before the first module.
+- Show the result before the mechanism.
+
+## Math and physics
+
+- Ask top-down vs bottom-up; both are valid.
+- Start with a phenomenon, experiment, graph, or simulation, even in bottom-up mode.
+- Use Manim for the video; see `references/math-physics.md`.
+- Labs are computational: Python/SymPy, numeric tolerance, symbolic equivalence, conservation laws, or a known analytic case.
+- Keep the mathematical logic in a testable function; test the function, not the pixels.
 
 ## The final module
 

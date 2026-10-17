@@ -111,6 +111,70 @@ or follow its symlink/global-skill instructions. It has a Traditional Chinese RE
 - Keep the course’s own voice; do not paste academic prose into the teaching copy.
 - Confirm the non-commercial license before using its output in a paid product.
 
+## mattpocock/skills
+
+**Repo:** https://github.com/mattpocock/skills
+**License:** MIT
+**What it is:** a composable set of engineering and productivity skills. The most useful ones here are `/grill-me` (relentless interview to resolve a plan), `/grill-with-docs` (same, plus a shared glossary), `/ask-matt` (router), `/teach` (stateful multi-session teaching), and `/writing-for-agents` (writing skill docs).
+
+**Use it when:**
+
+- the learner’s goal is ambiguous (“I want to understand X” can mean five courses);
+- you need to ask “what do you actually want?” before designing;
+- the learner wants a multi-session teaching relationship instead of a one-shot course;
+- you are writing or revising the course skill itself.
+
+**Do not let it replace the level test.** The level test is the required minimum. Grilling is optional and should be capped (about 10 questions) and written into `COURSE_BRIEF.md`. Do not grill a novice on domain facts they cannot know.
+
+**Install (from its README, pick one):**
+
+```bash
+npx skills@latest add mattpocock/skills -a opencode
+# or the Claude Code / Codex plugin commands from the repo README
+```
+
+**Integration:**
+
+- If the goal is vague, run `/grill-me` before the level test or alongside it.
+- Use `/grill-with-docs` if the project needs a shared glossary; keep the glossary separate from the course copy.
+- Use `/teach` only when the learner explicitly wants ongoing sessions; the course is still the deliverable.
+- Record the resolved answers in `COURSE_BRIEF.md`.
+- Do not add a second, conflicting interview process on top of the level test; merge the answers.
+
+## manim_skill
+
+**Repo:** https://github.com/adithya-s-k/manim_skill
+**License:** MIT
+**What it is:** agent skills for Manim, with best practices and tested examples for **Manim Community Edition** (`manim`, `from manim import *`) and **ManimGL** (`manimgl`, `from manimlib import *`).
+
+**Use it when:**
+
+- the course is math, physics, or another quantitative topic;
+- the explainer needs animated equations, graphs, transformations, vectors, fields, or 3D geometry;
+- the learner asked for a “3Blue1Brown-style” visual.
+
+**Do not use it for:**
+
+- software architecture or codebase internals where Manim would add no explanatory value;
+- a generic UI explainer;
+- decoration that does not animate the actual derivation.
+
+**Install:**
+
+```bash
+npx skills add adithya-s-k/manim_skill
+```
+
+Prerequisites: Python 3.7+, FFmpeg, and a LaTeX distribution (MacTeX/TeX Live/MiKTeX). ManimCE is the safer default for a course; ManimGL is better for interactive/3D exploration but less production-stable.
+
+**Integration:**
+
+- Read `references/math-physics.md`.
+- Keep the mathematical logic in a testable pure function; test that function, not the pixels.
+- Render Manim scenes to MP4, then mux the voice/music with ffmpeg or composite in HyperFrames.
+- Check LaTeX glyphs, labels, axes, units, and the final frame.
+- A known analytic/limiting case must be tested.
+
 ## Rules for all companions
 
 1. **Optional, not required.** A course must be buildable with this skill alone.
@@ -118,3 +182,4 @@ or follow its symlink/global-skill instructions. It has a Traditional Chinese RE
 3. **Respect licenses.** Link to the repos; do not vendor their content.
 4. **Verify outputs.** Review video cuts, design findings, and citations.
 5. **Keep the course’s direction.** Use companions to improve execution, not to replace the top-down teaching design.
+6. **Ask first.** For a Newcomer, do not use a companion that assumes domain knowledge. Use the level test and the course’s own scaffolded path.
