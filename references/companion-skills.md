@@ -135,7 +135,7 @@ brew install ffmpeg
 - the page feels generic, cramped, or visually inconsistent;
 - you want a deterministic CI scan: `npx impeccable detect course/ --json`.
 
-**Do not let it erase the course’s own design system.** The warm paper palette, one accent, real code panels, and hand-built lab cards are deliberate. Use impeccable to find defects, not to replace the direction.
+**Do not let it erase the course’s own design system.** The white canvas, one accent, real code panels, and hand-built lab cards are deliberate. Use impeccable to find defects, not to replace the direction.
 
 **Install:**
 
@@ -179,7 +179,7 @@ npx impeccable detect course/ --json
 - body text or code is hard to read, or a design review flags contrast;
 - you need a coherent palette for the page, code panels, command blocks, and diagrams.
 
-**Do not use it to replace the course’s design direction.** Keep the warm paper canvas, hierarchy, and lab structure. Apply the palette as a constraint, not a redesign.
+**Do not use it to replace the course’s design direction.** Keep the white canvas, hierarchy, and lab structure. Apply the palette as a constraint, not a redesign.
 
 **Install (by reference):**
 

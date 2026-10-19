@@ -5,23 +5,41 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 ## Brief and level
 
 - [ ] The 6-question level test was run, or the learner declined and the Builder default was recorded.
-- [ ] `COURSE_BRIEF.md` names the track, language, topic, goal, and length.
+- [ ] `COURSE_BRIEF.md` names the track, language, topic, goal, time budget, and target seat time.
+- [ ] The track’s recommended seat time matches the learner’s budget, or the downgrade/core-path split is recorded.
 - [ ] The course has 3–5 concepts and 2–3 labs, not a tour of every file.
 
 ## Course
 
 - [ ] The first module starts with an observable behavior, not a definition.
+- [ ] The default canvas is **white** (`#FFFFFF`), not warm paper, beige, off-white, or dark, unless the learner asked for a theme; the choice is recorded in `COURSE_BRIEF.md`.
+- [ ] The module/lab count and depth match the track; a Deep Diver course has enough material for 90–150+ minutes and is not padded with repeated text.
+- [ ] If the learner asked for “more difficult” or “more detailed,” the time budget and depth increased together.
 - [ ] There is one end-to-end trace through the real system.
-- [ ] Every module has at least one diagram or interactive visual.
+- [ ] Every conceptual screen leads with a visual; there are no text-only teaching screens.
+- [ ] Every teaching section has at least one Mermaid diagram; every module has at least three and at least two diagram types.
+- [ ] Every diagram has a one-sentence “what to notice” caption, a source fallback, and ≤12 nodes.
 - [ ] Every module has at least one real code↔English translation.
 - [ ] Technical terms have glossary tooltips on first use per module.
 - [ ] Each lab is **inside** the module that teaches its core.
-- [ ] There is no standalone “Labs” module.
+- [ ] Each section check and short-answer card is inside its section, before the lab, and not in a separate quiz module.
+- [ ] There is no standalone “Labs” module and no standalone “Quiz” module.
 - [ ] The lab kind matches the learning verb (code, writing, design, performance, experiment, research, or drill).
+- [ ] The answer format matches the target performance (code, constructed response, artifact, performance, exam-style MC, or a hybrid).
 - [ ] Multiple choice appears only for recognition/recall/discrimination, with per-option feedback; it is not the default and not the only evidence for a production skill.
+- [ ] If the course is exam prep (CFA, licensing), MC matches the real item format and timing, includes rationales and per-topic reporting, and is paired with a show-your-work calculation and a written recommendation.
+- [ ] Every teaching section has MC → short answer; a section that owns a lab adds the lab third, in that order.
+- [ ] Each MC item has per-option rationales, retry, and is unscored/not gated; it includes at least one misconception item and one application item.
+- [ ] The section has one short-answer prompt (2–4 sentences) with local autosave, a model answer, and a 3-item self-check; it is unscored and not gated.
+- [ ] No lab starts before its MC and short answer, and no short answer appears before the MC.
+- [ ] The MC + short answer do not replace the lab. Exam-fidelity MC belongs in the lab, not only in the check.
+- [ ] Micro-check cadence holds: no more than two screens or about three minutes without an interaction; one recall opener per section after the first module.
+- [ ] No check gates progress or contributes to the lab score.
+- [ ] Architecture decision labs use an ADR/trade-off table with repo evidence; MC does not replace the decision.
+- [ ] Service/business labs (including learning as a service) use a blueprint, pricing model, experiment plan, or customer synthesis—not generic prose or a definitions quiz.
 - [ ] Code snippets are exact copies from the repo.
-- [ ] No text walls: 2–3 sentences per block, at least 50% visual per screen.
-- [ ] Mermaid uses the course palette, not the default theme.
+- [ ] No text walls: graph-first, 2–3 sentences per block; a text-only teaching screen is a defect.
+- [ ] Mermaid uses the course palette (white by default, or the requested theme), not the default purple/blue theme.
 - [ ] The page works offline except for web fonts; Mermaid, video, and poster are local.
 
 ## Labs
@@ -55,10 +73,14 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 
 - [ ] Duration is 60–90 s (or the agreed length).
 - [ ] 16:9, 1920×1080, 30 fps.
-- [ ] Narration is intelligible and timed to the scenes.
+- [ ] The video canvas is **white by default**; a warm paper or dark theme appears only if the learner asked for it.
+- [ ] Narration uses **Supertonic 3** (default voice `M1`, or an auditioned alternative such as `F1`/`M2`), not Kokoro and not `hyperframes tts`.
+- [ ] The Supertonic `--lang` matches the narration language; Chinese uses `edge-tts` because Supertonic 3 does not support Chinese.
+- [ ] Supertonic clips are 44.1 kHz source; the mix is 48 kHz.
+- [ ] Narration is intelligible and timed to the scenes; identifiers and numbers are pronounced correctly.
 - [ ] Music is audible but does not compete with the voice.
 - [ ] SFX are subtle and useful (typing, tokens, results), not constant.
-- [ ] At least one scene shows real code/output/data from the project.
+- [ ] At least one scene shows real code/output/data from the project; every scene has a graph, real code, or real output.
 - [ ] The poster is a real frame, not black.
 - [ ] No black gap after the end card; the final frame is intentional.
 - [ ] The transcript matches the narration and timestamps.
@@ -71,7 +93,13 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 
 - [ ] Video `readyState >= 3` and duration matches.
 - [ ] Every lab loads; the preview is read-only.
-- [ ] Every Mermaid diagram renders with content (not a blank SVG).
+- [ ] Every section check loads, marks the chosen and correct options, shows a rationale for every option, and can retry.
+- [ ] Section checks are unscored and do not gate progress.
+- [ ] Every short-answer card loads, autosaves locally, shows a word count, reveals a model answer after an attempt or “I’m stuck,” and shows the 3-item self-check.
+- [ ] Short answers are unscored, not sent to a server, and not part of the lab result.
+- [ ] Micro-checks load and can be completed with the keyboard; no check gates progress.
+- [ ] Every Mermaid diagram renders with content (not a blank SVG), has a caption, and does not overflow the page at 375 px.
+- [ ] The page background is white unless a theme was requested; no warm-paper or beige canvas slipped in.
 - [ ] No console errors.
 - [ ] No duplicate IDs.
 - [ ] No missing local asset references.
@@ -109,7 +137,8 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 
 ## Handoff
 
-- [ ] `course/README.md` explains the course, track, lab kinds, edit/check/restore commands, lab IDs, work-file paths, judge/manual verification, and video rebuild.
+- [ ] `course/README.md` explains the course, track, target seat time, lab kinds, edit/check/restore commands, lab IDs, work-file paths, judge/manual verification, and video rebuild.
+- [ ] The handoff records the Supertonic 3 voice and language, and notes the model’s OpenRAIL-M license.
 - [ ] The final response names the course URL, the video path, the lab commands, and the restore command.
 - [ ] The user is told that the repo files were intentionally modified and how to restore them.
 - [ ] Any background servers or preview processes are either left running intentionally or stopped.

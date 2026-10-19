@@ -2,6 +2,8 @@
 
 A lab is a **learn-by-doing rep**, not necessarily a coding exercise. The medium follows the skill being taught: debugging is code, explaining is writing, designing is an artifact, playing is a performance, and recognizing is a drill. The invariant is that the learner **produces evidence** and the course **verifies it against explicit criteria**.
 
+For the deeper question—**which answer format is authentic for this learner**—read `references/assessment-design.md`. It covers CFA-style exams, architecture decisions, service businesses (including learning as a service), and other domains where the right answer is not always code.
+
 ## Choose the kind from the learning verb
 
 | Kind | Learner produces | Examples | Default verification | Code required |
@@ -17,15 +19,23 @@ A lab is a **learn-by-doing rep**, not necessarily a coding exercise. The medium
 
 Pick the kind that matches the objective. Do not force a code lab onto a non-code skill, and do not replace a production skill with a quiz.
 
+Three common special cases:
+
+- **Exam prep** (CFA, licensing): make the item format match the real exam, including item sets and timing. Add a show-your-work task so the learner can justify a number, not only select it.
+- **Architecture decisions**: use an ADR or trade-off table with evidence; multiple choice may check vocabulary, but it cannot make the decision.
+- **Service / business design** (including learning as a service): use a blueprint, pricing model, experiment plan, or customer synthesis—not generic prose or a definitions quiz.
+
 ## Multiple choice is allowed, with limits
 
-Multiple choice is a legitimate lab format when the objective is **recognition, recall, discrimination, or misconception-checking**.
+Multiple choice is a legitimate format for **formative section checks**, recognition, recall, discrimination, and exam fidelity.
 
 **Allowed:**
 
+- a 2–4 item section check followed by a short-answer prompt, after the screens and before the lab;
 - ear training, vocabulary, symbol recognition, “which error came from which layer”;
 - a warm-up or exit ticket before/after a production lab;
-- a quick check that the learner can distinguish two similar concepts.
+- a quick check that the learner can distinguish two similar concepts;
+- exam-fidelity item sets when the learner is preparing for a multiple-choice exam.
 
 **Not allowed:**
 
@@ -38,10 +48,27 @@ Multiple choice is a legitimate lab format when the objective is **recognition, 
 
 - every option gets a short explanation after submission, not just “correct/incorrect”;
 - include plausible distractors drawn from real misconceptions;
+- for a section check, include at least one misconception item and one application item;
 - follow it with a production task whenever the objective includes production;
-- keep it short (3–6 items), and do not call it a lab if it is only a check.
+- keep it short (section check: 2–4 items; drill: 3–6 items), and do not call it a lab if it is only a check.
 
 The pre-course level diagnostic stays separate and is still the only placement quiz.
+
+## Formative section checks (not labs)
+
+Every teaching section gets a two-part gate before its lab: **MC → short answer**. Together they catch the learner who nodded along but missed the one idea the rest of the section depends on.
+
+- **MC card:** 2–4 items, answerable in under two minutes.
+- One recall/recognition item, one misconception item, and one application/transfer item.
+- Immediate per-option feedback and a short “why”; the correct option links back to the screen.
+- Retryable and unscored. It does not gate progress and is not part of the lab result.
+- Static HTML/JS on the page; no server, no checker, no judge.
+- **Short-answer card:** one prompt after the MC, 2–4 sentences, local autosave, a model answer, and a 3-item self-check. It is unscored and not auto-graded.
+- Place both after the teaching screens and before the lab, so a gap is caught before practice.
+- For a Newcomer, keep the MC to 2 items, define every term in the options, and give the short answer a sentence frame.
+- For exam-fidelity courses, the section check can use exam-style stems, but the timed item set is the lab.
+
+A section check is **not** a substitute for the lab. If the section has no lab because the skill is only recognition, the check can be the practice—but say so explicitly. The short answer is not a second lab and must not grow into a graded essay. See `references/interactivity.md` for the full interaction contract.
 
 ## Verification ladder
 

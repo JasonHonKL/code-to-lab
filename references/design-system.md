@@ -1,38 +1,41 @@
 # Design System
 
-The goal is a warm, distinctive developer notebook — not the default purple-gradient AI course.
+The goal is a clean, distinctive developer notebook — not the default purple-gradient AI course.
 
 ## Canvas
 
-- Warm off-white background `#FAF7F2`; alternate `#F5F0E8`.
-- Dark ink `#2C2A28`; secondary `#5F5A54` (6.4:1); muted `#6B6560` (5.4:1). Do not use `#9E9790` for normal-size text; it is 2.7:1 on the canvas.
-- One accent. Vermillion `#D94F30`, teal `#2A7B9B`, amber `#D4A843`, or forest `#2D8B55`. Never a purple gradient.
-- Palette source: the `color-themes` companion (158 TOML palettes). The warm notebook palette below is the default; if the learner names a theme, map that theme's keys to these variables instead of inventing colors.
-- Code ground: choose from `color-themes`. For a light paper course, **GitHub Light High Contrast** (`#FFFFFF` / `#010409`) for code panels and **GitHub Dark High Contrast** (`#0A0C10` / `#F0F3F6`) for terminal/command blocks. A dark code ground (`#1E1E2E` / `#CDD6F4`) is also valid on a dark page; do not use low-contrast gray comments.
-- Borders `#E5DFD6`; surfaces white or `#FDF9F3`.
-- Success `#2D8B55`; error `#C93B3B`; info `#2A7B9B`.
+**Default: white.** The page and the video use a white background, dark ink, neutral borders, and one accent. Warm paper, cream, beige, off-white, and dark canvases are opt-in: use one only when the learner asks for it or names a theme, and record it in `COURSE_BRIEF.md`.
+
+- Page background `#FFFFFF`; alternate section surface `#F7F7F8` (neutral, not warm).
+- Ink `#111318` (18.6:1); secondary `#4B5563` (7.6:1); muted `#5F6673` (5.8:1). Do not use `#9AA0A6` for normal-size text.
+- One accent. Vermillion `#B83A1F` (5.7:1 on white), teal `#1F6F8B` (5.7:1), amber `#8A5A00` (5.9:1), or forest `#1F7A4D` (5.3:1). Never a purple gradient. `#D94F30` is fine for a large decorative mark but not for body text (4.1:1).
+- Palette source: the `color-themes` companion (158 TOML palettes). The white palette below is the default; if the learner names a theme or asks for a dark page, map that theme’s keys to these variables instead of inventing colors.
+- Code ground: GitHub Light High Contrast (`#FFFFFF` / `#010409`) for code panels and GitHub Dark High Contrast (`#0A0C10` / `#F0F3F6`) for terminal/command blocks. A dark code ground (`#1E1E2E` / `#CDD6F4`) is also valid on a dark page; do not use low-contrast gray comments.
+- Borders `#E3E5E8`; surfaces white. On a white page, cards need a visible border or a soft neutral shadow; a borderless white card disappears.
+- Success `#1F7A4D`; error `#B42318`; info `#1F6F8B`.
 
 ```css
 :root {
-  --color-bg: #FAF7F2;
-  --color-bg-warm: #F5F0E8;
+  --color-bg: #FFFFFF;
+  --color-bg-soft: #F7F7F8;
+  --color-surface: #FFFFFF;
   --color-bg-code: #FFFFFF;
   --color-code-fg: #010409;
   --color-code-comment: #4B535D;
-  --color-text: #2C2A28;
-  --color-text-secondary: #5F5A54;
-  --color-text-muted: #6B6560;
-  --color-border: #E5DFD6;
-  --color-accent: #D94F30;
-  --color-accent-hover: #C4432A;
-  --color-accent-light: #FDEEE9;
-  --color-success: #2D8B55;
-  --color-error: #C93B3B;
-  --color-info: #2A7B9B;
+  --color-text: #111318;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #5F6673;
+  --color-border: #E3E5E8;
+  --color-accent: #B83A1F;
+  --color-accent-hover: #9E2F18;
+  --color-accent-light: #FDF0EC;
+  --color-success: #1F7A4D;
+  --color-error: #B42318;
+  --color-info: #1F6F8B;
 }
 ```
 
-Use warm-tinted shadows (`rgba(44,42,40,…)`), never pure black.
+Use neutral shadows (`rgba(17,19,24,…)`), never pure black. Do not reintroduce a warm tint unless the learner asked for a warm theme.
 
 ## Typography
 
@@ -61,7 +64,7 @@ For Traditional Chinese, use PingFang TC, Noto Sans TC, or Source Han Sans for C
 
 ## Code
 
-- Use a palette from `color-themes`. For a light paper course: GitHub Light High Contrast for code (`#FFFFFF` background, `#010409` foreground, `#4B535D` comments, `#A0111F` keywords, `#024C1A` strings, `#0349B4` numbers, `#622CBC` functions) and GitHub Dark High Contrast for commands (`#0A0C10` / `#F0F3F6`). Dark IDE panels are fine on a dark page; Catppuccin-inspired colors are optional, not mandatory.
+- Use a palette from `color-themes`. For the default white course: GitHub Light High Contrast for code (`#FFFFFF` background, `#010409` foreground, `#4B535D` comments, `#A0111F` keywords, `#024C1A` strings, `#0349B4` numbers, `#622CBC` functions) and GitHub Dark High Contrast for commands (`#0A0C10` / `#F0F3F6`). Dark IDE panels are fine on a dark page; Catppuccin-inspired colors are optional, not mandatory.
 - Code foreground, comments, and each syntax token must reach **7:1** on the code background. A theme name is not proof; measure the rendered pairs.
 - Code must wrap; no horizontal scrollbar in teaching blocks.
 - Choose naturally short snippets (5–10 lines). Never rewrite project code.
@@ -70,19 +73,23 @@ For Traditional Chinese, use PingFang TC, Noto Sans TC, or Source Han Sans for C
 
 ## Diagrams
 
-Mermaid theme:
+Graph-first: every conceptual screen leads with a Mermaid diagram or an equally visual block. Every teaching section has at least one Mermaid diagram; every module has at least three and at least two types. Read `references/diagrams.md` for the type table, patterns, and accessibility rules.
+
+Mermaid theme for the white page:
 
 ```js
 mermaid.initialize({
   startOnLoad: false,
   theme: 'base',
   themeVariables: {
-    primaryColor: '#FDF9F3',
-    primaryTextColor: '#2C2A28',
-    primaryBorderColor: '#2A7B9B',
-    lineColor: '#6B6560',
-    secondaryColor: '#E4F2F7',
-    tertiaryColor: '#FDEEE9',
+    primaryColor: '#FFFFFF',
+    primaryTextColor: '#111318',
+    primaryBorderColor: '#B83A1F',
+    lineColor: '#5F6673',
+    secondaryColor: '#F3F4F6',
+    tertiaryColor: '#FDF0EC',
+    clusterBkg: '#F7F7F8',
+    clusterBorder: '#D7DADF',
     fontFamily: 'DM Sans, sans-serif',
     fontSize: '15px',
   },
@@ -90,17 +97,45 @@ mermaid.initialize({
 ```
 
 - Bundle Mermaid locally. Do not depend on the CDN at runtime.
+- If the learner requested a theme, map these Mermaid variables to that palette; keep the white values above only for the default course.
 - Render diagrams with a fixed-size wrapper and `overflow-x: auto` for wide ones.
 - Keep labels short; use `<br/>` for two-line labels (escape them in HTML if the source is inside a normal element; use `<script type="text/plain">` for raw Mermaid text).
-- Do not reuse the default purple Mermaid theme.
+- Every diagram has a one-sentence “what to notice” caption, an `aria-label`, and a source fallback in `<details>`.
+- Keep diagrams to 12 nodes or fewer; split a larger map across screens.
+- Do not reuse the default purple Mermaid theme, rainbow nodes, or emoji.
 
 ## Equations
 
 For math/physics, use an equation↔English translation block: the equation on the left, what each symbol means and why it is there on the right. Use LaTeX or MathJax for display; keep units and assumptions visible. Use one color consistently for the same quantity across the video, diagrams, and labs.
 
-## Lab UI
+## Section gate UI: MC → short answer → lab
 
-- A white card inside the module, not a separate page.
+The three beats are visually distinct and always in this order. Label them 1, 2, 3 so the learner knows where they are.
+
+### 1. MC card
+
+- A compact bordered card inside the section; lighter than a lab card. No file path, checker command, or check button.
+- 2–4 items; show one at a time or all at once, but keep it under two minutes.
+- After an answer, mark the chosen option, mark the correct one, and show a one-sentence rationale for **every** option.
+- Include a short “why” and a link back to the relevant screen.
+- Retry is always available. Do not score, gate progress, or add a timer.
+- Use the success/error colors plus a check/cross and text, never color alone.
+- On mobile, stack options and keep the rationale under the chosen option.
+
+### 2. Short-answer card
+
+- Sits immediately after the MC card and before the lab. Same width as the section body, not a modal.
+- One prompt, 2–4 sentences; a labelled `<textarea>` with 3–4 visible rows and a live word counter.
+- Autosave to `localStorage` with a “Saved locally” indicator and a “Clear” button. No server call.
+- **Reveal model answer** becomes available after one sentence or an “I’m stuck” click. Never lock it permanently.
+- The model answer is 3–5 sentences, in a soft surface with an accent border, followed by a 3-item self-check checklist (mechanism / evidence / consequence).
+- The checklist is comparison, not grading: yes/no boxes, no score, no red “wrong” state.
+- Offer “Copy my answer” and “Copy model answer.”
+- On mobile, full width; keep the counter visible above the keyboard.
+
+### 3. Lab card
+
+- A white card with a visible border on the white page, not a separate page.
 - Header: lab number, difficulty, time, file.
 - Broken behavior in one sentence.
 - Sidebar: mission, deliverable, task list, concepts, hints.
@@ -115,7 +150,7 @@ For math/physics, use an equation↔English translation block: the equation on t
 
 - Avoid emoji unless the user asks. Use letters, simple geometric marks, or CSS shapes.
 - One accent color is enough. Do not rainbow the UI.
-- Use warm shadows and subtle dot-grid paper texture.
+- Use neutral shadows and a subtle neutral dot-grid texture. No warm paper tint unless requested.
 
 ## Accessibility
 
@@ -125,6 +160,8 @@ For math/physics, use an equation↔English translation block: the equation on t
 - Do not rely on color alone for pass/fail; include a check/cross and text.
 - Keep code-readable font sizes; allow zoom.
 - Tooltips must be reachable by keyboard/tap and appended to `body` so they are not clipped.
+- Label every textarea; connect the word counter, save status, and model-answer reveal to `aria-live="polite"`.
+- Ordering and hotspot interactions must work with buttons/keyboard, not drag or hover only.
 
 ## Optional impeccable audit
 
@@ -136,7 +173,7 @@ npx impeccable detect course/ --json
 
 or `/impeccable audit course` / `/impeccable critique course` / `/impeccable polish course`.
 
-Use it to catch deterministic frontend defects (contrast, spacing, overflow, overused fonts, nested cards, purple gradients), not to replace the warm paper direction. A clean detector is evidence, not proof; inspect the rendered page across viewports. See `references/companion-skills.md`.
+Use it to catch deterministic frontend defects (contrast, spacing, overflow, overused fonts, nested cards, purple gradients), not to replace the white course direction or the graph-first hierarchy. A clean detector is evidence, not proof; inspect the rendered page across viewports. See `references/companion-skills.md`.
 
 ## Responsive
 
@@ -146,3 +183,6 @@ Use it to catch deterministic frontend defects (contrast, spacing, overflow, ove
 - Video is full width with a 16:9 aspect ratio.
 - Code preview scrolls horizontally on small screens; the page itself must not.
 - Non-code lab cards stack the rubric above the results; long criteria wrap instead of truncating.
+- Section-check options stack at 640 px; rationale text stays at body size, not tiny caption size.
+- The short-answer textarea is full width at 640 px; the counter and reveal button stack above it.
+- Micro-checks (order-the-steps, hotspots, match pairs) become vertical button lists at 640 px; no horizontal drag target.

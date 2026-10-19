@@ -1,7 +1,7 @@
 # STORYBOARD
 
 **Format:** 1920×1080 · 30 fps · __ s
-**Voice:** Kokoro-82M / other · **Music:** __ · **SFX:** __
+**Canvas:** white (default) / __ · **Voice:** Supertonic 3 (`M1` default; Chinese uses `edge-tts`) · **Music:** __ · **SFX:** __
 
 | # | Time | Scene | Visual | On-screen copy | Motion | Audio |
 |---|---|---|---|---|---|---|

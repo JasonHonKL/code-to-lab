@@ -1,0 +1,95 @@
+{
+  "id": "module-02-section-01",
+  "title": "Check your understanding",
+  "placement": "after-section-02-01-before-lab-02",
+  "gate_order": ["mc", "short_answer", "lab"],
+  "scored": false,
+  "retryable": true,
+  "micro_checks": [
+    {
+      "id": "m1",
+      "placement": "after-screen-02-01",
+      "type": "predict",
+      "prompt": "Before the reveal: what does the parser receive from the lexer?",
+      "options": [
+        { "id": "A", "text": "Characters" },
+        { "id": "B", "text": "Tokens" },
+        { "id": "C", "text": "An expression tree" }
+      ],
+      "correct": "B",
+      "reveal": "Tokens. The lexer has already grouped characters; the parser turns the token stream into a tree.",
+      "why": "Characters → lexer → tokens → parser → tree."
+    },
+    {
+      "id": "m2",
+      "placement": "after-screen-02-02",
+      "type": "order",
+      "prompt": "Put the pipeline in order.",
+      "items": ["Parser", "Lexer", "Runtime", "Tokens"],
+      "correct_order": ["Lexer", "Tokens", "Parser", "Runtime"],
+      "why": "The token stream is the handoff between lexing and parsing."
+    }
+  ],
+  "items": [
+    {
+      "id": "q1",
+      "type": "recall",
+      "objective": "Name the stage that turns characters into tokens",
+      "stem": "Which stage turns a stream of characters into tokens?",
+      "options": [
+        { "id": "A", "text": "The parser", "rationale": "The parser consumes tokens; it does not create them." },
+        { "id": "B", "text": "The lexer", "rationale": "Correct: the lexer scans characters and emits tokens." },
+        { "id": "C", "text": "The runtime", "rationale": "The runtime executes instructions after parsing." }
+      ],
+      "correct": "B",
+      "why": "The pipeline is characters → lexer → tokens → parser → instructions → runtime."
+    },
+    {
+      "id": "q2",
+      "type": "misconception",
+      "objective": "Distinguish parsing from execution",
+      "stem": "A program prints the wrong result but does not crash. Where should you look first?",
+      "options": [
+        { "id": "A", "text": "The lexer, because every wrong result starts with a bad token", "rationale": "Tokenization errors usually cause syntax errors, not a clean wrong result." },
+        { "id": "B", "text": "The execution path, because the program ran and produced output", "rationale": "Correct: a clean wrong result suggests the program executed a valid but incorrect instruction sequence." },
+        { "id": "C", "text": "The build system, because the binary may be stale", "rationale": "Possible, but less likely; check the runtime trace first, then rebuild if needed." }
+      ],
+      "correct": "B",
+      "why": "A clean wrong answer is a runtime/instruction problem more often than a lexer problem. Confirm with a trace."
+    },
+    {
+      "id": "q3",
+      "type": "application",
+      "objective": "Apply the pipeline to a new input",
+      "stem": "The input `12 + 3` produces the tokens `NUMBER(12)`, `PLUS`, `NUMBER(3)`. What is the parser's job next?",
+      "options": [
+        { "id": "A", "text": "Re-scan the characters to find whitespace", "rationale": "That is lexer work, already done." },
+        { "id": "B", "text": "Build an expression tree from the token stream", "rationale": "Correct: the parser groups tokens into a syntax tree." },
+        { "id": "C", "text": "Add the two numbers", "rationale": "That is runtime work; the parser only builds the structure." }
+      ],
+      "correct": "B",
+      "why": "The parser turns a flat token stream into a tree; execution happens later."
+    }
+  ],
+  "short_answer": {
+    "id": "sa1",
+    "type": "explain-back",
+    "placement": "after-mc-before-lab",
+    "objective": "Explain why a clean wrong result points at runtime, not the lexer",
+    "prompt": "In 2–4 sentences, explain how the lexer and parser turn `12 + 3` into something the runtime can execute, and why a clean wrong answer points at the runtime rather than the lexer.",
+    "min_words": 25,
+    "max_words": 120,
+    "sentence_target": "2–4 sentences",
+    "autosave_key": "tdc:<course>:module-02-section-01:short-answer",
+    "reveal_after_words": 15,
+    "model_answer": "The lexer scans the characters and emits `NUMBER(12)`, `PLUS`, `NUMBER(3)`. The parser groups that flat stream into an expression tree, so it can only fail with a syntax error, not a clean wrong value. The runtime walks the tree and applies `PLUS`; a valid but incorrect instruction sequence therefore produces output without crashing. That is why a clean wrong result is a runtime/instruction problem first, and a lexer problem only if the tokens themselves are wrong.",
+    "self_check": [
+      "Did you name the lexer’s output (tokens) and the parser’s output (tree)?",
+      "Did you say why a parse error would be a crash/syntax error, not a clean wrong value?",
+      "Did you name the runtime as the place where the value is produced?"
+    ],
+    "scored": false,
+    "gated": false,
+    "auto_graded": false
+  }
+}

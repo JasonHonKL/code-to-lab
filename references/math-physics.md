@@ -115,6 +115,7 @@ Quality rules:
 ## Diagrams and equations
 
 - Use Manim stills or Mermaid for the model map.
+- **White background by default:** set `config.background_color = WHITE` and use dark ink for Manim renders unless the learner asked for a dark theme. Keep the same white canvas as the course page and the Mermaid diagrams.
 - Use a code↔English-style translation for equations: left = the equation, right = “what each term means and why it is there.”
 - Always state assumptions and units.
 - Use a consistent color for the same quantity across the video, diagrams, and labs.

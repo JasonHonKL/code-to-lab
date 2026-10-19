@@ -4,6 +4,8 @@ A lab is a real learn-by-doing rep with a verifiable deliverable. For a **code l
 
 The course page never hosts the work. It shows a read-only starter or preview and reports results. Do not turn a non-code lab into an in-page text box; the learner writes, designs, plays, or records in their own tool.
 
+Section checks are static page elements, not labs. They do not get a nav dot, a work file, a checker, or a judge; they are unscored and retryable.
+
 ## Why this shape
 
 - The learner builds muscle memory in the real project, not a toy file.

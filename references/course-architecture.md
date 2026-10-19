@@ -39,10 +39,29 @@ For a math/physics topic, replace the code trace with a concrete phenomenon and 
     <div class="module-body">
       <section class="screen">
         <h2 class="screen-heading">…</h2>
-        <p>2–3 sentences.</p>
-        <!-- diagram, translation block, flow, chat, cards -->
+        <figure class="diagram">
+          <pre class="mermaid">flowchart LR …</pre>
+          <figcaption>What to notice: …</figcaption>
+        </figure>
+        <p>2–3 sentences that annotate the diagram.</p>
+        <div class="micro-check" data-check="predict-N-1"><!-- predict/reveal or 1 MC --></div>
       </section>
-      <!-- 2–4 screens per module -->
+      <!-- 2–4 screens per module; one interaction every 2 screens -->
+      <div class="section-check" data-check-id="module-N-section-M">
+        <p class="gate-label">1 · Check</p>
+        <h3>Check your understanding</h3>
+        <!-- 2–4 MC items: recall, misconception, application; per-option feedback; retry -->
+      </div>
+      <div class="short-answer" data-sa-id="module-N-section-M">
+        <p class="gate-label">2 · Explain it back</p>
+        <h3>In your own words</h3>
+        <label for="sa-N-M">2–4 sentences: …</label>
+        <textarea id="sa-N-M" rows="4"></textarea>
+        <p class="counter">0 / 120 words · Saved locally</p>
+        <button class="reveal-model">Reveal model answer</button>
+        <!-- model answer + 3-item self-check after reveal -->
+      </div>
+      <p class="gate-label">3 · Lab</p>
       <!-- lab card here if this module owns a lab -->
     </div>
   </div>
@@ -67,17 +86,21 @@ A lab belongs immediately after the section that teaches its core. Do not collec
 
 Read `references/lab-kinds.md` for the full catalog and verification contract. The lab kind must match the learning verb: do not force a code lab onto a writing or performance skill.
 
-The nav has one dot per **teaching section**, not one per lab. The lab cards live inside the modules and do not get their own dot.
+The nav has one dot per **teaching section**, not one per lab. The lab cards live inside the modules and do not get their own dot. Section checks and short answers do not get a nav dot either; they are steps inside the section.
 
 ## Content rules
 
-- **2–3 sentences per text block.** If a fourth sentence is needed, replace text with a visual.
-- **At least 50% visual per screen.** Diagrams, code blocks, cards, flows, chats, translations.
+- **Graph-first.** Every conceptual screen leads with a Mermaid diagram or an equally visual block (code↔English, annotated code, table). Every teaching section has at least one Mermaid diagram; every module has at least three diagrams and at least two types. If a fourth sentence describes a flow, sequence, state, hierarchy, decision, or relationship, replace it with a diagram. Read `references/diagrams.md`.
+- **2–3 sentences per text block.** The text annotates the diagram; it does not restate it.
+- **Micro-check cadence.** No more than two screens or about three minutes of passive reading without an interaction. Put a predict/reveal, one-question MC, order-the-steps, hotspot, or match-pairs check between screens.
 - **Code↔English translations** are the backbone. Real code on the left, line-by-line plain language on the right.
 - **Use exact code** from the repo. Never simplify or rewrite a snippet. Choose naturally short sections instead.
 - **Tooltips on every technical term**, first use per module. Use a dashed underline and `cursor: pointer`, not a question-mark cursor.
 - **No recycled metaphors.** Pick one that fits the concept. Do not use restaurant/kitchen for everything.
-- **Active practice, not a quiz.** Multiple choice is allowed for recognition, recall, or discrimination (with per-option feedback), but not as the default lab format, not as the only evidence for a production skill, and not as “guess the formula.” Use labs, diagrams, traces, and translations for everything else.
+- **Every section gets a three-beat gate: MC → short answer → lab.** After the screens, add 2–4 MC items (one recall/recognition, one misconception, one application) with per-option feedback, retry, and a “why.” Then one short-answer prompt (2–4 sentences) with autosave, a model answer, and a 3-item self-check. Then the lab. Both checks are unscored and do not gate progress; neither replaces the lab.
+- **Recall opener.** After the first module, each section opens with one question about the previous section: “Before we open this, what did we say would happen?” It is spacing, not a gate.
+- **Active practice, not a quiz.** Multiple choice is allowed for section checks, micro-checks, recognition, recall, or discrimination (with per-option feedback), but not as the default lab format, not as the only evidence for a production skill, and not as “guess the formula.” Use labs, diagrams, traces, and translations for everything else.
+- **Match the answer format to the target performance.** Codebase work → code; architecture → ADR/trade-off artifact; CFA-style exam → item sets plus show-your-work; service design → blueprint/model/plan. Read `references/assessment-design.md`.
 - **One idea per screen.** If you need two diagrams, use two screens.
 - **Show the thing.** At least one screen per module must display real code, real output, or a real data structure from the project.
 - **Errors are a teaching tool.** Map error messages to the layer that produced them.
@@ -85,12 +108,18 @@ The nav has one dot per **teaching section**, not one per lab. The lab cards liv
 
 ## Diagrams
 
-Use Mermaid for:
+Mermaid is the default. Choose the type from the question the learner is asking:
 
-- system maps (`flowchart LR/TB`),
-- request/sequence traces (`sequenceDiagram`),
-- type/relationship maps (`classDiagram`),
-- lookup/dispatch flows (`flowchart TD`).
+| Learner’s question | Type |
+|---|---|
+| What are the stages and boundaries? | `flowchart LR` |
+| Who calls whom, in what order? | `sequenceDiagram` |
+| What states can this be in? | `stateDiagram-v2` |
+| What is the data shaped like? | `erDiagram` or `classDiagram` |
+| Which branch do I take? | `flowchart TD` with labelled edges |
+| What is the hierarchy? | `flowchart TB` or `mindmap` |
+| When did this happen? | `timeline` |
+| What is the trade-off? | `quadrantChart` |
 
 Use custom HTML/CSS for:
 
@@ -100,7 +129,7 @@ Use custom HTML/CSS for:
 - fast-path vs fallback cards,
 - flow animations and group chats.
 
-Theme Mermaid with the same warm palette as the page. Do not leave the default purple/blue theme.
+Every diagram gets a one-sentence “what to notice” caption and a source fallback. Keep it to 12 nodes or fewer. Theme Mermaid with the white course palette (see `references/design-system.md`); do not leave the default purple/blue theme.
 
 ## Glossary tooltips
 
@@ -115,15 +144,21 @@ Ask for the course language before writing. Keep code, file names, identifiers, 
 | | Newcomer | Explorer | Builder | Deep Diver |
 |---|---|---|---|---|
 | Module count | 4 | 4 | 5 | 5–6 |
+| Seat time | 30–45 min | 45–60 min | 60–90 min | 90–150+ min |
 | Opening | “What is this?” + visual phenomenon | Observable behavior | Observable behavior | Observable behavior / internals |
 | Analogy density | Highest | High | Medium | Low |
 | Code/equation snippet length | 3–8 lines, heavily annotated | 5–10 lines | 8–15 lines | 15–30 lines |
 | Tooltips | Every term | Very aggressive | Standard | Only non-obvious |
 | Lab tasks | 1 guided task | 1–2 | 2–3 | 3–4 |
 | Hints | Step-by-step | 2 up front | 3 progressive | 3, last minimal |
+| Diagrams | 3 per module, simplest | 3 per module | 3+ per module | 3–4 per module, denser |
+| Micro-checks | Every 1–2 screens | Every 2 screens | Every 2 screens | Every 2–3 screens |
+| MC / short answer | 2 items / 1–2 sentences | 2–3 items / 2–3 sentences | 3 items / 2–4 sentences | 3–4 items / 3–4 sentences |
 | Video | 75–90 s | 75–90 s | 90 s | 90–120 s |
 
 A Newcomer track is selected by the topic prior-knowledge answer, not by the general score. A strong programmer who is new to the topic still gets the “What is this?” opening and the guided first lab.
+
+Depth and seat time scale together. A Deep Diver course is 90–150+ minutes with 5–6 modules and harder labs; do not deliver the same content in 15 minutes. If the learner’s budget is below the track minimum, downgrade the track or split it into a core path plus optional deep-dive modules, and say which you did.
 
 ## Newcomer rules
 

@@ -2,9 +2,11 @@
 
 A self-contained agent skill that turns any codebase or technical topic into a **top-down interactive course**:
 
-- one short narrated explainer video,
-- diagrams and code-to-plain-English translations,
+- one short narrated explainer video, voiced with **Supertonic 3**,
+- a **white background by default** (themes are opt-in),
+- **graph-first Mermaid diagrams** — every section leads with a diagram, and diagrams replace prose for flows, states, sequences, and relationships,
 - hands-on labs placed **inside** the sections that teach them,
+- a per-section **MC check → short answer → lab** gate, plus micro-checks between screens so the learner does not drift,
 - labs that fit the skill: code, writing, design, performance/practice, experiment, or research,
 - TODO stubs in the **real project files** for code labs, and real work files or artifacts for the rest,
 - progressive hints and a reference solution or exemplar,
@@ -39,14 +41,14 @@ The learner starts with something they can already see, then opens the boxes tha
 
 Before building, the agent runs a two-minute diagnostic with **two separate axes**: general technical level and **topic prior knowledge**. The topic question includes an explicit **“I don’t know this topic at all”** option.
 
-| Track | Course shape |
-|---|---|
-| **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab |
-| **Explorer** | 4 modules, 2 labs, more analogies, more scaffolding |
-| **Builder** | 5 modules, 3 labs, standard hints |
-| **Deep Diver** | 5–6 modules, 3 harder labs, less scaffolding, more real code |
+| Track | Course shape | Recommended seat time |
+|---|---|---|
+| **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab | 30–45 min |
+| **Explorer** | 4 modules, 2 labs, more analogies, more scaffolding | 45–60 min |
+| **Builder** | 5 modules, 3 labs, standard hints | 60–90 min |
+| **Deep Diver** | 5–6 modules, 3 harder labs, less scaffolding, more real code | 90–150+ min |
 
-The topic answer wins over the general score: a strong programmer can still be new to the topic. The test is not graded. It only changes depth, pace, and hint density.
+The topic answer wins over the general score: a strong programmer can still be new to the topic. The test is not graded. It only changes depth, pace, hint density—and time. A deeper, more detailed course is longer: Deep Diver is 90–150+ minutes, not a 15-minute tour. If the budget is below the track minimum, the course is downgraded or split into a core path plus optional deep-dive modules.
 
 For math/physics, the agent also asks **top-down vs bottom-up** and can use **Manim** for the explainer. See `references/math-physics.md`.
 
@@ -60,7 +62,21 @@ A lab appears immediately after the section that teaches its core:
 
 There is no separate “Labs” module at the end.
 
-### 3. Labs happen in the real medium
+### 3. Graph-first, white by default
+
+The course page and video use a **white background by default** (`#FFFFFF`), dark ink, and one accent. Warm paper, beige, off-white, and dark themes are opt-in; the agent uses one only when the learner asks for it and records the choice in `COURSE_BRIEF.md`.
+
+Diagrams are the primary explanation, not decoration:
+
+- every conceptual screen leads with a Mermaid diagram or an equally visual block,
+- every teaching section has at least one diagram,
+- every module has at least three diagrams and at least two diagram types,
+- flows, sequences, states, hierarchies, decisions, and relationships become graphs; prose annotates the graph,
+- diagrams can be stepped through, clicked, or used as a hotspot check.
+
+Read `references/diagrams.md` for the type-selection table, patterns, white Mermaid theme, and accessibility rules.
+
+### 4. Labs happen in the real medium
 
 Not every lab is a coding exercise. The lab medium follows the skill being taught:
 
@@ -72,7 +88,7 @@ Not every lab is a coding exercise. The lab medium follows the skill being taugh
 
 The learner works in the real file or medium. There is no in-page editor that only edits a copy.
 
-### 4. Verification fits the medium
+### 5. Verification fits the medium
 
 `node course/check.mjs <lab-id>`:
 
@@ -84,13 +100,38 @@ The learner works in the real file or medium. There is no in-page editor that on
 
 For code labs, the checker copies the repo to a temp directory, keeps the learner’s target file, fills the other labs with reference solutions, and runs the authoritative cases. It never modifies the learner’s work.
 
-### 5. Active practice, not a quiz
+### 6. Active practice plus the MC → short answer → lab gate
 
-The pre-course level diagnostic is the only placement quiz. In the course body, multiple choice is allowed when the objective is recognition, recall, or discrimination (ear training, vocabulary, error triage) with per-option feedback. It is never the default lab format and never the only evidence for a production skill. Most labs ask the learner to produce something.
+Every teaching section has a three-beat gate before its lab:
 
-### 6. One video, not a lecture
+1. **MC check** — 2–4 items (recall, misconception, application), per-option feedback, retry, unscored.
+2. **Short answer** — one “explain it back” prompt, 2–4 sentences, autosaved locally, with a model answer and a 3-item self-check. Unscored and not auto-graded.
+3. **Lab** — the learner produces the real artifact.
 
-A 60–90 second explainer with a local voice model, a music bed, and UI sound effects. It gives the mental model; the course zooms into it. A fallback pipeline is included if HyperFrames is unavailable.
+The gate catches the learner who nodded along but missed the section’s core idea, and the short answer forces retrieval before practice. Neither check gates progress or replaces the lab.
+
+Between screens, the course adds **micro-checkpoints** every 1–2 screens: predict/reveal, one-question MC, order-the-steps, a diagram hotspot, or match pairs. No more than two screens or about three minutes pass without an interaction, so the learner does not drift into passive reading.
+
+The pre-course level diagnostic remains the only placement quiz. Multiple choice is otherwise allowed for section checks, micro-checks, recognition/recall/discrimination drills, and exam-fidelity item sets (CFA-style), with per-option feedback. It is never the default lab format and never the only evidence for a production skill. Most labs ask the learner to produce something.
+
+### 7. The answer format matches the target performance
+
+A lab should look like the performance the learner is preparing for—not like the easiest thing to grade.
+
+| Learner goal | Lab answer format | Multiple choice? |
+|---|---|---|
+| Debug or extend a codebase | Code diff in the real repo + tests | Warm-up only |
+| Make architecture decisions | ADR / trade-off table with repo evidence | Vocabulary only; not the decision |
+| Pass a CFA-style exam | Exam-style item sets + show-your-work calculation | Yes—primary for exam fidelity, with rationales |
+| Design or run a service (incl. learning as a service) | Blueprint, pricing model, experiment plan, customer synthesis | Terminology/regulation only |
+| Learn math/physics | Derivation or computation | Warm-up only |
+| Learn a language or instrument | Recorded performance + practice log | Recognition drills only |
+
+Read `references/assessment-design.md` for the full matrix and worked examples.
+
+### 8. One video, not a lecture
+
+A 60–90 second explainer on a white canvas with a local voice model, a music bed, and UI sound effects. Narration uses **Supertonic 3** (default voice `M1`) for every language it supports; Chinese uses `edge-tts` because Supertonic 3 does not cover it. It gives the mental model; the course zooms into it. A fallback pipeline is included if HyperFrames is unavailable.
 
 ## Install
 
@@ -156,10 +197,14 @@ SKILL.md
 references/
   level-test.md            # 6-question diagnostic + tracks
   course-architecture.md   # top-down arc, module templates, inline labs
+  diagrams.md              # graph-first rules, Mermaid types, white theme, accessibility
+  interactivity.md         # section rhythm, MC → short answer → lab, micro-checks
+  assessment-design.md     # answer formats by domain: code, ADR, CFA, service, language
   lab-kinds.md             # code/writing/design/performance labs, MC rules, LLM judge
   lab-checker.md           # repo-mode labs, checker modes, test design
   video-production.md      # script, storyboard, voice, sound, render
-  design-system.md         # palette, type, diagrams, lab UI
+  voice.md                 # Supertonic 3 install, voices, languages, per-scene narration
+  design-system.md         # white canvas, type, diagrams, check/lab UI
   color-themes.md          # palette catalog, contrast gate, install-by-reference
   quality-gates.md         # pre-delivery checklist
   math-physics.md          # top-down/bottom-up math/physics courses + Manim
@@ -170,6 +215,9 @@ templates/
   lab.mjs                  # generic start/restore/status helper
   lab-cases.json           # authoritative case format (code labs)
   lab-rubric.json          # rubric + deterministic checks + judge (non-code labs)
+  architecture-decision.md # ADR-style deliverable for architecture labs
+  mc-item-set.json         # exam-fidelity MC item set with rationales + show-your-work
+  section-check.json       # micro-checks + 2–4 MC items + short answer, model answer, self-check
 scripts/
   install-companions.sh    # link the vendored skills into your agent
   install-color-themes.sh  # fetch the color-themes companion by reference
@@ -204,15 +252,16 @@ The page is a read-only preview plus a **Check my work** button. Edit the real c
 
 ## Video pipeline
 
-Default: a 60–90 second HyperFrames composition.
+Default: a 60–90 second HyperFrames composition on a white canvas.
 
-- Kokoro-82M or another local TTS for the voice.
+- **Supertonic 3** for narration (default `M1`; 31 languages; 44.1 kHz local ONNX); `edge-tts` only for Chinese, which Supertonic 3 does not cover.
+- One clip per scene, measured with `ffprobe`; pre-mixed into `mix.m4a`.
 - A soft music bed and subtle UI SFX, pre-mixed with ffmpeg.
 - Local fonts, local GSAP, local audio.
 - One paused timeline, deterministic scenes.
 - Poster frame extracted from the final render.
 
-If HyperFrames is unavailable, the skill uses a fallback: HTML/CSS slides + TTS + ffmpeg, or a screen-recorded walkthrough. When a slide deck is requested, it uses `frontend-slides` to build the deck.
+If HyperFrames is unavailable, the skill uses a fallback: HTML/CSS slides + Supertonic 3 + ffmpeg, or a screen-recorded walkthrough. When a slide deck is requested, it uses `frontend-slides` to build the deck.
 
 ## Companion tools (optional)
 
@@ -298,7 +347,8 @@ See `references/math-physics.md`.
 - A compiler/toolchain for a code repo (make, cargo, npm, go, etc.); non-code labs need only their own medium.
 - Optional: HyperFrames for the video.
 - Optional: FFmpeg for audio/video assembly.
-- Optional: Python 3.10+ with `kokoro-onnx` and `soundfile` for local narration.
+- Optional: Python 3.10+ with `supertonic` for local narration (first run downloads ~400 MB; no GPU).
+- Optional: `edge-tts` for Chinese narration, which Supertonic 3 does not cover.
 - Optional: `GEMINI_API_KEY` for the `deep-research` companion (paid, opt-in).
 - Optional: a judge model/API for non-code lab rubrics; every lab also has a `--manual` fallback.
 
@@ -307,25 +357,39 @@ The skill itself has no runtime dependencies.
 ## Design principles
 
 - Start with behavior, not definitions.
-- Show, don’t tell: diagrams, translations, real output.
+- **Graph-first, not text-first:** the diagram is the explanation; the prose annotates it.
+- Show, don’t tell: Mermaid maps, translations, real output.
+- **White background by default;** themes are opt-in.
 - Exact code from the repo, never simplified snippets.
-- 2–3 sentences per text block; at least 50% visual per screen.
+- 2–3 sentences per text block; a text-only teaching screen is a defect.
+- Every teaching section has at least one diagram; every module has at least three.
 - Tooltips for every technical term on first use.
 - No recycled metaphors.
-- Choose the lab kind from the learning verb; multiple choice only for recognition/recall/discrimination, with feedback.
+- Choose the lab kind from the learning verb; multiple choice only for section checks, micro-checks, recognition/recall/discrimination, and exam fidelity, with feedback.
+- **Every teaching section gates the lab with MC → short answer → lab;** neither check replaces the lab.
+- No more than two screens or ~3 minutes without an interaction.
+- Match the answer format to the target performance: code for debugging, ADR for architecture, item sets for CFA-style exams, artifacts for service design.
+- Depth and time scale together; never compress a Deep Diver course into a 15-minute tour.
 - The project’s own tests are the specification for code; explicit rubrics are the specification for non-code work.
 - Verify the checker in both directions before delivery.
 
 ## Quality gates
 
 - Level test completed or Builder default recorded.
+- Page and video are white by default; a named theme only when requested.
 - Labs inline, not collected at the end, and the lab kind matches the learning verb.
+- Every section has a Mermaid diagram; every module has at least three and two diagram types; diagrams have captions and source fallbacks.
+- Every section has MC → short answer; a lab section adds the lab third and last; both checks are unscored and do not gate progress.
+- Every section has micro-checks with no more than two screens or ~3 minutes between interactions.
+- The answer format matches the target performance.
+- The selected track's recommended seat time matches the learner's time budget; a Deep Diver course is 90–150+ minutes, not a compressed tour.
+- If MC is used for exam fidelity, it includes rationales and a show-your-work task.
 - Code labs modify real repo files with TODO skeletons; non-code labs have a real work file or artifact.
 - `lab.mjs restore` works for both.
 - `check.mjs --self-test` passes: skeleton/weak exemplar fails, solution/strong exemplar passes.
 - Every lab checks independently, and every non-code lab has deterministic checks plus a `--manual` fallback.
-- Video has voice, music, SFX, a poster, and no black tail.
-- Page loads with no console errors, diagrams render, labs are read-only, mobile works.
+- Video has voice, music, SFX, a poster, and no black tail; narration uses Supertonic 3 (Chinese: `edge-tts`).
+- Page loads with no console errors, diagrams render, labs are read-only, short answers autosave locally, mobile works.
 - README explains edit / check / restore.
 
 ## Notes

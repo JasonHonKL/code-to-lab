@@ -1,6 +1,6 @@
 ---
 name: top-down-course
-description: "Build a top-down, interactive course from any codebase or technical topic: a short narrated explainer video, diagrams, hands-on labs placed inline between sections, progressive hints, and verification that fits the skill. Labs are learn-by-doing and may edit real code, write or perform in the real medium, design an artifact, or run an experiment; they can be checked by tests, deterministic validators, rubrics, or a calibrated LLM judge. Use when someone wants to turn code or a skill into a course, teach a codebase, create a video + diagrams + exercises, or design a level-adapted tutorial. Always run a short learner-level diagnostic before building, and never make the in-page editor the lab."
+description: "Build a top-down, interactive course from any codebase or technical topic: a short narrated explainer voiced with Supertonic 3, a white background by default, graph-first Mermaid diagrams, hands-on labs placed inline between sections, a per-section MC check then short-answer gate before each lab, micro-checkpoints between screens, progressive hints, and verification that fits the skill. Labs are learn-by-doing and may edit real code, write or perform in the real medium, design an artifact, or run an experiment; they can be checked by tests, deterministic validators, rubrics, or a calibrated LLM judge. Use when someone wants to turn code or a skill into a course, teach a codebase, create a video + diagrams + exercises, or design a level-adapted tutorial. Always run a short learner-level diagnostic before building, and never make the in-page editor the lab."
 ---
 
 # Top-Down Course
@@ -18,14 +18,21 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 ## Non-negotiables
 
 - **Run the level test before building.** It has two axes: general technical level and **topic prior knowledge**. Include the explicit **“I don’t know this topic at all”** option and use the **Newcomer** track when it is chosen. If the learner declines, default to **Builder** and say so.
+- **Depth and time scale together.** The deeper, more detailed track needs a longer seat time: Newcomer 30–45 min, Explorer 45–60, Builder 60–90, Deep Diver 90–150+ minutes. If the learner asks for “more difficult” or “more detailed,” increase the time budget and depth together; never compress a Deep Diver course into a 15-minute tour.
 - **Top-down arc.** Never start with “what is a pointer” or “what is a hash table.” Start with the behavior the learner can see, then open the box that produced it.
 - **Labs live inside the course**, after the section that teaches their core. Never collect all labs into one “Labs” module at the end.
 - **Labs happen in the real medium.** For code, install TODO stubs into the actual source files, back up the originals, and provide `start` / `restore` commands. For writing, design, practice, or experiments, scaffold a real work file or artifact and check that. The course page is a read-only preview and a check button, not an editor.
 - **Choose the lab kind from the learning verb.** Debug → code; explain → writing; design → artifact; play or speak → performance; recognize → drill. Read `references/lab-kinds.md` before choosing. Do not force a code lab onto a non-code skill.
-- **Labs are active practice, not a quiz.** Multiple choice is allowed when the objective is recognition, recall, or discrimination (ear training, vocabulary, error triage), with per-option feedback. It is not allowed as the only evidence for a production skill, as the default format, or as “guess the formula.” The level diagnostic remains separate and is for placement, not grading.
+- **Match the answer format to the target performance.** If the learner is preparing for a multiple-choice exam (CFA, licensing), MC item sets are authentic—pair them with show-your-work and a written recommendation. If the target is debugging, use code; if the target is an architecture decision, require an ADR/trade-off table with evidence, not “pick the best option.” Read `references/assessment-design.md` for the domain matrix.
+- **Default to a white course.** The page and the video use a white background (`#FFFFFF`), dark ink, and one accent. Warm paper, beige, off-white, and dark themes are opt-in: use one only when the learner asks for it or names a theme, and record it in `COURSE_BRIEF.md`.
+- **Graph-first, not text-first.** Every conceptual screen leads with a visual, and every teaching section has at least one Mermaid diagram. Every module has at least three Mermaid diagrams and at least two diagram types. If a sentence describes a flow, sequence, state, hierarchy, decision, or relationship, draw it; the prose annotates the graph. Read `references/diagrams.md`.
+- **Prevent drift with a steady rhythm.** No more than two screens or about three minutes of passive reading without an interaction. Put a micro-check (predict/reveal, one-question MC, order-the-steps, hotspot) between screens, and one recall opener at the start of each section after the first module. Read `references/interactivity.md`.
+- **Every teaching section gets a three-beat gate before its lab: MC → short answer → lab.** First, 2–4 multiple-choice items with per-option feedback, retry, one misconception item, and one application item. Second, one short-answer prompt (2–4 sentences) with local autosave, a model answer, and a 3-item self-check. Then the lab. It is formative: not scored, not gated, and never a substitute for the lab.
+- **Labs are active practice, not a quiz.** Multiple choice is allowed for section checks, micro-checks, recognition/recall/discrimination drills, and exam-fidelity item sets, with per-option feedback. It is not allowed as the only evidence for a production skill, as the default lab format, or as “guess the formula.” The level diagnostic remains separate and is for placement, not grading.
 - **Every lab needs verification that fits the medium.** Code labs build a temp copy and run authoritative tests. Non-code labs combine deterministic checks, an explicit rubric, and—only when needed—a calibrated LLM judge or expert review. The checker must never modify the learner's work.
 - **Every lab needs 3 progressive hints and a reference solution or exemplar.**
 - **Verify before delivery:** `--self-test` (skeleton/weak exemplar fails, solution/strong exemplar passes), page loads with no console errors, video has audio, mobile layout works.
+- **Voice is Supertonic 3.** Narration uses Supertone **[Supertonic 3](https://huggingface.co/Supertone/supertonic-3)** (local, 44.1 kHz, default voice `M1`) for every language it supports. Use `edge-tts` only for languages it does not cover, currently Chinese. Do not use Kokoro or `hyperframes tts` for narration. Read `references/voice.md`.
 - **Use the research and slides companions when asked.** For research, use `sanjay3290/ai-skills` → `skills/deep-research` (Gemini Deep Research) first; get consent for its paid API. For a slide deck, use `zarazhangrui/frontend-slides`. Both are optional to install but are the default choice when the learner asks for that artifact. See `references/companion-skills.md`.
 - **Write in the learner's language.** Ask; do not assume English. Keep code, identifiers, and upstream comments in their original language.
 - **Contrast is a quality gate.** Body text ≥ 4.5:1 and code tokens ≥ 7:1 against their actual backgrounds. Use a palette from the `color-themes` companion when a theme is requested or contrast is in question; measure it, do not eyeball it.
@@ -37,9 +44,9 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 | 0 | Learner-level diagnostic + brief | `COURSE_BRIEF.md` exists with a track |
 | 1 | Analyze the codebase/topic; choose concepts and lab sites | 3–5 concepts, 2–3 labs, one end-to-end trace |
 | 2 | Design the top-down arc and inline lab placement | Module outline reviewed |
-| 3 | Build the course site | Page loads, diagrams render, labs are inline |
+| 3 | Build the course site | Graph-first page, checks + short answers before labs, diagrams render |
 | 4 | Build the labs and their verification | `--self-test` passes (both directions) |
-| 5 | Produce the video | 60–90 s MP4 with voice + sound + poster |
+| 5 | Produce the video | 60–90 s MP4 with Supertonic 3 voice + sound + poster |
 | 6 | Verify and hand off | All quality gates pass; README has commands |
 
 Read the relevant reference only when you reach that phase.
@@ -54,21 +61,24 @@ Ask **6 scored questions** (self-rating, scenarios, one code snippet/symbolic tr
 - **Domain:** software / math / physics / other.
 - **Direction:** top-down (phenomenon → principles) or bottom-up (definitions → results). Ask for math/physics; default to top-down for software. If the learner is a Newcomer, do not force this choice before the first module.
 - **Goal:** steer AI / debug / understand architecture / build / solve problems / teach.
-- **Time:** 15 / 30 / 60+ minutes.
+- **Time:** 20–35 / 35–60 / 60–90 / 90–150+ minutes (scale with the track).
 - **Language** and whether a video is required.
+- **Do not ask about the background or voice unless the learner raises them.** Default to the white canvas and Supertonic 3 voice `M1`; record any requested theme or voice in the brief.
 
 Select the track:
 
-| Condition | Track | Course shape |
-|---|---|---|
-| Topic “I don’t know this topic at all” | **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab, 75–90 s video |
-| General score 0–4 | **Explorer** | 4 modules, 2 labs, more analogies, more scaffolding, 75–90 s video |
-| General score 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video |
-| General score 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, more real code, 90–120 s video |
+| Condition | Track | Course shape | Seat time |
+|---|---|---|---|
+| Topic “I don’t know this topic at all” | **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab, 75–90 s video | 30–45 min |
+| General score 0–4 | **Explorer** | 4 modules, 2 labs, more analogies, more scaffolding, 75–90 s video | 45–60 min |
+| General score 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video | 60–90 min |
+| General score 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, more real code, 90–120 s video | 90–150+ min |
 
 Topic “I’ve heard some terms” adds a one-screen primer; “I can use it / teach it” skips the primer. The Newcomer track wins over the general score: a strong programmer can still be new to the topic.
 
-If the learner declines, use **Builder**. Write the result to `COURSE_BRIEF.md` using `templates/course-brief.md`.
+If the learner declines, use **Builder** and state the assumption. If their stated time budget is under 45 minutes, use **Explorer** instead and record the downgrade. Write the result to `COURSE_BRIEF.md` using `templates/course-brief.md`.
+
+If the time budget is below the track minimum, downgrade or split into a core path plus optional deep-dive modules. If it is above, add optional extensions, not padding. See `references/level-test.md`.
 
 If `mattpocock/skills` is installed and the goal is ambiguous, optionally run `/grill-me` or `/grill-with-docs` to ask what they actually want. Cap it at about 10 questions, record the answers in the brief, and do not grill a novice on domain facts. The level test is mandatory; grilling is optional.
 
@@ -87,6 +97,8 @@ Extract:
 - **Lab candidates:** 2–3 core sections that are self-contained, testable from the command line, and essential to the system. Prefer code that is stable, small, and has an existing test suite.
 
 Choose 3–5 concepts. Fewer, deeper modules beat many thin ones.
+
+When the answer format is not obvious—exam prep, architecture decisions, service or business courses—read `references/assessment-design.md` before choosing lab sites.
 
 For a math/physics topic, read `references/math-physics.md` and use the same arc with a derivation and a computational lab. Use Manim for the video when the topic is mathematical or physical.
 
@@ -111,28 +123,33 @@ Place the labs like this:
 
 Do not create a separate “Labs” module. The nav should have one dot per teaching section; the labs are cards inside those sections.
 
+Plan the gate with the lab: every lab section gets its MC items and short-answer prompt designed at the same time as the lab mission, not bolted on afterward. Plan at least one diagram per section and the micro-check between its screens.
+
 ## Phase 3 — Build the course site
 
-Read `references/design-system.md`.
+Read `references/design-system.md`, `references/diagrams.md`, and `references/interactivity.md`.
 
-If the learner names a theme, or if code/body text is hard to read, read `references/color-themes.md` and use the `color-themes` companion. Pick a palette from its `themes/*.toml` catalog (Tokyo Night is the default; GitHub Light/Dark High Contrast are good for code panels), map it to CSS custom properties, and verify contrast after rendering. Do not invent a palette when the requested one exists.
+Start with the **white default**: page background `#FFFFFF`, dark ink, one accent, neutral gray borders. Do not use a warm paper, beige, off-white, or dark canvas unless the learner asks for it. If the learner names a theme or asks for a dark page, read `references/color-themes.md`, pick the requested palette (Tokyo Night is a good dark default; GitHub Light/Dark High Contrast are good for code panels), map it to CSS custom properties, and verify contrast after rendering. Do not invent a palette when the requested one exists.
 
 Build a directory course site with:
 
 - `index.html` assembled from `_base.html`, `modules/*.html`, `_footer.html`.
-- `styles.css` and `main.js` for course-wide layout, progress, tooltips, chat, and flow animations.
+- `styles.css` and `main.js` for course-wide layout, progress, tooltips, chat, flow animations, and the sticky section rail.
+- `section-check.js` for the MC cards, micro-checks, and short-answer autosave/reveal.
 - `lab.css` and `lab.js` for the read-only lab preview, hints, check button, and results.
 - `assets/` for the poster, video, and a local Mermaid build.
 - `build.sh` that concatenates the modules.
 
 Content rules:
 
-- 2–3 sentences per text block; every screen at least 50% visual.
+- **Graph-first.** Every conceptual screen leads with a Mermaid diagram or an equally visual block; every teaching section has at least one Mermaid diagram; every module has at least three Mermaid diagrams and at least two types. A text-only screen is a defect. See `references/diagrams.md`.
+- 2–3 sentences per text block. If a fourth sentence describes a flow or relationship, replace it with a diagram.
 - Every technical term gets a glossary tooltip on first use per module.
 - Every module has at least one real code↔English translation.
-- Every module has a diagram or interactive visual (Mermaid, flow animation, group chat, architecture map).
-- Every lab is a white card with: the incomplete/weak behavior, mission, deliverable, evidence path, 3 hints, a read-only starter or preview (code or artifact), copy-path, check command, check button, rubric, and a reference solution/exemplar.
-- Multiple choice is allowed only for recognition, recall, or discrimination, with per-option feedback; never as the only evidence for a production skill and never as the default lab format.
+- **Micro-check cadence.** No more than two screens or about three minutes of passive reading without an interaction. Use predict/reveal, a one-question MC, order-the-steps, a diagram hotspot, or an explain-back prompt. One recall opener per section after the first module.
+- **The gate before each lab is MC → short answer → lab.** Every teaching section ends with a 2–4 item **Check your understanding** card (per-option feedback, retry, one misconception item, one application item), then a short-answer card (2–4 sentences, local autosave, model answer, 3-item self-check), then the lab. Neither is scored or gated, and neither replaces the lab. See `references/interactivity.md`.
+- Every lab is a white card with a visible border on the white page: the incomplete/weak behavior, mission, deliverable, evidence path, 3 hints, a read-only starter or preview (code or artifact), copy-path, check command, check button, rubric, and a reference solution/exemplar.
+- Multiple choice is allowed for section checks, micro-checks, recognition drills, and exam-fidelity item sets, with per-option feedback; never as the only evidence for a production skill and never as the default lab format.
 
 If the learner asks for slides, a deck, or a presentation version, read `references/companion-skills.md` and use `frontend-slides`. Do not build a second competing design system; reuse the course's palette, type, and content.
 
@@ -148,7 +165,7 @@ or `/impeccable audit course`. Treat the findings as a second pass, not as a rep
 
 ## Phase 4 — Build the labs and verification
 
-Read `references/lab-kinds.md`, then `references/lab-checker.md`. Copy and adapt `templates/lab.mjs` and `templates/lab-rubric.json` if useful.
+Read `references/assessment-design.md`, `references/lab-kinds.md`, then `references/lab-checker.md`. Copy and adapt `templates/lab.mjs`, `templates/lab-rubric.json`, and `templates/architecture-decision.md` if useful.
 
 The contract for code labs:
 
@@ -182,18 +199,19 @@ Test design:
 
 ## Phase 5 — Produce the video
 
-Read `references/video-production.md`.
+Read `references/video-production.md` and `references/voice.md`.
 
-Produce the requested video language/variant. For Traditional Chinese, use `zh-TW-HsiaoChenNeural` via `edge-tts`; for Cantonese, use `zh-HK-HiuMaanNeural` and colloquial Cantonese. Do not generate an English duplicate unless the learner asks for one. If both Mandarin and Cantonese are requested, keep both as separate MP4s with separate captions. See the language-and-voice section in the reference.
+Produce the requested video language/variant. Narration uses **Supertonic 3** for every language it supports (default voice `M1`); do not use Kokoro or `hyperframes tts` for narration. Traditional Chinese and Cantonese are not supported by Supertonic 3—use `zh-TW-HsiaoChenNeural` or `zh-HK-HiuMaanNeural` via `edge-tts`, with colloquial written Cantonese for the latter. Do not generate an English duplicate unless the learner asks for one. If both Mandarin and Cantonese are requested, keep both as separate MP4s with separate captions. See `references/voice.md` and the language-and-voice section in the video reference.
 
 Target 60–90 seconds (up to 120 for Deep Diver), 16:9, 1920×1080, 30 fps.
 
-- 5–7 scenes: hook → the machine → 2–3 stage highlights → values/data → outro.
+- 5–7 scenes: hook → the machine → 2–3 stage highlights → values/data → outro. Every scene shows a graph, real code, or real output; no abstract filler.
 - 150–220 words of narration, or about 320–400 Chinese characters for a 75–95 s Chinese video. Measure the rendered voice; do not guess. Write for the ear, not the page.
-- Voice: a local TTS. Kokoro-82M (`am_michael`) for English; `zh-TW-HsiaoChenNeural` via `edge-tts` for Traditional Chinese, unless the learner requests another voice. Do not require a paid provider.
+- **White canvas by default.** The video uses a white background, dark ink, and one accent unless the learner asked for a theme. Do not ship the default warm-paper or purple-gradient look.
+- Voice: **Supertonic 3** via the `supertonic` CLI or Python SDK (default `M1`; audition `F1`/`M2`; `--steps 10`; 44.1 kHz WAV). One clip per scene, measure with `ffprobe`. Use `edge-tts` only for Chinese, which Supertonic 3 does not cover. Do not require a paid provider. Listen to the first 10 seconds and re-render if the voice sounds robotic or mispronounces identifiers.
 - Music and SFX: a soft bed under the voice, keyboard/click/whoosh cues, a small result chime. Pre-mix with ffmpeg and normalize to about −16 LUFS.
 - Render with HyperFrames when available: one paused GSAP timeline, local fonts, local audio, no network at render time, root `data-duration`.
-- If HyperFrames is unavailable, use the fallback: HTML/CSS slides + TTS + ffmpeg, or a screen-recorded walkthrough with burned-in titles. When a slide deck is requested, use `frontend-slides` (`zarazhangrui/frontend-slides`) to build the HTML deck, then record or render it with the same storyboard and audio bed.
+- If HyperFrames is unavailable, use the fallback: HTML/CSS slides + Supertonic 3 + ffmpeg, or a screen-recorded walkthrough with burned-in titles. When a slide deck is requested, use `frontend-slides` (`zarazhangrui/frontend-slides`) to build the HTML deck, then record or render it with the same storyboard and audio bed.
 - Extract a poster frame and embed the MP4 at the top of the course.
 
 If the video uses recorded footage or demo takes, optionally use `video-use` to cut, caption, and grade that footage. Do not use it as the primary explainer generator; keep the generated 60–90 s storyboard as the spine.
@@ -227,7 +245,7 @@ Check the page:
 Write `course/README.md` with:
 
 - what the course is;
-- the level track;
+- the level track and target seat time;
 - the exact edit/check/restore commands;
 - the lab IDs and files;
 - the video and audio rebuild commands;
@@ -239,10 +257,14 @@ Write `course/README.md` with:
 |---|---|
 | `references/level-test.md` | The 6-question diagnostic, scoring, and track adaptations |
 | `references/course-architecture.md` | Top-down arc, module templates, inline lab placement, content rules |
+| `references/diagrams.md` | Graph-first rule, diagram type selection, Mermaid patterns, white theme, accessibility |
+| `references/interactivity.md` | Section rhythm, MC → short answer → lab, micro-check types, anti-drift layout |
+| `references/assessment-design.md` | Answer formats by domain: codebase, architecture decisions, CFA-style exams, service/learning-as-a-service, language, design, music |
 | `references/lab-kinds.md` | Code/writing/design/performance/experiment/research/drill labs, MC rules, rubric and LLM-judge contract, non-code self-test |
 | `references/lab-checker.md` | Code repo-mode labs, start/restore, checker modes, case format, self-test; non-code adapters |
-| `references/video-production.md` | Script, storyboard, voice/music/SFX, HyperFrames composition, fallback |
-| `references/design-system.md` | Palette, typography, diagrams, lab UI, responsive rules |
+| `references/video-production.md` | Script, storyboard, Supertonic 3 voice integration, music/SFX, HyperFrames composition, fallback |
+| `references/voice.md` | Supertonic 3 install, voices, languages, per-scene narration, Chinese fallback, troubleshooting |
+| `references/design-system.md` | White canvas, palette, typography, diagrams, check/short-answer/lab UI, responsive rules |
 | `references/color-themes.md` | Palette catalog, contrast gate, code/terminal pairings, install-by-reference |
 | `references/quality-gates.md` | Pre-delivery checklist |
 | `references/companion-skills.md` | Optional `deep-research`, `frontend-slides`, `video-use`, `impeccable`, `academic-research-skills`, `mattpocock/skills`, and `manim_skill` integrations |
@@ -257,6 +279,9 @@ Write `course/README.md` with:
 | `templates/lab.mjs` | Generic start/restore/status helper for code and work-file labs (adapt imports) |
 | `templates/lab-cases.json` | Authoritative case format for code labs |
 | `templates/lab-rubric.json` | Rubric + deterministic-check + LLM-judge format for non-code labs |
+| `templates/architecture-decision.md` | ADR-style lab deliverable for architecture decisions |
+| `templates/mc-item-set.json` | Exam-fidelity item set with per-option rationales and a show-your-work task |
+| `templates/section-check.json` | Micro-checks + 2–4 MC items + the short-answer prompt, model answer, and self-check for one section |
 
 ## Companion tools
 
@@ -281,11 +306,14 @@ Read `references/companion-skills.md` for install notes, licenses, and integrati
 |---|---|---|---|---|
 | Modules | 4 | 4 | 5 | 5–6 |
 | Labs | 2 (guided first lab) | 2 | 3 | 3 |
+| Seat time | 30–45 min | 45–60 min | 60–90 min | 90–150+ min |
 | Hints | Very explicit | 2 up front | 3 progressive | 3, last one minimal |
 | Code shown | Short, heavily annotated | Short, annotated | Real snippets | Longer real snippets |
 | Video | 75–90 s | 75–90 s | 90 s | 90–120 s, denser |
 | Tooltips | Every term | Aggressive | Standard | Only non-obvious terms |
-| Diagrams | Most, simplest | More, simpler | Standard | Fewer, denser |
+| Diagrams | 3 per module, simplest | 3 per module | 3+ per module | 3–4 per module, denser links |
+| Micro-checks | Every 1–2 screens | Every 2 screens | Every 2 screens | Every 2–3 screens |
+| MC + short answer | 2 items + 1–2 sentences | 2–3 items + 2–3 sentences | 3 items + 2–4 sentences | 3–4 items + 3–4 sentences with evidence |
 
 ## Anti-patterns
 
@@ -294,13 +322,23 @@ Read `references/companion-skills.md` for install notes, licenses, and integrati
 - Asking a Newcomer to choose top-down vs bottom-up before the first module.
 - Using generic Manim decoration instead of animating the actual derivation.
 - A “Labs” section at the end instead of labs after their concept.
+- No per-section checks, or one giant quiz at the end instead.
+- A lab as the first interaction in a section: the gate is MC → short answer → lab, in that order.
+- A section check that replaces the lab, or a lab with no check for the core idea.
+- A long passive stretch (more than two screens or about three minutes) with no interaction.
+- A text wall where a Mermaid graph would be clearer, or a module below its diagram floor.
+- A default beige, warm-paper, off-white, or dark canvas when the learner did not ask for one.
 - An in-page editor that edits a copy instead of the real medium.
 - Forcing every lab to be code when the skill is writing, design, performance, or recognition.
+- Using one answer format for every domain: code for a CFA course, MC for an architecture decision, or prose for a service design.
 - Multiple choice as the default lab format, as the only evidence for a production skill, or as “guess the formula.”
+- “Pick the best architecture/design/strategy” with no context, trade-off, or evidence.
+- Exam-style MC with no rationale, no per-topic report, and no show-your-work task.
 - An LLM judge with no rubric, no quoted evidence, no calibration, or no deterministic checks where they are possible.
 - A checker that copies the repo but ignores the learner’s edits, or modifies the learner’s work.
 - All labs removed at once with no way to restore the originals.
 - A video with no voice, no sound, or no poster.
+- Using Kokoro or `edge-tts` for a language Supertonic 3 supports, or forcing Supertonic on Chinese.
 - Text walls, recycled metaphors, or a purple-gradient AI look.
 - Low-contrast body text or code, especially gray comments on a dark panel; a theme name without its actual palette.
 - Letting an optional companion override the course’s direction: a launch-style `video-use` cut, generic `impeccable` advice, or academic prose pasted into the teaching copy.

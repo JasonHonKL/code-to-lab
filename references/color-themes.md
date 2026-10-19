@@ -18,7 +18,7 @@ The script keeps a sparse checkout in the local cache, then links `color-themes`
 
 - 158 palettes under `themes/*.toml`, including Tokyo Night, Catppuccin (four variants), GitHub Light/Dark (including high-contrast and colorblind variants), Flexoki, Everforest, Dracula, Nord-like palettes, Alabaster, and many terminal themes.
 - Each file uses Alacritty-style keys: `colors.primary.background`, `colors.primary.foreground`, `colors.normal.*`, `colors.bright.*`.
-- The skill defaults to **Tokyo Night** when the learner has no preference.
+- The skill’s default is the **white canvas** defined in `references/design-system.md`. When the learner asks for a dark theme without naming one, Tokyo Night is a good default.
 
 ## When to use it
 
@@ -27,7 +27,7 @@ The script keeps a sparse checkout in the local cache, then links `color-themes`
 - A design review flags code tokens, muted text, or command blocks.
 - You need a coherent palette for diagrams, terminal blocks, and syntax highlighting.
 
-Do **not** use it to replace the course’s design direction. A palette is a constraint, not a redesign. Keep the warm paper canvas, typography hierarchy, and lab card structure.
+Do **not** use it to replace the course’s design direction. A palette is a constraint, not a redesign. Keep the white canvas, typography hierarchy, and lab card structure.
 
 ## Contrast is the gate
 
@@ -44,9 +44,9 @@ A theme name is not proof of readability. Measure the pairs you actually use:
 
 Use a small contrast function (WCAG relative luminance) rather than eyeballing. Record the chosen pairs in `COURSE_BRIEF.md` or the design notes. If a palette fails, pick a darker/lighter variant from the catalog rather than adding opacity.
 
-## Recommended pairings for a paper course
+## Recommended pairings for the white course
 
-The course’s default warm canvas is light. Two high-contrast palettes from the catalog work well together:
+The course’s default canvas is white. Two high-contrast palettes from the catalog work well together:
 
 - **Code panels:** `github_light_high_contrast.toml`
   - background `#ffffff`, foreground `#010409`

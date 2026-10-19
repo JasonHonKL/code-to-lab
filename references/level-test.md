@@ -120,10 +120,13 @@ Ask these to shape the course, not the score:
    - build on top of the codebase
    - solve problems / pass an exam
    - teach it to someone else
-2. **Time:** “How much time do you want to spend?”
-   - 15 minutes (Explorer)
-   - 30 minutes (Builder)
-   - 60+ minutes (Deep Diver)
+2. **Time:** “How much time do you want to spend on the tutorial?”
+   - 20–35 minutes (focused tour; Explorer)
+   - 35–60 minutes (standard course; Explorer/Builder)
+   - 60–90 minutes (deeper build; Builder)
+   - 90–150+ minutes (full deep dive; Deep Diver)
+
+   Time is a constraint, not just a preference. A deeper, more detailed course needs a longer seat time—do not promise a Deep Diver course in 20 minutes.
 3. **Language:** “Should the course be in English, Traditional Chinese, or another language?”
 4. **Video:** “Do you want a narrated video, or are diagrams + labs enough?”
 
@@ -131,16 +134,32 @@ If `mattpocock/skills` is installed, you may optionally run `/grill-me` to resol
 
 ## Tracks
 
-| Condition | Track | What changes |
-|---|---|---|
-| Topic A (none) | **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab, 75–90 s video, no unglossed jargon |
-| Score 0–4, topic B–D | **Explorer** | 4 modules, 2 labs, more analogies, show 2 hints up front, shorter snippets |
-| Score 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video |
-| Score 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, longer real code, 90–120 s video |
+| Condition | Track | What changes | Recommended seat time |
+|---|---|---|---|
+| Topic A (none) | **Newcomer** | 4 modules, 2 labs, a “What is this?” opening, every term defined, a guided first lab, 75–90 s video, no unglossed jargon | 30–45 min |
+| Score 0–4, topic B–D | **Explorer** | 4 modules, 2 labs, more analogies, show 2 hints up front, shorter snippets | 45–60 min |
+| Score 5–8 | **Builder** | 5 modules, 3 labs, standard hints, 90 s video | 60–90 min |
+| Score 9–12 | **Deep Diver** | 5–6 modules, 3 harder labs, fewer hints, longer real code, 90–120 s video | 90–150+ min |
 
 If the score is mixed, use the **lowest dimension for support** and the **highest for pace**. A strong programmer who is new to the topic gets Newcomer for the topic primer, then the full technical pace after it.
 
-If the learner declines the test, use **Builder** and state the assumption in `COURSE_BRIEF.md`.
+If the learner declines the test, use **Builder** and state the assumption in `COURSE_BRIEF.md`. If their stated time budget is under 45 minutes, use **Explorer** instead and record the downgrade.
+
+## Time and depth must agree
+
+The track sets a recommended seat time. The course length, module count, lab depth, and hint density scale together.
+
+- **Newcomer:** 30–45 minutes, 4 modules, 2 labs, very explicit hints.
+- **Explorer:** 45–60 minutes, 4 modules, 2 labs, more analogies.
+- **Builder:** 60–90 minutes, 5 modules, 3 labs, standard hints.
+- **Deep Diver:** 90–150+ minutes, 5–6 modules, 3 harder labs, less scaffolding, more real code.
+
+Rules:
+
+- If the time budget is **below** the track minimum, either downgrade the track or split the course into a **core path** that fits the budget plus optional deep-dive modules. Say which one you did in `COURSE_BRIEF.md`.
+- If the time budget is **above** the track needs, add optional extensions (a harder lab, a real-code walkthrough, a reading path). Do not pad with repeated text.
+- If the learner asks for “more difficult”, “more detailed”, or “deeper”, increase the **time budget and depth** together. A more detailed course is not the same content with more words.
+- Do not compress a Deep Diver course into 15–20 minutes. Either reduce the scope to Builder/Explorer or tell the learner the full deep dive needs 90+ minutes.
 
 ## Newcomer rules
 

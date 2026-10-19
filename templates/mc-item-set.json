@@ -1,0 +1,35 @@
+{
+  "id": "03-cfa-item-set",
+  "kind": "drill",
+  "format": "itemSet",
+  "title": "CFA item set — bond duration",
+  "timeLimitSeconds": 360,
+  "vignette": "A portfolio manager holds a 7-year, 4% annual-pay bond. Yields fall by 50 basis points.",
+  "items": [
+    {
+      "id": "q1",
+      "objective": "duration-price relationship",
+      "stem": "If modified duration is 6.1, the approximate percentage price change is closest to:",
+      "options": [
+        { "id": "A", "text": "+1.53%", "rationale": "Uses half the duration effect; this is the correct sign but the wrong magnitude." },
+        { "id": "B", "text": "+3.05%", "rationale": "Correct: -duration x yield change = -6.1 x -0.005 = +3.05%." },
+        { "id": "C", "text": "-3.05%", "rationale": "Gets the duration math right but reverses the sign; falling yields raise prices." }
+      ],
+      "correct": "B",
+      "explanation": "Price change ≈ -modified duration × change in yield. A 50 bp fall is -0.005, so -6.1 × -0.005 = +0.0305."
+    }
+  ],
+  "showYourWork": {
+    "prompt": "Compute the modified duration from the bond's Macaulay duration, then explain why the price change is positive.",
+    "rubric": [
+      "Shows the Macaulay-to-modified duration conversion",
+      "Uses the correct sign for the yield change",
+      "Reports the result with units (percentage price change)",
+      "Explains the inverse price-yield relationship"
+    ]
+  },
+  "reporting": {
+    "perObjective": true,
+    "showRationalesAfterSubmit": true
+  }
+}
