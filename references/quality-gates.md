@@ -73,6 +73,10 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 
 - [ ] Duration is 60–90 s (or the agreed length).
 - [ ] 16:9, 1920×1080, 30 fps.
+- [ ] The camera is locked: no shake, wobble, drift, rotation, parallax, breathing zoom, or continuous pan.
+- [ ] Static holds are stable: no text shimmer, edge crawl, or 1–2 px drift; `freezedetect` finds the intended holds and `vidstabdetect` shows identity transforms in them.
+- [ ] The stream is constant frame rate 30 fps; no dropped or duplicated frames.
+- [ ] The explainer was rendered frame-exact from a paused timeline, not screen-recorded.
 - [ ] The video canvas is **white by default**; a warm paper or dark theme appears only if the learner asked for it.
 - [ ] Narration uses **Supertonic 3** (default voice `M1`, or an auditioned alternative such as `F1`/`M2`), not Kokoro and not `hyperframes tts`.
 - [ ] The Supertonic `--lang` matches the narration language; Chinese uses `edge-tts` because Supertonic 3 does not support Chinese.
@@ -103,6 +107,12 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] No console errors.
 - [ ] No duplicate IDs.
 - [ ] No missing local asset references.
+- [ ] No nested cards: one bordered surface per level; a panel does not contain another bordered panel.
+- [ ] Row actions are inline text actions, not stacked bordered buttons; each surface has at most one primary button.
+- [ ] Filters are a borderless toolbar above the list, not their own card.
+- [ ] Table date, status, and action labels do not collide at 1024 px or 1440 px.
+- [ ] Screenshots were captured at 1440×900 and 390×844 and inspected for clipped buttons, overlapping labels, and nested-card stacks.
+- [ ] If the course is localized, the i18n coverage check passes and expanded strings do not clip buttons, tabs, or table cells.
 - [ ] The nav dot count equals the teaching-section count.
 - [ ] Mobile: no page-level horizontal overflow; labs stack; nav does not cover the first module.
 - [ ] Body text and muted text meet 4.5:1 on their rendered backgrounds.
@@ -134,6 +144,14 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] `COURSE_BRIEF.md` records which companions and verification rungs were used.
 - [ ] If `mattpocock/skills` was used for grilling: the answers were merged into the brief and did not replace the level test.
 - [ ] If `manim_skill` was used: the scenes were rendered and checked, and the mathematical functions are covered by tests.
+
+## Updating an existing course
+
+- Merge upstream changes; do not overwrite the course to “regenerate” it.
+- Resolve conflicts in the source modules and styles, never by hand-editing built `index.html`, rendered frames, or a generated video.
+- Preserve the localization layer. Re-run the i18n coverage check and inspect expanded strings in buttons, tabs, and table cells.
+- Keep one design direction across the merge. If both sides changed a screen, keep the newer interaction model and port the other side’s copy and behavior into it.
+- Re-run the full gate after the merge: `--self-test`, screenshots at 1440 and 390, the video stability check, and the page console check. A green pre-merge build is not evidence for the merged tree.
 
 ## Handoff
 

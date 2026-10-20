@@ -62,6 +62,18 @@ For Traditional Chinese, use PingFang TC, Noto Sans TC, or Source Han Sans for C
 - Fixed nav 50 px, progress bar, one dot per teaching section.
 - On mobile, stack two-column layouts and keep the fixed nav from covering the first module.
 
+## Surface hierarchy and actions
+
+The course should read as one page with sections, not a stack of boxes.
+
+- **One card level.** A panel may contain text, a form, a table, or a diagram; it must not contain another bordered card. Use a section heading, a rule, or spacing for the next level. If a screenshot shows two borders around the same content, remove one.
+- **Inline row actions.** Edit, rename, delete, and similar row actions are text buttons on one line, right-aligned, with one emphasised action. Do not stack three bordered buttons in a table cell.
+- **One primary action per surface.** A filled or accent button is the main action; everything else is a text action. Destructive actions use the error color and a two-step confirm in place.
+- **Filters are a toolbar, not a card.** Lay status/priority/assignee filters in a borderless row above the list they filter, not in their own panel.
+- **Hide secondary work.** Import, advanced settings, and long optional forms live behind a disclosure (`<details>`) and stay collapsed until used.
+- **Tables have a column budget.** Use `table-layout: fixed`, explicit percentage widths, and 10–18 px cell padding. Date, status, and action labels must not collide. Test at 1440, 1024, and 390 px; let text wrap by choice, never by overflow.
+- **Screenshot before delivery.** Capture every screen at 1440×900 and 390×844. Look for nested cards, clipped buttons, overlapping labels, and page-level horizontal overflow. A clean DOM is not evidence; the rendered frame is.
+
 ## Code
 
 - Use a palette from `color-themes`. For the default white course: GitHub Light High Contrast for code (`#FFFFFF` background, `#010409` foreground, `#4B535D` comments, `#A0111F` keywords, `#024C1A` strings, `#0349B4` numbers, `#622CBC` functions) and GitHub Dark High Contrast for commands (`#0A0C10` / `#F0F3F6`). Dark IDE panels are fine on a dark page; Catppuccin-inspired colors are optional, not mandatory.

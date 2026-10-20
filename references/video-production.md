@@ -99,6 +99,62 @@ ffmpeg -i voice.wav -i music.wav -i sfx.wav \
 - Motion is seekable and deterministic: opacity, position, scale, clip-path, background-color. No render-time clocks, no unseeded randomness, no network.
 - Hard cuts between scenes are fine. Do not add a fancy transition you cannot verify.
 
+## Camera and frame stability
+
+The explainer is a fixed 1920×1080 frame with content moving inside it. The viewer must never perceive the frame itself moving.
+
+**Fixed frame**
+
+- No camera shake, handheld drift, wobble, bounce, rotation, 3D tilt, parallax, or breathing/autofocus zoom.
+- No continuous pan or Ken Burns move across a hold. A zoom is allowed only as one deliberate step between two readable compositions, never as constant motion.
+- Hard cuts or one short crossfade. No whip pans, zoom punches, glitch, or multi-axis transitions.
+- The background must not drift in color or brightness over time.
+
+**What may move**
+
+- Content inside the frame: a line draws, a node highlights, code types, a value changes.
+- Use whole-pixel positions. Avoid fractional `translate`, `scale`, `letter-spacing`, or `font-size` animation on text; subpixel movement makes glyphs shimmer.
+- Prefer opacity, clip-path, wipe, and a step highlight. If a transform is necessary, use `translate3d` at whole pixels and never animate text scale between 0.99 and 1.01.
+- Pause decorative loops (cursor blink, pulsing glow) during capture.
+
+**Frame-exact capture (fallback)**
+
+Do not screen-record the explainer. Screen capture brings dropped frames, cursor motion, scroll jitter, and variable frame rate.
+
+1. Fixed viewport 1920×1080, device scale factor 1, scrollbars hidden.
+2. Wait for `document.fonts.ready` and two animation frames after layout.
+3. Disable smooth scrolling, caret blink, and CSS animations that are not on the timeline.
+4. For each output frame `n`, seek the paused timeline to exactly `n/30`, wait one frame, then capture.
+5. Keep the same window size, zoom, and font rendering for every frame; never scroll during a capture.
+6. Encode constant frame rate with `-fps_mode cfr -r 30`.
+7. If a frame takes longer than the budget, reduce effects. Do not drop or duplicate frames.
+
+**Verify stability**
+
+```bash
+ffprobe -v error -select_streams v:0 \
+  -show_entries stream=avg_frame_rate,r_frame_rate,nb_frames \
+  -of default=nw=1 renders/video.mp4
+```
+
+Both frame rates must be `30/1`.
+
+```bash
+ffmpeg -v error -i renders/video.mp4 \
+  -vf freezedetect=n=0.003:d=0.5 -map 0:v -f null - 2>&1 | head
+```
+
+Every intended hold should be detected as a freeze. If a hold is never detected, something is still moving.
+
+```bash
+ffmpeg -v error -i renders/video.mp4 \
+  -vf vidstabdetect=shakiness=5:accuracy=9:result=/tmp/transforms.trf -f null -
+```
+
+Inspect the transform file for a hold: identity transforms mean the camera is locked. Non-identity transforms in a scene you intended to be static are a defect.
+
+Watch the first 10 seconds and the quietest scene at 100% on a 1080p timeline. Reject edge crawl, text shimmer, and any frame that drifts by 1–2 px.
+
 ## HyperFrames composition
 
 If HyperFrames is installed, build a single composition:
@@ -133,7 +189,7 @@ ffmpeg -ss 9 -i renders/video.mp4 -frames:v 1 -q:v 2 assets/poster.jpg
 If HyperFrames is unavailable:
 
 1. Build the same scenes as an HTML/CSS deck with one timeline (CSS animations or GSAP). When the learner asks for a slide deck, use `frontend-slides` and its 16:9 deck output.
-2. Record the deck with a headless browser screenshot sequence or a screen recorder.
+2. Capture the deck frame-by-frame from a paused timeline with a headless browser. Do not screen-record the explainer; capture introduces dropped frames, cursor motion, scroll jitter, and variable frame rate.
 3. Generate the same Supertonic 3 voice/audio bed.
 4. Mux with ffmpeg:
 
@@ -189,6 +245,10 @@ Add a transcript in the course page, with timestamps that match the scenes. If t
 - Every line that must be read stays long enough to read.
 - Narration uses **Supertonic 3** (default `M1` or an auditioned alternative), not Kokoro and not `hyperframes tts`.
 - The narration language matches `--lang`; Chinese uses `edge-tts` because Supertonic 3 does not support it.
+- The camera is locked: no shake, wobble, drift, rotation, parallax, breathing zoom, or continuous pan.
+- Static holds are stable; no text shimmer, edge crawl, or 1–2 px drift.
+- Frame rate is constant 30 fps and no frames were dropped or duplicated.
+- The explainer was rendered frame-exact, not screen-recorded.
 - Supertonic clips are 44.1 kHz source; the mix is 48 kHz.
 - Voice is intelligible; identifiers and numbers are pronounced correctly; music does not compete.
 - No black gaps after the end card.

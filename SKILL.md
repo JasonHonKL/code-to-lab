@@ -32,6 +32,8 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 - **Every lab needs verification that fits the medium.** Code labs build a temp copy and run authoritative tests. Non-code labs combine deterministic checks, an explicit rubric, and—only when needed—a calibrated LLM judge or expert review. The checker must never modify the learner's work.
 - **Every lab needs 3 progressive hints and a reference solution or exemplar.**
 - **Verify before delivery:** `--self-test` (skeleton/weak exemplar fails, solution/strong exemplar passes), page loads with no console errors, video has audio, mobile layout works.
+- **Motion stays inside a fixed frame.** The video camera is locked: no shake, wobble, handheld drift, parallax, rotation, breathing zoom, or continuous pan. Animate content inside a 1920×1080 frame; use hard cuts or one simple crossfade. Never screen-record the explainer. Render frame-exact from a paused timeline, and make every static hold pixel-stable.
+- **Flatten the surfaces.** One card level only: no card inside a card. Row actions are inline text actions, not a stack of boxed buttons. Filters are a borderless toolbar, secondary forms hide behind a disclosure, and each surface has at most one primary button.
 - **Voice is Supertonic 3.** Narration uses Supertone **[Supertonic 3](https://huggingface.co/Supertone/supertonic-3)** (local, 44.1 kHz, default voice `M1`) for every language it supports. Use `edge-tts` only for languages it does not cover, currently Chinese. Do not use Kokoro or `hyperframes tts` for narration. Read `references/voice.md`.
 - **Use the research and slides companions when asked.** For research, use `sanjay3290/ai-skills` → `skills/deep-research` (Gemini Deep Research) first; get consent for its paid API. For a slide deck, use `zarazhangrui/frontend-slides`. Both are optional to install but are the default choice when the learner asks for that artifact. See `references/companion-skills.md`.
 - **Write in the learner's language.** Ask; do not assume English. Keep code, identifiers, and upstream comments in their original language.
@@ -155,6 +157,8 @@ If the learner asks for slides, a deck, or a presentation version, read `referen
 
 The page must work offline except for web fonts; bundle Mermaid, the video, and the poster locally.
 
+Before the optional audit, take screenshots at 1440×900 and 390×844. Remove nested cards, stacked boxed row actions, and overlapping table labels; the surface rules are in `references/design-system.md`.
+
 If `impeccable` is installed, run its audit after the page is built:
 
 ```bash
@@ -211,7 +215,8 @@ Target 60–90 seconds (up to 120 for Deep Diver), 16:9, 1920×1080, 30 fps.
 - Voice: **Supertonic 3** via the `supertonic` CLI or Python SDK (default `M1`; audition `F1`/`M2`; `--steps 10`; 44.1 kHz WAV). One clip per scene, measure with `ffprobe`. Use `edge-tts` only for Chinese, which Supertonic 3 does not cover. Do not require a paid provider. Listen to the first 10 seconds and re-render if the voice sounds robotic or mispronounces identifiers.
 - Music and SFX: a soft bed under the voice, keyboard/click/whoosh cues, a small result chime. Pre-mix with ffmpeg and normalize to about −16 LUFS.
 - Render with HyperFrames when available: one paused GSAP timeline, local fonts, local audio, no network at render time, root `data-duration`.
-- If HyperFrames is unavailable, use the fallback: HTML/CSS slides + Supertonic 3 + ffmpeg, or a screen-recorded walkthrough with burned-in titles. When a slide deck is requested, use `frontend-slides` (`zarazhangrui/frontend-slides`) to build the HTML deck, then record or render it with the same storyboard and audio bed.
+- Keep the camera fixed. The frame does not shake, drift, wobble, rotate, or zoom continuously; animate elements inside it, not the canvas. The stability rules and the render check are in `references/video-production.md`.
+- If HyperFrames is unavailable, use the fallback: a paused HTML/CSS timeline captured frame-by-frame, plus Supertonic 3 and ffmpeg. Do not screen-record the explainer: capture introduces dropped frames, cursor motion, scroll jitter, and variable frame rate. When a slide deck is requested, use `frontend-slides` (`zarazhangrui/frontend-slides`) to build the HTML deck, then render it with the same storyboard and audio bed.
 - Extract a poster frame and embed the MP4 at the top of the course.
 
 If the video uses recorded footage or demo takes, optionally use `video-use` to cut, caption, and grade that footage. Do not use it as the primary explainer generator; keep the generated 60–90 s storyboard as the spine.
@@ -236,11 +241,14 @@ node course/serve.mjs
 Check the page:
 
 - video `readyState` and duration;
+- video is constant-frame-rate 30 fps and holds are pixel-stable (see `references/video-production.md`);
 - every lab loads and is read-only;
 - every diagram renders;
 - no console errors;
+- screenshot every screen at 1440×900 and 390×844; no nested-card stacks, clipped buttons, colliding table labels, or page-level horizontal overflow;
 - mobile layout has no horizontal overflow outside code/editor areas;
-- body text ≥ 4.5:1, code foreground/comments/syntax tokens ≥ 7:1, and command blocks ≥ 7:1 on their real backgrounds.
+- body text ≥ 4.5:1, code foreground/comments/syntax tokens ≥ 7:1, and command blocks ≥ 7:1 on their real backgrounds;
+- if the course is localized, the i18n coverage check passes and expanded strings do not clip buttons, tabs, or table cells.
 
 Write `course/README.md` with:
 
@@ -338,6 +346,10 @@ Read `references/companion-skills.md` for install notes, licenses, and integrati
 - A checker that copies the repo but ignores the learner’s edits, or modifies the learner’s work.
 - All labs removed at once with no way to restore the originals.
 - A video with no voice, no sound, or no poster.
+- A shaking, wobbling, drifting, rotating, or continuously zooming video frame; text that shimmers during a hold; or an explainer captured with a screen recorder.
+- A card inside a card inside a card; three boxed buttons stacked in a table row; filters in their own card above the list they filter.
+- A table whose date, status, or action labels collide at 1024px, or a localized string that clips its button.
+- Merging upstream changes by overwriting translated copy or generated screens instead of merging and re-running the checks.
 - Using Kokoro or `edge-tts` for a language Supertonic 3 supports, or forcing Supertonic on Chinese.
 - Text walls, recycled metaphors, or a purple-gradient AI look.
 - Low-contrast body text or code, especially gray comments on a dark panel; a theme name without its actual palette.

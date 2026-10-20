@@ -259,9 +259,11 @@ Default: a 60–90 second HyperFrames composition on a white canvas.
 - A soft music bed and subtle UI SFX, pre-mixed with ffmpeg.
 - Local fonts, local GSAP, local audio.
 - One paused timeline, deterministic scenes.
+- A locked camera: no shake, wobble, drift, parallax, or continuous zoom; animate content inside a fixed 1920×1080 frame.
+- Frame-exact capture at a constant 30 fps; static holds are stable.
 - Poster frame extracted from the final render.
 
-If HyperFrames is unavailable, the skill uses a fallback: HTML/CSS slides + Supertonic 3 + ffmpeg, or a screen-recorded walkthrough. When a slide deck is requested, it uses `frontend-slides` to build the deck.
+If HyperFrames is unavailable, the skill uses a fallback: a paused HTML/CSS timeline captured frame-by-frame, plus Supertonic 3 and ffmpeg. It does not screen-record the explainer. When a slide deck is requested, it uses `frontend-slides` to build the deck.
 
 ## Companion tools (optional)
 
@@ -372,6 +374,8 @@ The skill itself has no runtime dependencies.
 - Depth and time scale together; never compress a Deep Diver course into a 15-minute tour.
 - The project’s own tests are the specification for code; explicit rubrics are the specification for non-code work.
 - Verify the checker in both directions before delivery.
+- **Flatten the page:** one card level, inline row actions, filters as a toolbar, at most one primary button per surface.
+- **Lock the camera:** the video frame never shakes, drifts, or zooms continuously; static holds are pixel-stable.
 
 ## Quality gates
 
@@ -389,7 +393,11 @@ The skill itself has no runtime dependencies.
 - `check.mjs --self-test` passes: skeleton/weak exemplar fails, solution/strong exemplar passes.
 - Every lab checks independently, and every non-code lab has deterministic checks plus a `--manual` fallback.
 - Video has voice, music, SFX, a poster, and no black tail; narration uses Supertonic 3 (Chinese: `edge-tts`).
+- Video camera is locked, frame rate is constant 30 fps, static holds are stable, and the explainer was rendered frame-exact rather than screen-recorded.
 - Page loads with no console errors, diagrams render, labs are read-only, short answers autosave locally, mobile works.
+- No nested cards; row actions are inline; filters are a toolbar; table labels do not collide at 1024 px.
+- Screenshots at 1440×900 and 390×844 were inspected; localized strings do not clip.
+- After merging upstream changes, translations and the full check suite were preserved and re-run.
 - README explains edit / check / restore.
 
 ## Notes
