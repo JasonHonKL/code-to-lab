@@ -64,6 +64,7 @@ Every teaching section gets a two-part gate before its lab: **MC → short answe
 - Retryable and unscored. It does not gate progress and is not part of the lab result.
 - Static HTML/JS on the page; no server, no checker, no judge.
 - **Short-answer card:** one prompt after the MC, 2–4 sentences, local autosave, a model answer, and a 3-item self-check. It is unscored and not auto-graded.
+- **Budget the lab separately.** A 5-minute section can own a 15-minute lab; never fold the lab into the read/check estimate. See `references/pacing.md`.
 - Place both after the teaching screens and before the lab, so a gap is caught before practice.
 - For a Newcomer, keep the MC to 2 items, define every term in the options, and give the short answer a sentence frame.
 - For exam-fidelity courses, the section check can use exam-style stems, but the timed item set is the lab.

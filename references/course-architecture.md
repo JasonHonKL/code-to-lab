@@ -29,20 +29,29 @@ For a math/physics topic, replace the code trace with a concrete phenomenon and 
 ## Module template
 
 ```html
-<section class="module" id="module-N">
+<section class="module" id="module-N" data-read-min="5" data-check-min="3" data-lab-min="15">
   <div class="module-content">
     <header class="module-header">
       <span class="module-number">0N</span>
+      <p class="section-time">≈5 min read · 3 min check</p>
       <h1 class="module-title">…</h1>
       <p class="module-subtitle">One line about what this module teaches.</p>
     </header>
     <div class="module-body">
       <section class="screen">
         <h2 class="screen-heading">…</h2>
-        <figure class="diagram">
-          <pre class="mermaid">flowchart LR …</pre>
+        <figure class="diagram" id="diagram-N-1">
+          <div class="diagram-toolbar">
+            <span class="diagram-label">System map</span>
+            <button class="diagram-expand" type="button" data-diagram-open="N-1"
+                    aria-haspopup="dialog">Enlarge</button>
+          </div>
+          <div class="diagram-canvas">
+            <pre class="mermaid">flowchart LR …</pre>
+          </div>
           <figcaption>What to notice: …</figcaption>
         </figure>
+        <!-- full-screen <dialog> for the enlarged SVG; see references/diagrams.md -->
         <p>2–3 sentences that annotate the diagram.</p>
         <div class="micro-check" data-check="predict-N-1"><!-- predict/reveal or 1 MC --></div>
       </section>
@@ -68,6 +77,23 @@ For a math/physics topic, replace the code trace with a concrete phenomenon and 
 </section>
 ```
 
+## Section pacing
+
+Every section carries a visible budget for **reading** and **answering**, and every lab carries its own estimate. The full calculation and the course-total reconciliation are in `references/pacing.md`.
+
+| Track | Read | MC | Short answer | Section total | Lab (if owned) |
+|---|---|---|---|---|---|
+| Newcomer | 3–4 min | 1 min | 1.5–2 min | **5.5–7 min** | 8–12 min |
+| Explorer | 4–5 min | 1–1.5 min | 2 min | **7–8.5 min** | 10–15 min |
+| Builder | 4–6 min | 1.5 min | 2–3 min | **7.5–10.5 min** | 12–18 min |
+| Deep Diver | 5–7 min | 1.5–2 min | 3–4 min | **9.5–13 min** | 15–25 min |
+
+- Show `≈X min read · Y min check` in the section header and the sticky rail; show `Lab N · 12–18 min` in the lab header.
+- Lab time is additional. Do not fold it into the reading estimate.
+- One section per module is the default; a module with two sections counts twice toward the course total.
+- Estimate from words, diagrams, translations, MC items, and the short answer. Do not use intuition.
+- If the sum is over the track’s seat time, cut a screen, merge two thin sections, or shorten the lab. Never cut the short answer.
+
 ## Inline lab placement
 
 A lab belongs immediately after the section that teaches its core. Do not collect labs into a final module.
@@ -91,6 +117,7 @@ The nav has one dot per **teaching section**, not one per lab. The lab cards liv
 ## Content rules
 
 - **Graph-first.** Every conceptual screen leads with a Mermaid diagram or an equally visual block (code↔English, annotated code, table). Every teaching section has at least one Mermaid diagram; every module has at least three diagrams and at least two types. If a fourth sentence describes a flow, sequence, state, hierarchy, decision, or relationship, replace it with a diagram. Read `references/diagrams.md`.
+- **Enlarge, never shrink.** Every diagram has an `Enlarge` control that opens a full-screen dialog with zoom, pan, reset, and close. Inline text stays at 15 px or larger; a wide diagram scrolls instead of scaling down. See `references/diagrams.md`.
 - **2–3 sentences per text block.** The text annotates the diagram; it does not restate it.
 - **Micro-check cadence.** No more than two screens or about three minutes of passive reading without an interaction. Put a predict/reveal, one-question MC, order-the-steps, hotspot, or match-pairs check between screens.
 - **Code↔English translations** are the backbone. Real code on the left, line-by-line plain language on the right.
@@ -98,6 +125,7 @@ The nav has one dot per **teaching section**, not one per lab. The lab cards liv
 - **Tooltips on every technical term**, first use per module. Use a dashed underline and `cursor: pointer`, not a question-mark cursor.
 - **No recycled metaphors.** Pick one that fits the concept. Do not use restaurant/kitchen for everything.
 - **Every section gets a three-beat gate: MC → short answer → lab.** After the screens, add 2–4 MC items (one recall/recognition, one misconception, one application) with per-option feedback, retry, and a “why.” Then one short-answer prompt (2–4 sentences) with autosave, a model answer, and a 3-item self-check. Then the lab. Both checks are unscored and do not gate progress; neither replaces the lab.
+- **Show a time chip.** The section header and sticky rail show `≈X min read · Y min check`; the lab header shows its own estimate. Keep the lab out of the reading number, and do not add a countdown. See `references/pacing.md`.
 - **Recall opener.** After the first module, each section opens with one question about the previous section: “Before we open this, what did we say would happen?” It is spacing, not a gate.
 - **Active practice, not a quiz.** Multiple choice is allowed for section checks, micro-checks, recognition, recall, or discrimination (with per-option feedback), but not as the default lab format, not as the only evidence for a production skill, and not as “guess the formula.” Use labs, diagrams, traces, and translations for everything else.
 - **Match the answer format to the target performance.** Codebase work → code; architecture → ADR/trade-off artifact; CFA-style exam → item sets plus show-your-work; service design → blueprint/model/plan. Read `references/assessment-design.md`.
@@ -129,7 +157,7 @@ Use custom HTML/CSS for:
 - fast-path vs fallback cards,
 - flow animations and group chats.
 
-Every diagram gets a one-sentence “what to notice” caption and a source fallback. Keep it to 12 nodes or fewer. Theme Mermaid with the white course palette (see `references/design-system.md`); do not leave the default purple/blue theme.
+Every diagram gets a one-sentence “what to notice” caption, a source fallback, and a visible `Enlarge` control that opens a full-screen zoom/pan dialog. Keep it to 12 nodes or fewer. Theme Mermaid with the white course palette (see `references/design-system.md`); do not leave the default purple/blue theme.
 
 ## Glossary tooltips
 
@@ -145,6 +173,8 @@ Ask for the course language before writing. Keep code, file names, identifiers, 
 |---|---|---|---|---|
 | Module count | 4 | 4 | 5 | 5–6 |
 | Seat time | 30–45 min | 45–60 min | 60–90 min | 90–150+ min |
+| Section read + check | 5.5–7 min | 7–8.5 min | 7.5–10.5 min | 9.5–13 min |
+| Lab budget | 8–12 min | 10–15 min | 12–18 min | 15–25 min |
 | Opening | “What is this?” + visual phenomenon | Observable behavior | Observable behavior | Observable behavior / internals |
 | Analogy density | Highest | High | Medium | Low |
 | Code/equation snippet length | 3–8 lines, heavily annotated | 5–10 lines | 8–15 lines | 15–30 lines |

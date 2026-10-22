@@ -13,6 +13,11 @@
 - **Voice:** Supertonic 3 `M1` / other: __ / Chinese uses `edge-tts`: __
 - **Time budget:** 20–35 / 35–60 / 60–90 / 90–150+ minutes
 - **Target seat time:** __ minutes (must match the track)
+- **Pacing plan:** __ sections × __ min core = __ min; __ labs × __ min = __ min; + __ min frame = **__ min total** (target __ min)
+- **Section budget:**
+  | Section | Read | MC | Short answer | Lab | Total |
+  |---|---|---|---|---|---|
+  | | | | | | |
 - **If the budget is below the track minimum:** downgrade / core path + optional deep-dive modules
 - **Video:** yes / no / length
 - **Diagram plan:** 3+ Mermaid diagrams per module; types: __

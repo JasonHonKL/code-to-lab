@@ -126,7 +126,7 @@ Ask these to shape the course, not the score:
    - 60–90 minutes (deeper build; Builder)
    - 90–150+ minutes (full deep dive; Deep Diver)
 
-   Time is a constraint, not just a preference. A deeper, more detailed course needs a longer seat time—do not promise a Deep Diver course in 20 minutes.
+   Time is a constraint, not just a preference. A deeper, more detailed course needs a longer seat time—do not promise a Deep Diver course in 20 minutes. Translate the chosen budget into a section plan (`sections × read/check + labs × lab + 5–10 min frame`) using `references/pacing.md`; if the sum is over, cut a section or downgrade the track.
 3. **Language:** “Should the course be in English, Traditional Chinese, or another language?”
 4. **Video:** “Do you want a narrated video, or are diagrams + labs enough?”
 

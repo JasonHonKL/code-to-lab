@@ -7,6 +7,7 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] The 6-question level test was run, or the learner declined and the Builder default was recorded.
 - [ ] `COURSE_BRIEF.md` names the track, language, topic, goal, time budget, and target seat time.
 - [ ] The track’s recommended seat time matches the learner’s budget, or the downgrade/core-path split is recorded.
+- [ ] `COURSE_BRIEF.md` has a pacing plan: sections × read/check + labs × lab + frame = total, and the total fits the target.
 - [ ] The course has 3–5 concepts and 2–3 labs, not a tour of every file.
 
 ## Course
@@ -15,10 +16,15 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] The default canvas is **white** (`#FFFFFF`), not warm paper, beige, off-white, or dark, unless the learner asked for a theme; the choice is recorded in `COURSE_BRIEF.md`.
 - [ ] The module/lab count and depth match the track; a Deep Diver course has enough material for 90–150+ minutes and is not padded with repeated text.
 - [ ] If the learner asked for “more difficult” or “more detailed,” the time budget and depth increased together.
+- [ ] Every section has a visible `read + check` time chip; every lab has its own estimate.
+- [ ] Section core budgets fall inside the track range (5.5–13 min); lab time is separate and not folded into reading.
+- [ ] `Σ section core + Σ lab + 5–10 min frame` fits the track’s seat time and is recorded in `COURSE_BRIEF.md`.
+- [ ] No countdown, timer badge, or “you are behind” pressure; time boxes are planning estimates.
 - [ ] There is one end-to-end trace through the real system.
 - [ ] Every conceptual screen leads with a visual; there are no text-only teaching screens.
 - [ ] Every teaching section has at least one Mermaid diagram; every module has at least three and at least two diagram types.
 - [ ] Every diagram has a one-sentence “what to notice” caption, a source fallback, and ≤12 nodes.
+- [ ] Every diagram has an `Enlarge` control; the full-screen dialog supports zoom, pan, reset, and close, returns focus, and never scales inline text below 15 px.
 - [ ] Every module has at least one real code↔English translation.
 - [ ] Technical terms have glossary tooltips on first use per module.
 - [ ] Each lab is **inside** the module that teaches its core.
@@ -102,7 +108,13 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 - [ ] Every short-answer card loads, autosaves locally, shows a word count, reveals a model answer after an attempt or “I’m stuck,” and shows the 3-item self-check.
 - [ ] Short answers are unscored, not sent to a server, and not part of the lab result.
 - [ ] Micro-checks load and can be completed with the keyboard; no check gates progress.
+- [ ] Every section shows its `read + check` time chip; the sticky rail shows the section number, time, and next action.
+- [ ] Every lab header shows its own time estimate; the course intro shows the total.
+- [ ] No countdown timer, auto-advance, or “you are behind” copy exists in the page.
 - [ ] Every Mermaid diagram renders with content (not a blank SVG), has a caption, and does not overflow the page at 375 px.
+- [ ] Every diagram opens its enlarged dialog; zoom in/out, reset, pan, close, and `Escape` work; focus returns to the trigger.
+- [ ] The enlarged dialog is full-screen at 390 px, controls stay visible, and the page behind it does not scroll.
+- [ ] Enlarged diagrams were screenshotted at 1440×900 and 390×844; no clipped close button, no unreadable text, no duplicated SVG IDs.
 - [ ] The page background is white unless a theme was requested; no warm-paper or beige canvas slipped in.
 - [ ] No console errors.
 - [ ] No duplicate IDs.
@@ -155,7 +167,7 @@ Do not deliver until every item passes. If a check fails, fix it before moving o
 
 ## Handoff
 
-- [ ] `course/README.md` explains the course, track, target seat time, lab kinds, edit/check/restore commands, lab IDs, work-file paths, judge/manual verification, and video rebuild.
+- [ ] `course/README.md` explains the course, track, target seat time, per-section read/check budget, lab budgets, course total, lab kinds, edit/check/restore commands, lab IDs, work-file paths, judge/manual verification, and video rebuild.
 - [ ] The handoff records the Supertonic 3 voice and language, and notes the model’s OpenRAIL-M license.
 - [ ] The final response names the course URL, the video path, the lab commands, and the restore command.
 - [ ] The user is told that the repo files were intentionally modified and how to restore them.

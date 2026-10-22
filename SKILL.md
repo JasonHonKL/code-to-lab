@@ -1,6 +1,6 @@
 ---
 name: top-down-course
-description: "Build a top-down, interactive course from any codebase or technical topic: a short narrated explainer voiced with Supertonic 3, a white background by default, graph-first Mermaid diagrams, hands-on labs placed inline between sections, a per-section MC check then short-answer gate before each lab, micro-checkpoints between screens, progressive hints, and verification that fits the skill. Labs are learn-by-doing and may edit real code, write or perform in the real medium, design an artifact, or run an experiment; they can be checked by tests, deterministic validators, rubrics, or a calibrated LLM judge. Use when someone wants to turn code or a skill into a course, teach a codebase, create a video + diagrams + exercises, or design a level-adapted tutorial. Always run a short learner-level diagnostic before building, and never make the in-page editor the lab."
+description: "Build a top-down, interactive course from any codebase or technical topic: a short narrated explainer voiced with Supertonic 3, a white background by default, graph-first Mermaid diagrams that enlarge into a zoom/pan dialog, hands-on labs placed inline between sections, a per-section MC check then short-answer gate before each lab, micro-checkpoints between screens, progressive hints, and verification that fits the skill. Labs are learn-by-doing and may edit real code, write or perform in the real medium, design an artifact, or run an experiment; they can be checked by tests, deterministic validators, rubrics, or a calibrated LLM judge. Use when someone wants to turn code or a skill into a course, teach a codebase, create a video + diagrams + exercises, or design a level-adapted tutorial. Always run a short learner-level diagnostic before building, and never make the in-page editor the lab."
 ---
 
 # Top-Down Course
@@ -26,7 +26,9 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 - **Match the answer format to the target performance.** If the learner is preparing for a multiple-choice exam (CFA, licensing), MC item sets are authentic—pair them with show-your-work and a written recommendation. If the target is debugging, use code; if the target is an architecture decision, require an ADR/trade-off table with evidence, not “pick the best option.” Read `references/assessment-design.md` for the domain matrix.
 - **Default to a white course.** The page and the video use a white background (`#FFFFFF`), dark ink, and one accent. Warm paper, beige, off-white, and dark themes are opt-in: use one only when the learner asks for it or names a theme, and record it in `COURSE_BRIEF.md`.
 - **Graph-first, not text-first.** Every conceptual screen leads with a visual, and every teaching section has at least one Mermaid diagram. Every module has at least three Mermaid diagrams and at least two diagram types. If a sentence describes a flow, sequence, state, hierarchy, decision, or relationship, draw it; the prose annotates the graph. Read `references/diagrams.md`.
+- **Diagrams enlarge, never shrink.** Every diagram has a visible `Enlarge` control that opens a full-screen dialog with zoom, pan, reset, and close. Inline diagram text stays at 15 px or larger; a wide diagram scrolls instead of scaling down. Keyboard, focus return, and mobile controls are part of the contract.
 - **Prevent drift with a steady rhythm.** No more than two screens or about three minutes of passive reading without an interaction. Put a micro-check (predict/reveal, one-question MC, order-the-steps, hotspot) between screens, and one recall opener at the start of each section after the first module. Read `references/interactivity.md`.
+- **Time-box every section.** Each section shows `≈X min read · Y min check`; each lab shows its own estimate. Use the per-track budgets in `references/pacing.md`: reading 3–7 min, MC 1–2 min, short answer 1.5–4 min, gate 2.5–6 min, lab separate. Never hide the lab inside the reading time, never cut the short answer to fit, and never add a countdown timer.
 - **Every teaching section gets a three-beat gate before its lab: MC → short answer → lab.** First, 2–4 multiple-choice items with per-option feedback, retry, one misconception item, and one application item. Second, one short-answer prompt (2–4 sentences) with local autosave, a model answer, and a 3-item self-check. Then the lab. It is formative: not scored, not gated, and never a substitute for the lab.
 - **Labs are active practice, not a quiz.** Multiple choice is allowed for section checks, micro-checks, recognition/recall/discrimination drills, and exam-fidelity item sets, with per-option feedback. It is not allowed as the only evidence for a production skill, as the default lab format, or as “guess the formula.” The level diagnostic remains separate and is for placement, not grading.
 - **Every lab needs verification that fits the medium.** Code labs build a temp copy and run authoritative tests. Non-code labs combine deterministic checks, an explicit rubric, and—only when needed—a calibrated LLM judge or expert review. The checker must never modify the learner's work.
@@ -45,7 +47,7 @@ This skill is self-contained. Do **not** require `/brag`, `codebase-to-course`, 
 |---|---|---|
 | 0 | Learner-level diagnostic + brief | `COURSE_BRIEF.md` exists with a track |
 | 1 | Analyze the codebase/topic; choose concepts and lab sites | 3–5 concepts, 2–3 labs, one end-to-end trace |
-| 2 | Design the top-down arc and inline lab placement | Module outline reviewed |
+| 2 | Design the top-down arc and inline lab placement | Module outline with section count and read/check/lab time plan reviewed |
 | 3 | Build the course site | Graph-first page, checks + short answers before labs, diagrams render |
 | 4 | Build the labs and their verification | `--self-test` passes (both directions) |
 | 5 | Produce the video | 60–90 s MP4 with Supertonic 3 voice + sound + poster |
@@ -127,9 +129,11 @@ Do not create a separate “Labs” module. The nav should have one dot per teac
 
 Plan the gate with the lab: every lab section gets its MC items and short-answer prompt designed at the same time as the lab mission, not bolted on afterward. Plan at least one diagram per section and the micro-check between its screens.
 
+Budget the arc before building it: count sections, assign each a read/check range from `references/pacing.md`, assign lab ranges, and sum them against the track’s seat time. If the sum is over, cut a section or move detail into an optional extension; do not plan a 110-minute course for a 60-minute budget.
+
 ## Phase 3 — Build the course site
 
-Read `references/design-system.md`, `references/diagrams.md`, and `references/interactivity.md`.
+Read `references/design-system.md`, `references/diagrams.md`, `references/interactivity.md`, and `references/pacing.md`.
 
 Start with the **white default**: page background `#FFFFFF`, dark ink, one accent, neutral gray borders. Do not use a warm paper, beige, off-white, or dark canvas unless the learner asks for it. If the learner names a theme or asks for a dark page, read `references/color-themes.md`, pick the requested palette (Tokyo Night is a good dark default; GitHub Light/Dark High Contrast are good for code panels), map it to CSS custom properties, and verify contrast after rendering. Do not invent a palette when the requested one exists.
 
@@ -145,11 +149,13 @@ Build a directory course site with:
 Content rules:
 
 - **Graph-first.** Every conceptual screen leads with a Mermaid diagram or an equally visual block; every teaching section has at least one Mermaid diagram; every module has at least three Mermaid diagrams and at least two types. A text-only screen is a defect. See `references/diagrams.md`.
+- **Every diagram enlarges.** Add a visible `Enlarge` control above the canvas; it opens a full-screen `<dialog>` with `−`, `+`, `Reset`, `Close`, pan, and focus return. Never scale inline diagram text below 15 px. See `references/diagrams.md`.
 - 2–3 sentences per text block. If a fourth sentence describes a flow or relationship, replace it with a diagram.
 - Every technical term gets a glossary tooltip on first use per module.
 - Every module has at least one real code↔English translation.
 - **Micro-check cadence.** No more than two screens or about three minutes of passive reading without an interaction. Use predict/reveal, a one-question MC, order-the-steps, a diagram hotspot, or an explain-back prompt. One recall opener per section after the first module.
 - **The gate before each lab is MC → short answer → lab.** Every teaching section ends with a 2–4 item **Check your understanding** card (per-option feedback, retry, one misconception item, one application item), then a short-answer card (2–4 sentences, local autosave, model answer, 3-item self-check), then the lab. Neither is scored or gated, and neither replaces the lab. See `references/interactivity.md`.
+- **Time chips are part of the layout.** Each section header and the sticky rail show `≈X min read · Y min check`; the course intro states the total; each lab header shows its own estimate. Calculate them from words, diagrams, translations, MC items, and the short answer as described in `references/pacing.md`, then check that the total fits the track’s seat time. Do not add a countdown.
 - Every lab is a white card with a visible border on the white page: the incomplete/weak behavior, mission, deliverable, evidence path, 3 hints, a read-only starter or preview (code or artifact), copy-path, check command, check button, rubric, and a reference solution/exemplar.
 - Multiple choice is allowed for section checks, micro-checks, recognition drills, and exam-fidelity item sets, with per-option feedback; never as the only evidence for a production skill and never as the default lab format.
 
@@ -225,7 +231,7 @@ For math/physics, use `manim_skill` and Manim (Community Edition by default) for
 
 ## Phase 6 — Verify and hand off
 
-Read `references/quality-gates.md`.
+Read `references/quality-gates.md` and `references/pacing.md`.
 
 Run:
 
@@ -244,8 +250,12 @@ Check the page:
 - video is constant-frame-rate 30 fps and holds are pixel-stable (see `references/video-production.md`);
 - every lab loads and is read-only;
 - every diagram renders;
+- every diagram has a working `Enlarge` control; the dialog zooms, pans, resets, closes on `Escape`, returns focus, and fills the viewport at 390 px;
+- every section and lab shows a time estimate; the course intro states the total, and `Σ sections + Σ labs` fits the track’s seat time;
+- no countdown, timer pressure, or auto-advance is present;
 - no console errors;
 - screenshot every screen at 1440×900 and 390×844; no nested-card stacks, clipped buttons, colliding table labels, or page-level horizontal overflow;
+- screenshot each enlarged diagram at 1440×900 and 390×844; controls visible, no clipped close button, no page scroll behind the dialog;
 - mobile layout has no horizontal overflow outside code/editor areas;
 - body text ≥ 4.5:1, code foreground/comments/syntax tokens ≥ 7:1, and command blocks ≥ 7:1 on their real backgrounds;
 - if the course is localized, the i18n coverage check passes and expanded strings do not clip buttons, tabs, or table cells.
@@ -254,6 +264,7 @@ Write `course/README.md` with:
 
 - what the course is;
 - the level track and target seat time;
+- the per-section read/check budget, lab budgets, and the course total;
 - the exact edit/check/restore commands;
 - the lab IDs and files;
 - the video and audio rebuild commands;
@@ -265,8 +276,9 @@ Write `course/README.md` with:
 |---|---|
 | `references/level-test.md` | The 6-question diagnostic, scoring, and track adaptations |
 | `references/course-architecture.md` | Top-down arc, module templates, inline lab placement, content rules |
-| `references/diagrams.md` | Graph-first rule, diagram type selection, Mermaid patterns, white theme, accessibility |
+| `references/diagrams.md` | Graph-first rule, type selection, Mermaid patterns, enlarge/zoom dialog, white theme, accessibility |
 | `references/interactivity.md` | Section rhythm, MC → short answer → lab, micro-check types, anti-drift layout |
+| `references/pacing.md` | Per-section read/check budgets, lab budgets, time chips, course-total reconciliation |
 | `references/assessment-design.md` | Answer formats by domain: codebase, architecture decisions, CFA-style exams, service/learning-as-a-service, language, design, music |
 | `references/lab-kinds.md` | Code/writing/design/performance/experiment/research/drill labs, MC rules, rubric and LLM-judge contract, non-code self-test |
 | `references/lab-checker.md` | Code repo-mode labs, start/restore, checker modes, case format, self-test; non-code adapters |
@@ -315,6 +327,8 @@ Read `references/companion-skills.md` for install notes, licenses, and integrati
 | Modules | 4 | 4 | 5 | 5–6 |
 | Labs | 2 (guided first lab) | 2 | 3 | 3 |
 | Seat time | 30–45 min | 45–60 min | 60–90 min | 90–150+ min |
+| Section read + check | 5.5–7 min | 7–8.5 min | 7.5–10.5 min | 9.5–13 min |
+| Lab budget | 8–12 min | 10–15 min | 12–18 min | 15–25 min |
 | Hints | Very explicit | 2 up front | 3 progressive | 3, last one minimal |
 | Code shown | Short, heavily annotated | Short, annotated | Real snippets | Longer real snippets |
 | Video | 75–90 s | 75–90 s | 90 s | 90–120 s, denser |
@@ -334,7 +348,11 @@ Read `references/companion-skills.md` for install notes, licenses, and integrati
 - A lab as the first interaction in a section: the gate is MC → short answer → lab, in that order.
 - A section check that replaces the lab, or a lab with no check for the core idea.
 - A long passive stretch (more than two screens or about three minutes) with no interaction.
+- A section with no read/check time estimate, or a course whose section + lab totals exceed its stated seat time.
+- A lab folded into “reading time,” or a short answer cut to make the budget fit.
+- A countdown timer, “you are behind” copy, or any other pressure on a formative check.
 - A text wall where a Mermaid graph would be clearer, or a module below its diagram floor.
+- A diagram shrunk below readable text with no `Enlarge` control, or an enlarge path that only opens a new tab.
 - A default beige, warm-paper, off-white, or dark canvas when the learner did not ask for one.
 - An in-page editor that edits a copy instead of the real medium.
 - Forcing every lab to be code when the skill is writing, design, performance, or recognition.

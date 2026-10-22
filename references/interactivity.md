@@ -25,6 +25,23 @@ The fixed gate before a lab is **MC → short answer → lab**. Not lab → quiz
 - **No auto-advance.** The learner clicks “Next: check” or “Next: explain,” and can always scroll back.
 - **Do not gate progress.** Every check has a “continue anyway” path; the point is awareness, not compliance.
 
+## Time boxes
+
+Every section carries a visible budget for reading and answering; every lab carries its own. The time box is a planning aid, not a deadline.
+
+| Track | Read / diagram | MC | Short answer | Check gate | Section total |
+|---|---|---|---|---|---|
+| Newcomer | 3–4 min | 1 min | 1.5–2 min | 2.5–3 min | **5.5–7 min** |
+| Explorer | 4–5 min | 1–1.5 min | 2 min | 3–3.5 min | **7–8.5 min** |
+| Builder | 4–6 min | 1.5 min | 2–3 min | 3.5–4.5 min | **7.5–10.5 min** |
+| Deep Diver | 5–7 min | 1.5–2 min | 3–4 min | 4.5–6 min | **9.5–13 min** |
+
+- Show `≈X min read · Y min check` in the section header and the sticky rail.
+- **Read** includes screens, diagrams, captions, and code↔English translations. **Check** includes the MC, the short answer, and comparing with the model answer. **Lab** is separate.
+- Estimate from words, diagrams, translations, MC items, and the short answer; see `references/pacing.md`.
+- Do not add a countdown, timer badge, or “you are behind” copy.
+- If a section runs over, cut a screen or split it. If the short answer runs long, tighten the prompt, not the thinking time.
+
 ## Micro-check types
 
 | Type | Use it when | Learner action | Implementation |
@@ -40,6 +57,8 @@ The fixed gate before a lab is **MC → short answer → lab**. Not lab → quiz
 | **Diagram step-through** | A trace has several ordered hops | Next/Previous highlights one hop | Toggle classes on rendered SVG nodes |
 
 Use only the types that fit the medium. A writing course does not need “spot the bug”; a code course does not need a pronunciation drill.
+
+Zooming or enlarging a diagram is an **affordance, not a micro-check**. Do not count the `Enlarge` button toward the cadence; it removes a usability barrier, it does not test understanding.
 
 ## The MC card
 
@@ -118,6 +137,7 @@ Avoid “What did the section say?” and “Define X.” The prompt should requ
 | | Newcomer | Explorer | Builder | Deep Diver |
 |---|---|---|---|---|
 | Micro-check cadence | Every 1–2 screens | Every 2 screens | Every 2 screens | Every 2–3 screens |
+| Read + check budget | 5.5–7 min | 7–8.5 min | 7.5–10.5 min | 9.5–13 min |
 | MC items / section | 2 | 2–3 | 3 | 3–4 |
 | Short answer length | 1–2 sentences, sentence starters | 2–3 sentences | 2–4 sentences | 3–4 sentences + evidence |
 | Short-answer support | Frame + word bank | Frame | Prompt + checklist | Prompt + checklist + counterexample |
@@ -143,6 +163,9 @@ A Newcomer short answer can be “Finish this sentence: The lexer turns ___ into
 - [ ] Every section has exactly one short-answer prompt with a model answer and a 3-item self-check.
 - [ ] The short answer autosaves locally, shows a word count, and can be cleared.
 - [ ] The model answer reveals after an attempt or “I’m stuck,” never only after a perfect answer.
+- [ ] Every section shows a read + check time box; every lab shows its own estimate.
+- [ ] The section and course totals fit the track’s seat time; the lab is not folded into reading time.
+- [ ] No countdown timer or “you are behind” pressure.
 - [ ] No more than 2 screens or ~3 minutes pass without an interaction.
 - [ ] There is at least one recall opener after the first module.
 - [ ] No check gates progress or contributes to the lab score.
@@ -152,6 +175,9 @@ A Newcomer short answer can be “Finish this sentence: The lexer turns ___ into
 
 ## Anti-patterns
 
+- A section with no read/check estimate, or a course that claims 60 minutes while budgeting 110.
+- A lab folded into “reading time,” or a short answer cut to make the budget fit.
+- A countdown timer that turns a formative check into an exam.
 - A 10-minute read followed by one giant quiz at the end.
 - A lab as the first interaction in a section.
 - MC with no rationale, or a “correct/incorrect” toast and nothing else.

@@ -46,6 +46,7 @@ In addition to the lab, every teaching section ends with a two-part gate: **MC �
 - **Immediate feedback:** every option gets a rationale, and the correct answer links back to the screen.
 - **Retryable and unscored.** It does not gate progress and is not part of the lab result.
 - **Short answer:** one prompt after the MC, 2–4 sentences, with local autosave, a model answer, and a 3-item self-check (mechanism / evidence / consequence). It is unscored and not auto-graded.
+- **Time box:** MC 1–2 min, short answer 2–4 min, gate 3–6 min depending on track; the lab has its own budget. See `references/pacing.md`.
 - **Placement:** after the teaching screens and before the lab, so the learner catches the gap before practicing.
 - **Scope:** test the section’s “must-not-miss” idea, not trivia. If the learner could look it up in the section without understanding it, the item is too shallow.
 - **No timer** except in an exam-fidelity lab. A section check is low-pressure.

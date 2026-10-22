@@ -60,6 +60,11 @@ For Traditional Chinese, use PingFang TC, Noto Sans TC, or Source Han Sans for C
 - `scroll-snap-type: y proximity`, never `mandatory`.
 - Modules `min-height: 100dvh` with a `100vh` fallback.
 - Fixed nav 50 px, progress bar, one dot per teaching section.
+- **Time chip:** `≈5 min read · 3 min check` in small mono/muted text beside the module number or section label. It is metadata, not a badge or a card.
+- **Sticky rail:** `Section 2/5 · ~8 min · next: check`, updated as the learner moves; it orients without gating.
+- **Lab header:** `Lab 2 · 12–18 min` beside difficulty and file.
+- **Course intro:** one line for the total, e.g. “5 sections · 3 labs · about 75–90 minutes.”
+- No countdown, timer badge, or “you are behind” copy.
 - On mobile, stack two-column layouts and keep the fixed nav from covering the first module.
 
 ## Surface hierarchy and actions
@@ -72,7 +77,7 @@ The course should read as one page with sections, not a stack of boxes.
 - **Filters are a toolbar, not a card.** Lay status/priority/assignee filters in a borderless row above the list they filter, not in their own panel.
 - **Hide secondary work.** Import, advanced settings, and long optional forms live behind a disclosure (`<details>`) and stay collapsed until used.
 - **Tables have a column budget.** Use `table-layout: fixed`, explicit percentage widths, and 10–18 px cell padding. Date, status, and action labels must not collide. Test at 1440, 1024, and 390 px; let text wrap by choice, never by overflow.
-- **Screenshot before delivery.** Capture every screen at 1440×900 and 390×844. Look for nested cards, clipped buttons, overlapping labels, and page-level horizontal overflow. A clean DOM is not evidence; the rendered frame is.
+- **Screenshot before delivery.** Capture every screen at 1440×900 and 390×844, plus one enlarged diagram dialog at each size. Look for nested cards, clipped buttons, overlapping labels, unreadable diagram text, and page-level horizontal overflow. A clean DOM is not evidence; the rendered frame is.
 
 ## Code
 
@@ -110,11 +115,33 @@ mermaid.initialize({
 
 - Bundle Mermaid locally. Do not depend on the CDN at runtime.
 - If the learner requested a theme, map these Mermaid variables to that palette; keep the white values above only for the default course.
-- Render diagrams with a fixed-size wrapper and `overflow-x: auto` for wide ones.
+- Render diagrams with a fixed-size wrapper and `overflow-x: auto` for wide ones. Never scale the inline diagram below 15 px effective text.
 - Keep labels short; use `<br/>` for two-line labels (escape them in HTML if the source is inside a normal element; use `<script type="text/plain">` for raw Mermaid text).
+- Every diagram has a visible **Enlarge** text button in a small toolbar above the canvas. It opens a full-screen `<dialog>` with the same SVG.
+- The dialog uses a white canvas, a compact top bar (`− 100% + Reset Close`), and a pan surface. The zoom level is live text, not a slider; the controls are text buttons, not a stack of bordered cards.
+- The `Enlarge` button is an affordance, not a learning interaction. Do not count it toward the micro-check cadence.
 - Every diagram has a one-sentence “what to notice” caption, an `aria-label`, and a source fallback in `<details>`.
 - Keep diagrams to 12 nodes or fewer; split a larger map across screens.
 - Do not reuse the default purple Mermaid theme, rainbow nodes, or emoji.
+
+```css
+.diagram-toolbar { display: flex; justify-content: space-between; align-items: center; }
+.diagram-expand { font: inherit; color: var(--color-accent); background: none; border: 0; cursor: pointer; }
+.diagram-dialog {
+  width: min(1400px, 96vw); height: 92dvh; max-width: none; max-height: none;
+  margin: auto; padding: 0; border: 1px solid var(--color-border); background: var(--color-bg);
+}
+.diagram-dialog[open] { display: flex; flex-direction: column; }
+.diagram-dialog::backdrop { background: rgb(17 19 24 / 55%); }
+.diagram-dialog-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); }
+.diagram-zoom-controls { display: flex; gap: 0.5rem; align-items: center; }
+.diagram-zoom-viewport { flex: 1; min-height: 0; overflow: hidden; touch-action: none; cursor: grab; }
+.diagram-zoom-viewport:active { cursor: grabbing; }
+.diagram-zoom-stage { width: max-content; transform-origin: top left; }
+@media (max-width: 640px) {
+  .diagram-dialog { width: 100vw; height: 100dvh; border: 0; }
+}
+```
 
 ## Equations
 
@@ -122,7 +149,7 @@ For math/physics, use an equation↔English translation block: the equation on t
 
 ## Section gate UI: MC → short answer → lab
 
-The three beats are visually distinct and always in this order. Label them 1, 2, 3 so the learner knows where they are.
+The three beats are visually distinct and always in this order. Label them 1, 2, 3 so the learner knows where they are. Show the check budget once at the top of the gate (`≈1 min MC · 3 min explain`), not a countdown on each item.
 
 ### 1. MC card
 
@@ -197,4 +224,7 @@ Use it to catch deterministic frontend defects (contrast, spacing, overflow, ove
 - Non-code lab cards stack the rubric above the results; long criteria wrap instead of truncating.
 - Section-check options stack at 640 px; rationale text stays at body size, not tiny caption size.
 - The short-answer textarea is full width at 640 px; the counter and reveal button stack above it.
+- The time chip wraps under the module number at 640 px; do not truncate or hide it.
+- The sticky rail shortens to `2/5 · ~8 min`, keeping the section number and time visible.
+- The enlarged diagram fills the viewport at 640 px; controls stay pinned to the top, the close button stays visible, and the diagram pans instead of forcing page-level overflow.
 - Micro-checks (order-the-steps, hotspots, match pairs) become vertical button lists at 640 px; no horizontal drag target.

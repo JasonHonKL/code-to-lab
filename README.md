@@ -5,8 +5,10 @@ A self-contained agent skill that turns any codebase or technical topic into a *
 - one short narrated explainer video, voiced with **Supertonic 3**,
 - a **white background by default** (themes are opt-in),
 - **graph-first Mermaid diagrams** — every section leads with a diagram, and diagrams replace prose for flows, states, sequences, and relationships,
+- **every diagram enlarges** — a full-screen zoom/pan dialog with a readable inline fallback, so dense maps are not trapped at thumbnail size,
 - hands-on labs placed **inside** the sections that teach them,
 - a per-section **MC check → short answer → lab** gate, plus micro-checks between screens so the learner does not drift,
+- **per-section time budgets** for reading and answering, with separate lab estimates, so the learner can plan a sitting and the course can be checked against its seat time,
 - labs that fit the skill: code, writing, design, performance/practice, experiment, or research,
 - TODO stubs in the **real project files** for code labs, and real work files or artifacts for the rest,
 - progressive hints and a reference solution or exemplar,
@@ -72,7 +74,8 @@ Diagrams are the primary explanation, not decoration:
 - every teaching section has at least one diagram,
 - every module has at least three diagrams and at least two diagram types,
 - flows, sequences, states, hierarchies, decisions, and relationships become graphs; prose annotates the graph,
-- diagrams can be stepped through, clicked, or used as a hotspot check.
+- diagrams can be stepped through, clicked, or used as a hotspot check,
+- every diagram can be enlarged into a full-screen zoom/pan dialog; inline text never drops below 15 px.
 
 Read `references/diagrams.md` for the type-selection table, patterns, white Mermaid theme, and accessibility rules.
 
@@ -111,6 +114,17 @@ Every teaching section has a three-beat gate before its lab:
 The gate catches the learner who nodded along but missed the section’s core idea, and the short answer forces retrieval before practice. Neither check gates progress or replaces the lab.
 
 Between screens, the course adds **micro-checkpoints** every 1–2 screens: predict/reveal, one-question MC, order-the-steps, a diagram hotspot, or match pairs. No more than two screens or about three minutes pass without an interaction, so the learner does not drift into passive reading.
+
+Each section also shows a **time budget** for reading and answering, and each lab shows its own estimate:
+
+| Track | Section read + check | Lab (if owned) |
+|---|---|---|
+| Newcomer | 5.5–7 min | 8–12 min |
+| Explorer | 7–8.5 min | 10–15 min |
+| Builder | 7.5–10.5 min | 12–18 min |
+| Deep Diver | 9.5–13 min | 15–25 min |
+
+The lab time is additional, not folded into reading. The course intro states the total, and the agent reconciles `Σ sections + Σ labs + 5–10 min` against the track’s seat time. Read `references/pacing.md` for the estimation formula and the worked example.
 
 The pre-course level diagnostic remains the only placement quiz. Multiple choice is otherwise allowed for section checks, micro-checks, recognition/recall/discrimination drills, and exam-fidelity item sets (CFA-style), with per-option feedback. It is never the default lab format and never the only evidence for a production skill. Most labs ask the learner to produce something.
 
@@ -182,7 +196,7 @@ Turn this codebase into a course.
 The skill will:
 
 1. run the level test,
-2. write `COURSE_BRIEF.md`,
+2. write `COURSE_BRIEF.md` with the track and the section/lab time plan,
 3. analyze the codebase and choose 3–5 concepts and 2–3 lab sites,
 4. design the top-down arc,
 5. build the course page,
@@ -197,8 +211,9 @@ SKILL.md
 references/
   level-test.md            # 6-question diagnostic + tracks
   course-architecture.md   # top-down arc, module templates, inline labs
-  diagrams.md              # graph-first rules, Mermaid types, white theme, accessibility
+  diagrams.md              # graph-first rules, Mermaid types, enlarge/zoom, white theme
   interactivity.md         # section rhythm, MC → short answer → lab, micro-checks
+  pacing.md                # per-section read/check budgets, lab budgets, course total
   assessment-design.md     # answer formats by domain: code, ADR, CFA, service, language
   lab-kinds.md             # code/writing/design/performance labs, MC rules, LLM judge
   lab-checker.md           # repo-mode labs, checker modes, test design
@@ -360,6 +375,7 @@ The skill itself has no runtime dependencies.
 
 - Start with behavior, not definitions.
 - **Graph-first, not text-first:** the diagram is the explanation; the prose annotates it.
+- **Every diagram enlarges:** full-screen dialog with zoom, pan, reset, and close; never shrink inline text below 15 px.
 - Show, don’t tell: Mermaid maps, translations, real output.
 - **White background by default;** themes are opt-in.
 - Exact code from the repo, never simplified snippets.
@@ -369,6 +385,7 @@ The skill itself has no runtime dependencies.
 - No recycled metaphors.
 - Choose the lab kind from the learning verb; multiple choice only for section checks, micro-checks, recognition/recall/discrimination, and exam fidelity, with feedback.
 - **Every teaching section gates the lab with MC → short answer → lab;** neither check replaces the lab.
+- **Time-box every section:** show read + check estimates, keep the lab separate, and reconcile the total with the track’s seat time; no countdown.
 - No more than two screens or ~3 minutes without an interaction.
 - Match the answer format to the target performance: code for debugging, ADR for architecture, item sets for CFA-style exams, artifacts for service design.
 - Depth and time scale together; never compress a Deep Diver course into a 15-minute tour.
@@ -383,7 +400,9 @@ The skill itself has no runtime dependencies.
 - Page and video are white by default; a named theme only when requested.
 - Labs inline, not collected at the end, and the lab kind matches the learning verb.
 - Every section has a Mermaid diagram; every module has at least three and two diagram types; diagrams have captions and source fallbacks.
+- Every diagram has an `Enlarge` dialog with zoom, pan, reset, and close; inline text stays readable and enlarged views are checked at 1440 and 390.
 - Every section has MC → short answer; a lab section adds the lab third and last; both checks are unscored and do not gate progress.
+- Every section and lab shows a time estimate; section + lab totals fit the track’s seat time; no countdown or timer pressure.
 - Every section has micro-checks with no more than two screens or ~3 minutes between interactions.
 - The answer format matches the target performance.
 - The selected track's recommended seat time matches the learner's time budget; a Deep Diver course is 90–150+ minutes, not a compressed tour.

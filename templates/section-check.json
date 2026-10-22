@@ -5,6 +5,16 @@
   "gate_order": ["mc", "short_answer", "lab"],
   "scored": false,
   "retryable": true,
+  "time_budget": {
+    "read_minutes": 5,
+    "mc_minutes": 1.5,
+    "short_answer_minutes": 3,
+    "check_minutes": 4.5,
+    "section_minutes": 9.5,
+    "lab_minutes": 15,
+    "section_with_lab_minutes": 24.5,
+    "estimate_basis": "420 words, 3 diagrams, 1 code↔English block, 3 MC items, 1 short answer"
+  },
   "micro_checks": [
     {
       "id": "m1",
